@@ -3,7 +3,7 @@
 	"description": "CakePHP Search Engine Optimization Plugin",
 	"type": "cakephp-plugin",
 	"keywords": ["cakephp", "seo", "meta tags", "title tags", "banning", "redirects", "ab test", "canonical", "blacklist", "levenshtein", "404 handling"],
-	"homepage": "git@github.com:stonelasley/seo.git",
+	"homepage": "https://github.com/stonelasley/seo.git",
 	"license": "MIT",
 	"authors": [
 		{
