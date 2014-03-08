@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/stonelasley/seo.png?branch=master)](https://travis-ci.org/stonelasley/seo) [![Coverage Status](https://coveralls.io/repos/stonelasley/CakePHP-Seo-Plugin/badge.png?branch=master)](https://coveralls.io/r/stonelasley/seo?branch=master) [![Total Downloads](https://poser.pugx.org/stonelasley/seo/d/total.png)](https://packagist.org/packages/stonelasley/seo) [![Latest Stable Version](https://poser.pugx.org/stonelasley/CakePHP-Seo-Plugin/v/stable.png)](https://packagist.org/packages/stonelasley/seo)
+[![Build Status](https://travis-ci.org/stonelasley/seo.png?branch=master)](https://travis-ci.org/stonelasley/seo) [![Coverage Status](https://coveralls.io/repos/stonelasley/seo/badge.png?branch=master)](https://coveralls.io/r/stonelasley/seo?branch=master) [![Total Downloads](https://poser.pugx.org/stonelasley/seo/d/total.png)](https://packagist.org/packages/stonelasley/seo) [![Latest Stable Version](https://poser.pugx.org/stonelasley/seo/v/stable.png)](https://packagist.org/packages/stonelasley/seo)
 
 # CakePHP-Seo-Plugin
  * Authors: Nick Baker, Alan Blount, Stone Lasley
@@ -27,7 +27,7 @@ Because this plugin has the type `cakephp-plugin` set in its own `composer.json`
 
 _[Manual]_
 
-* Download this: [http://github.com/stonelasley/CakePHP-Seo-Plugin/zipball/master](http://github.com/stonelasley/CakePHP-Seo-Plugin/zipball/master)
+* Download this: [http://github.com/stonelasley/seo/zipball/master](http://github.com/stonelasley/seo/zipball/master)
 * Unzip that download.
 * Copy the resulting folder to `app/Plugin`
 * Rename the folder you just copied to `CakePHP-Seo-Plugin`
@@ -52,7 +52,7 @@ In your `Plugin` directory type:
 
 In 2.0 you need to enable the plugin in your `app/Config/bootstrap.php` file:
 
-    CakePlugin::load('CakePHP-Seo-Plugin');
+    CakePlugin::load('Seo');
 
 If you are already using `CakePlugin::loadAll();`, then this is not necessary.
 
@@ -77,7 +77,7 @@ Create the file `app/config/seo.php` with the following configurations like so:
 	<?php
 	$config = array(
 		'Seo' => array(
-			'approverEmail' => 'nick@example.com',
+			'approverEmail' => 'admin@example.com',
 			'replyEmail' => 'noreply@example.com',
 			'parentDomain' => 'http://www.example.com',
 			'triggerCount' => 2,
