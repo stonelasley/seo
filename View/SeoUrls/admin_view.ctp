@@ -35,6 +35,8 @@
 		<ul>
 			<li><?php echo $this->Html->link(__('Edit Seo Url'), array('action' => 'edit', $seoUrl['SeoUrl']['id'])); ?> </li>
 			<li><?php echo $this->Form->postLink(__('Delete Seo Url'), array('action' => 'delete', $seoUrl['SeoUrl']['id']), null, __('Are you sure you want to delete # %s?', $seoUrl['SeoUrl']['id'])); ?> </li>
+			<li><?php echo $this->Html->link(__('List Seo Urls'), array('action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Seo Url'), array('action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

@@ -45,6 +45,8 @@
 		<ul>
 			<li><?php echo $this->Html->link(__('Edit Seo Meta Tag'), array('action' => 'edit', $seoMetaTag['SeoMetaTag']['id'])); ?> </li>
 			<li><?php echo $this->Form->postLink(__('Delete Seo Meta Tag'), array('action' => 'delete', $seoMetaTag['SeoMetaTag']['id']), null, __('Are you sure you want to delete # %s?', $seoMetaTag['SeoMetaTag']['id'])); ?> </li>
+			<li><?php echo $this->Html->link(__('List Seo Meta Tag'), array('action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Seo Meta Tag'), array('action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

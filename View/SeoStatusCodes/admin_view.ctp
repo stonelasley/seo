@@ -45,6 +45,8 @@
 		<ul>
 			<li><?php echo $this->Html->link(__('Edit Seo Status Code'), array('action' => 'edit', $seoStatusCode['SeoStatusCode']['id'])); ?> </li>
 			<li><?php echo $this->Html->link(__('Delete Seo Status Code'), array('action' => 'delete', $seoStatusCode['SeoStatusCode']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $seoStatusCode['SeoStatusCode']['id'])); ?> </li>
+			<li><?php echo $this->Html->link(__('List Seo Status Codes'), array('action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Seo Status Code'), array('action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

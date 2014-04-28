@@ -56,6 +56,8 @@
                 <ul>
                     <li><?php echo $this->Html->link(__('Edit Seo Redirect'), array('action' => 'edit', $seoRedirect['SeoRedirect']['id'])); ?> </li>
                     <li><?php echo $this->Html->link(__('Delete Seo Redirect'), array('action' => 'delete', $seoRedirect['SeoRedirect']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $seoRedirect['SeoRedirect']['id'])); ?> </li>
+					<li><?php echo $this->Html->link(__('List Seo Redirect'), array('action' => 'index')); ?> </li>
+					<li><?php echo $this->Html->link(__('New Seo Redirect'), array('action' => 'add')); ?> </li>
                 </ul>
             </div>
         </div>

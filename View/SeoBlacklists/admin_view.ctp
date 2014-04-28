@@ -45,6 +45,8 @@
 		<ul>
 			<li><?php echo $this->Html->link(__('Edit Seo Blacklist'), array('action' => 'edit', $seoBlacklist['SeoBlacklist']['id'])); ?> </li>
 			<li><?php echo $this->Html->link(__('Delete Seo Blacklist'), array('action' => 'delete', $seoBlacklist['SeoBlacklist']['id']), null, sprintf(__('Are you sure you want to delete # %s?'), $seoBlacklist['SeoBlacklist']['id'])); ?> </li>
+			<li><?php echo $this->Html->link(__('List Seo Blacklists'), array('action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Seo Blacklist'), array('action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

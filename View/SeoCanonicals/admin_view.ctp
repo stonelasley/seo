@@ -40,6 +40,8 @@
 		<ul>
 			<li><?php echo $this->Html->link(__('Edit Seo Canonical'), array('action' => 'edit', $seoCanonical['SeoCanonical']['id'])); ?> </li>
 			<li><?php echo $this->Form->postLink(__('Delete Seo Canonical'), array('action' => 'delete', $seoCanonical['SeoCanonical']['id']), null, __('Are you sure you want to delete # %s?', $seoCanonical['SeoCanonical']['id'])); ?> </li>
+			<li><?php echo $this->Html->link(__('List Seo Canonicals'), array('action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Seo Canonicals'), array('action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

@@ -35,6 +35,8 @@
 		<ul>
 			<li><?php echo $this->Html->link(__('Edit Seo Uri'), array('action' => 'edit', $seoUri['SeoUri']['id'])); ?> </li>
 			<li><?php echo $this->Form->postLink(__('Delete Seo Uri'), array('action' => 'delete', $seoUri['SeoUri']['id']), null, __('Are you sure you want to delete # %s?', $seoUri['SeoUri']['id'])); ?> </li>
+			<li><?php echo $this->Html->link(__('List Seo Uris'), array('action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link(__('New Seo Uri'), array('action' => 'add')); ?> </li>
 		</ul>
 	</div>
 	<div class="related">
