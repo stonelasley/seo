@@ -6,6 +6,6 @@
 			<legend><?php echo __('Admin Add Seo Uri'); ?></legend>
 			<?php echo $this->element('SeoUrl/form'); ?>
 		</fieldset>
-		<?php echo $this->Form->end(__('Save All'));?>
+		<?php echo $this->Form->end(__('Submit'));?>
 	</div>
 </div>

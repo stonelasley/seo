@@ -1,4 +1,4 @@
-<legend><?php echo __('Admin Add Seo Uri'); ?></legend>
+
 <?php
 echo $this->Form->hidden('SeoUri.id');
 echo $this->Form->input('SeoUri.uri');
