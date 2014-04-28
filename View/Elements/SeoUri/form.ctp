@@ -6,7 +6,7 @@ echo $this->Form->input('SeoUri.is_approved');
 ?>
 <div class="clear"></div>
 <h2>Title Tag</h2>
-<?php echo $this->element('SeoTitle/form'); ?>
+<?php echo $this->element('SeoTitle/form', array('index' => 0)); ?>
 <div class="clear"></div>
 <h2>Meta Tags</h2>
 <fieldset>
