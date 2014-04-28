@@ -38,7 +38,7 @@
 		</ul>
 	</div>
 	<div class="related">
-		<h3><?php echo __('Related Seo Redirects');?></h3>
+		<h3><?php echo __('Related Redirects');?></h3>
 		<?php if (!empty($seoUri['SeoRedirect'])):?>
 			<dl>	<?php $i = 0; $class = ' class="altrow"';?>
 				<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Redirect');?></dt>
@@ -68,9 +68,9 @@
 				<li>
 					<?php
 					if (!is_null($seoUri['SeoRedirect']['id'])) {
-						echo $this->Html->link(__('Edit Seo Redirect'), array('controller' => 'seo_redirects', 'action' => 'edit', $seoUri['SeoRedirect']['id']));
+						echo $this->Html->link(__('Edit Redirect'), array('controller' => 'seo_redirects', 'action' => 'edit', $seoUri['SeoRedirect']['id']));
 					} else {
-						echo $this->Html->link(__('Add Seo Redirect'), array('controller' => 'seo_redirects', 'action' => 'add', $seoUri['SeoUri']['id']));
+						echo $this->Html->link(__('Add Redirect'), array('controller' => 'seo_redirects', 'action' => 'add', $seoUri['SeoUri']['id']));
 					}
 					?>
 				</li>
@@ -78,7 +78,7 @@
 		</div>
 	</div>
 	<div class="related">
-		<h3><?php echo __('Related Seo Titles');?></h3>
+		<h3><?php echo __('Related Titles');?></h3>
 		<?php if (!empty($seoUri['SeoTitle'])):?>
 			<dl>	<?php $i = 0; $class = ' class="altrow"';?>
 				<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Title');?></dt>
@@ -95,9 +95,9 @@
 			<ul>
 				<li><?php
 					if (!is_null($seoUri['SeoTitle']['id'])) {
-					 	echo $this->Html->link(__('Edit Seo Title'), array('controller' => 'seo_titles', 'action' => 'edit', $seoUri['SeoTitle']['id']));
+					 	echo $this->Html->link(__('Edit Title'), array('controller' => 'seo_titles', 'action' => 'edit', $seoUri['SeoTitle']['id']));
 					} else {
-						echo $this->Html->link(__('Add Seo Title'), array('controller' => 'seo_titles', 'action' => 'add'));
+						echo $this->Html->link(__('Add Title'), array('controller' => 'seo_titles', 'action' => 'add'));
 					}
 					?>
 				</li>
@@ -105,7 +105,38 @@
 		</div>
 	</div>
 	<div class="related">
-		<h3><?php echo __('Related Seo Meta Tags');?></h3>
+		<h3><?php echo __('Related Canonical Links');?></h3>
+		<?php if (!empty($seoUri['SeoTitle'])):?>
+			<dl>	<?php $i = 0; $class = ' class="altrow"';?>
+				<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Canonical');?></dt>
+				<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+					<?php echo h($seoUri['SeoCanonical']['canonical']);?>
+					&nbsp;</dd>
+				<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Active');?></dt>
+				<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+					<?php echo h($seoUri['SeoCanonical']['is_active']);?>
+					&nbsp;</dd>
+				<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Created');?></dt>
+				<dd<?php if ($i++ % 2 == 0) echo $class;?>>
+					<?php echo h($seoUri['SeoCanonical']['created']);?>
+					&nbsp;</dd>
+			</dl>
+		<?php endif; ?>
+		<div class="actions">
+			<ul>
+				<li><?php
+					if (!is_null($seoUri['SeoCanonical']['id'])) {
+						echo $this->Html->link(__('Edit Canonical'), array('controller' => 'seo_canonicals', 'action' => 'edit', $seoUri['SeoCanonical']['id']));
+					} else {
+						echo $this->Html->link(__('Add Canonical'), array('controller' => 'seo_canonicals', 'action' => 'add'));
+					}
+					?>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="related">
+		<h3><?php echo __('Related Meta Tags');?></h3>
 		<?php if (!empty($seoUri['SeoMetaTag'])):?>
 			<table cellpadding = "0" cellspacing = "0">
 				<tr>
@@ -129,9 +160,9 @@
 						<td><?php echo h($seoMetaTag['is_http_equiv']);?></td>
 						<td><?php echo h($seoMetaTag['created']);?></td>
 						<td class="actions">
-							<?php echo $this->Html->link(__('View'), array('controller' => 'seo_meta_tags', 'action' => 'view', $seoMetaTag['id'])); ?>
-							<?php echo $this->Html->link(__('Edit'), array('controller' => 'seo_meta_tags', 'action' => 'edit', $seoMetaTag['id'])); ?>
-							<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'seo_meta_tags', 'action' => 'delete', $seoMetaTag['id']), null, __('Are you sure you want to delete # %s?', $seoMetaTag['id'])); ?>
+							<?php echo $this->Html->link(__('View Meta Tag'), array('controller' => 'seo_meta_tags', 'action' => 'view', $seoMetaTag['id'])); ?>
+							<?php echo $this->Html->link(__('Edit Meta Tag'), array('controller' => 'seo_meta_tags', 'action' => 'edit', $seoMetaTag['id'])); ?>
+							<?php echo $this->Form->postLink(__('Delete Meta Tag'), array('controller' => 'seo_meta_tags', 'action' => 'delete', $seoMetaTag['id']), null, __('Are you sure you want to delete # %s?', $seoMetaTag['id'])); ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -139,7 +170,7 @@
 		<?php endif; ?>
 		<div class="actions">
 			<ul>
-				<li><?php echo $this->Html->link(__('New Seo Meta Tag'), array('controller' => 'seo_meta_tags', 'action' => 'add'));?> </li>
+				<li><?php echo $this->Html->link(__('New Meta Tag'), array('controller' => 'seo_meta_tags', 'action' => 'add'));?> </li>
 			</ul>
 		</div>
 	</div>
