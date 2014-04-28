@@ -7,6 +7,9 @@
  */
 App::uses('SeoUtil', 'Seo.Lib');
 App::uses('SeoUri', 'Seo.Model');
+App::uses('SeoTitle', 'Seo.Model');
+App::uses('SeoMetaTag', 'Seo.Model');
+App::uses('SeoCanonical', 'Seo.Model');
 class SeoHelper extends AppHelper {
 
 	public $helpers = array('Html');
@@ -27,7 +30,7 @@ class SeoHelper extends AppHelper {
  * @return string of meta tags to show.
  */
 	public function metaTags($metaData = array()) {
-		$this->loadModel('SeoMetaTag');
+		$this->SeoMetaTag = ClassRegistry::init('Seo.SeoMetaTag');
 		$request = env('REQUEST_URI');
 		$metaTags = $this->SeoMetaTag->findAllTagsByUri($request);
 		$retval = "";
@@ -62,7 +65,7 @@ class SeoHelper extends AppHelper {
  */
 	public function canonical($url = null, $full = true) {
 		if ($url === null) {
-			$this->loadModel('SeoCanonical');
+			$this->SeoCanonical = ClassRegistry::init('Seo.SeoCanonical');
 			$request = env('REQUEST_URI');
 			$url = $this->SeoCanonical->findByUri($request);
 		}
@@ -110,23 +113,11 @@ class SeoHelper extends AppHelper {
  * @return string title for requested uri
  */
 	public function title($default = "") {
-		$this->loadModel('SeoTitle');
+		$this->SeoTitle = ClassRegistry::init('Seo.SeoTitle');
 		$request = env('REQUEST_URI');
 		$seoTitle = $this->SeoTitle->findTitleByUri($request);
 		$title = $seoTitle ? $seoTitle['SeoTitle']['title'] : $default;
 		return $this->Html->tag('title', $title);
-	}
-
-/**
- * Load a plugin model 
- * @param string modelname
- * @return void
- */
-	public function loadModel($model = null) {
-		if ($model && $this->$model == null) {
-			App::import('Model', "Seo.$model");
-			$this->$model = ClassRegistry::init("Seo.$model");
-		}
 	}
 
 /**
