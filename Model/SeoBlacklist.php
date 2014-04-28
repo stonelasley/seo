@@ -1,4 +1,5 @@
 <?php
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoBlacklist extends SeoAppModel {
 
 	public $name = 'SeoBlacklist';
