@@ -28,11 +28,11 @@ class SeoABTestsController extends SeoAppController {
 	}
 
 	public function admin_add() {
-		if (!empty($this->data)) {
-			$this->SeoABTest->clear();
-			if ($this->SeoABTest->save($this->data)) {
+		if ($this->request->is('post')) {
+			$this->SeoABTest->create();
+			if ($this->SeoABTest->save($this->request->data)) {
 				$this->Session->setFlash(__('The seo AB Test has been saved'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The seo AB Test could not be saved. Please, try again.'));
 			}
