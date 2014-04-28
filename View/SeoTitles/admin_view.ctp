@@ -35,7 +35,6 @@
 		<ul>
 			<li><?php echo $this->Html->link(__('Edit Seo Title'), array('action' => 'edit', $seoTitle['SeoTitle']['id'])); ?> </li>
 			<li><?php echo $this->Form->postLink(__('Delete Seo Title'), array('action' => 'delete', $seoTitle['SeoTitle']['id']), null, __('Are you sure you want to delete # %s?', $seoTitle['SeoTitle']['id'])); ?> </li>
-			<li><?php echo $this->Html->link(__('List Seo Titles'), array('action' => 'index')); ?> </li>
 			<li><?php echo $this->Html->link(__('New Seo Title'), array('action' => 'add')); ?> </li>
 		</ul>
 	</div>

@@ -12,6 +12,7 @@
 		<h3><?php echo __('Actions'); ?></h3>
 		<ul>
 			<li><?php echo $this->Html->link(__('Delete'), array('action' => 'delete', $this->Form->value('SeoRedirect.id')), null, sprintf(__('Are you sure you want to delete # %s?'), $this->Form->value('SeoRedirect.id'))); ?></li>
+			<li><?php echo $this->Html->link(__('New Seo Redirects'), array('controller' => 'seo_redirects', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

@@ -1,5 +1,4 @@
 <div class="seo_plugin">
-	<?php echo $this->element('seo_admin_filter', array('plugin' => 'seo', 'model' => 'SeoStatusCode')); ?>
 	<?php echo $this->element('seo_view_head', array('plugin' => 'seo')); ?>
 	<div class="seoStatusCodes index">
 		<h2><?php echo __('Seo Status Codes');?></h2>
@@ -40,6 +39,8 @@
 		<?php echo $this->element('seo_paging', array('plugin' => 'seo')); ?>
 	</div>
 	<div class="actions">
+		<h3><?php echo __('Search'); ?></h3>
+		<?php echo $this->element('seo_admin_filter', array('plugin' => 'seo', 'model' => 'SeoTitle')); ?>
 		<h3><?php echo __('Actions'); ?></h3>
 		<ul>
 			<li><?php echo $this->Html->link(__('New Seo Status Code'), array('action' => 'add')); ?></li>

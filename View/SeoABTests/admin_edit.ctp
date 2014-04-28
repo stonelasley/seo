@@ -11,8 +11,6 @@
 	<ul>
 
 		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('SeoABTest.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('SeoABTest.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Seo A B Tests'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Seo Uris'), array('controller' => 'seo_uris', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Seo Uri'), array('controller' => 'seo_uris', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

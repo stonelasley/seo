@@ -1,5 +1,4 @@
 <div class="seo_plugin">
-	<?php echo $this->element('seo_admin_filter', array('plugin' => 'seo', 'model' => 'SeoABTest')); ?>
 	<?php echo $this->element('seo_view_head', array('plugin' => 'seo')); ?>
 	<div class="seoABTests index">
 		<h2><?php echo __('Seo A B Tests'); ?></h2>
@@ -44,6 +43,8 @@
 		</div>
 	</div>
 	<div class="actions">
+		<h3><?php echo __('Search'); ?></h3>
+		<?php echo $this->element('seo_admin_filter', array('plugin' => 'seo', 'model' => 'SeoTitle')); ?>
 		<h3><?php echo __('Actions'); ?></h3>
 		<ul>
 			<li><?php echo $this->Html->link(__('New Seo A B Test'), array('action' => 'add')); ?></li>

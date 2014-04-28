@@ -12,6 +12,7 @@
 		<h3><?php echo __('Actions'); ?></h3>
 		<ul>
 			<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('SeoTitle.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('SeoTitle.id'))); ?></li>
+			<li><?php echo $this->Html->link(__('New Seo Title'), array('controller' => 'seo_title', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>

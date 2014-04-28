@@ -6,7 +6,7 @@
 	if ($model) {
 		echo $this->Form->create($model);
 		echo $this->element("$model/search");
-		echo $this->Form->end(array('label' => '/seo/img/search_button.gif', 'formnovalidate' => true));
+		echo $this->Form->end(array('label' => __('Search'), 'formnovalidate' => true));
 	}
 	?>
 </div>
