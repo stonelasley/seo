@@ -81,7 +81,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
 			->method('create');
 		$SeoUrls->SeoUrl->expects($this->once())
 			->method('save')
-			->will($this->returnValue(true)); //success
+			->will($this->returnValue(true));
 		unset($this->testData['id']);
 		$this->testAction(
 			'admin/seo/seo_Urls/add',
@@ -198,7 +198,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
 			->with(__('The seo url could not be saved. Please, try again.'), 'default');
 		$SeoUrls->SeoUrl->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		$result = $this->testAction(
 			'admin/seo/seo_Urls/edit',
 			array (
@@ -210,7 +210,6 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
 		$this->assertTrue(isset($this->vars['model']));
 		$this->assertEquals($this->vars['model'], 'SeoUrl');
 	}
-
 
 /**
  * testAdminDelete method
