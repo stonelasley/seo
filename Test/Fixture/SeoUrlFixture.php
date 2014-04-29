@@ -30,6 +30,27 @@ class SeoUrlFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => '535f2962-efd0-4ae7-80c5-066c173cdfff',
+			'url' => '/products',
+			'priority' => '1',
+			'created' => '2014-04-28 22:24:02',
+			'modified' => '2014-04-28 22:24:39'
+		),
+		array(
+			'id' => '535f2976-b820-46f9-b874-066f173cdfff',
+			'url' => '/recipes',
+			'priority' => '2',
+			'created' => '2014-04-28 22:24:22',
+			'modified' => '2014-04-28 22:24:22'
+		),
+		array(
+			'id' => '535f2980-7f64-4a48-940e-066e173cdfff',
+			'url' => '/categories',
+			'priority' => '3',
+			'created' => '2014-04-28 22:24:32',
+			'modified' => '2014-04-28 22:24:32'
+		),
 	);
 
 }
