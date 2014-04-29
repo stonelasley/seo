@@ -31,26 +31,27 @@ class SeoUriTest extends CakeTestCase {
 	}
 
 	public function testUrlEncode() {
-		$uri = $this->SeoUri->findById('5312925f-d9e8-41c5-8d10-0bddccb469e7');
-		$this->assertEquals('/dogs', $uri['SeoUri']['uri']);
-		$this->SeoUri->urlEncode('5312925f-d9e8-41c5-8d10-0bddccb469e7');
-		$result = $this->SeoUri->findById('5312925f-d9e8-41c5-8d10-0bddccb469e7');
-		$this->assertEquals('/dogs', $result['SeoUri']['uri']);
+		$uri = $this->SeoUri->findById('535da751-0100-409c-9adb-1173173cdfff');
+		$this->assertEquals('/', $uri['SeoUri']['uri']);
+		$this->SeoUri->urlEncode('535da751-0100-409c-9adb-1173173cdfff');
+		$result = $this->SeoUri->findById('535da751-0100-409c-9adb-1173173cdfff');
+		$this->assertEquals('/', $result['SeoUri']['uri']);
 
-		$uri = $this->SeoUri->findById('53139850-c644-4836-905c-0bc5ccb469e7');
-		$this->assertEquals('/mickey boy', $uri['SeoUri']['uri']);
-		$this->SeoUri->urlEncode('53139850-c644-4836-905c-0bc5ccb469e7');
-		$result = $this->SeoUri->findById('53139850-c644-4836-905c-0bc5ccb469e7');
-		$this->assertEquals('/mickey%20boy', $result['SeoUri']['uri']);
+		$uri = $this->SeoUri->findById('535f0ce3-bc44-4327-2345-066d173cdfff');
+		$this->assertEquals('/about us', $uri['SeoUri']['uri']);
+		$this->SeoUri->urlEncode('535f0ce3-bc44-4327-2345-066d173cdfff');
+		$result = $this->SeoUri->findById('535f0ce3-bc44-4327-2345-066d173cdfff');
+		$this->assertEquals('/about%20us', $result['SeoUri']['uri']);
 	}
 
 	public function testSetApproved() {
-		$this->SeoUri->id = '5313a904-ca7c-4cee-9aed-0c05ccb469e7';
+		$this->SeoUri->id = '535f0ce3-bc44-4327-2345-066d173cdfff';
 		$this->assertFalse($this->SeoUri->field('is_approved'));
 		$this->SeoUri->setApproved();
 		$this->assertTrue($this->SeoUri->field('is_approved'));
 	}
 
+	//@TODO get this puppy running
 	//	public function testSendNotification() {
 	//		$this->SeoUri->id = '5313a904-ca7c-4cee-9aed-0c05ccb469e7';
 	//		//$this->SeoUri->Email->expectOnce('send');
@@ -60,17 +61,17 @@ class SeoUriTest extends CakeTestCase {
 	//	}
 
 	public function testDeleteUriDeletesMeta() {
-		$this->assertTrue($this->SeoUri->SeoMetaTag->hasAny(array('id' => '53129048-f904-4a25-9f0d-0c07ccb469e7')));
-		$this->assertTrue($this->SeoUri->SeoMetaTag->hasAny(array('id' => '53129048-ebfc-49d0-a2b2-0c07ccb469e7')));
-		$this->SeoUri->delete('531288d1-4c4c-46ab-b1e2-0bc4ccb469e7');
-		$this->assertFalse($this->SeoUri->SeoMetaTag->hasAny(array('id' => '53129048-f904-4a25-9f0d-0c07ccb469e7')));
-		$this->assertFalse($this->SeoUri->SeoMetaTag->hasAny(array('id' => '53129048-ebfc-49d0-a2b2-0c07ccb469e7')));
+		$this->assertTrue($this->SeoUri->SeoMetaTag->hasAny(array('id' => '535da751-922c-4089-8779-1173173cdfff')));
+		$this->assertTrue($this->SeoUri->SeoMetaTag->hasAny(array('id' => '535da751-dc40-4991-a9a9-1173173cdfff')));
+		$this->SeoUri->delete('535da751-0100-409c-9adb-1173173cdfff');
+		$this->assertFalse($this->SeoUri->SeoMetaTag->hasAny(array('id' => '535da751-922c-4089-8779-1173173cdfff')));
+		$this->assertFalse($this->SeoUri->SeoMetaTag->hasAny(array('id' => '535da751-dc40-4991-a9a9-1173173cdfff')));
 	}
 
 	public function testDeleteUriDeleteRedirect() {
-		$this->assertTrue($this->SeoUri->SeoRedirect->hasAny(array('id' => '5313b3c4-cf4c-42ff-a6a8-0c06ccb469e7')));
-		$this->SeoUri->delete('5313a904-ca7c-4cee-9aed-0c05ccb469e7');
-		$this->assertFalse($this->SeoUri->SeoRedirect->hasAny(array('id' => '5313b3c4-cf4c-42ff-a6a8-0c06ccb469e7')));
+		$this->assertTrue($this->SeoUri->SeoRedirect->hasAny(array('id' => '535f0cbe-cd64-4ca6-ae77-066f173cdfff')));
+		$this->SeoUri->delete('535f0cbe-ba00-4403-a69d-066f173cdfff');
+		$this->assertFalse($this->SeoUri->SeoRedirect->hasAny(array('id' => '535f0cbe-cd64-4ca6-ae77-066f173cdfff')));
 	}
 
 	public function tearDown() {

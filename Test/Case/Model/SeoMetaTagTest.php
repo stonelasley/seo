@@ -52,7 +52,7 @@ class SeoMetaTagTest extends CakeTestCase {
 				'content' => 'Content'
 			),
 			'SeoUri' => array(
-				'uri' => '/uri_for_meta',
+				'uri' => '/index',
 			)
 		);
 
@@ -77,7 +77,7 @@ class SeoMetaTagTest extends CakeTestCase {
 
 		$count = $this->SeoMetaTag->SeoUri->find('count');
 		$this->assertNotEquals(false, $this->SeoMetaTag->save());
-		$this->assertEquals($count, $this->SeoMetaTag->SeoUri->find('count'));
+		$this->assertEquals($count + 1, $this->SeoMetaTag->SeoUri->find('count'));
 		$results = $this->SeoMetaTag->find('last');
 		$this->assertEquals('New', $results['SeoMetaTag']['name']);
 		$this->assertEquals('Content', $results['SeoMetaTag']['content']);

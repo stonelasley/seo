@@ -18,14 +18,12 @@ class SeoUrlTest extends CakeTestCase {
 		$this->SeoUrl->settings['cost_add'] = 1;
 		$this->SeoUrl->settings['cost_change'] = 1;
 		$this->SeoUrl->settings['cost_delete'] = 1;
-		$result1 = $this->SeoUrl->findRedirectByRequest("/puppies");
-		$this->assertEquals($result1, array('redirect' => '/test', 'shortest' => 6));
-
-		$result2 = $this->SeoUrl->findRedirectByRequest("/some_other_blah");
-		$this->assertEquals($result2, array('redirect' => '/test', 'shortest' => 13));
-
-		$result3 = $this->SeoUrl->findRedirectByRequest("/some_other");
-		$this->assertEquals($result3, array('redirect' => '/test', 'shortest' => 8));
+		$result = $this->SeoUrl->findRedirectByRequest("/products_url");
+		$this->assertEquals($result, array('redirect' => '/products', 'shortest' => 4));
+		$result = $this->SeoUrl->findRedirectByRequest("/invalid_categories");
+		$this->assertEquals($result, array('redirect' => '/categories', 'shortest' => 8));
+		$result = $this->SeoUrl->findRedirectByRequest("/recipes_with_some_other");
+		$this->assertEquals($result, array('redirect' => '/recipes', 'shortest' => 16));
 	}
 
 	public function testLevenshtien() {

@@ -46,18 +46,18 @@ class SeoBlacklistTest extends CakeTestCase {
 	}
 
 	public function testIsBannedByIp() {
-		$this->assertTrue($this->SeoBlacklist->isBanned('127.255.253.120'));
-		$this->assertTrue($this->SeoBlacklist->isBanned('127.255.253.121'));
-		$this->assertTrue($this->SeoBlacklist->isBanned('127.255.253.122'));
-		$this->assertFalse($this->SeoBlacklist->isBanned('127.255.253.123'));
+		$this->assertTrue($this->SeoBlacklist->isBanned('10.100.0.1'));
+		$this->assertTrue($this->SeoBlacklist->isBanned('10.100.0.2'));
+		$this->assertTrue($this->SeoBlacklist->isBanned('10.100.0.3'));
+		$this->assertFalse($this->SeoBlacklist->isBanned('10.100.0.10'));
 	}
 
 	public function testIsBannedByInt() {
-		$this->assertTrue($this->SeoBlacklist->isBanned(2147483000));
-		$this->assertTrue($this->SeoBlacklist->isBanned(2147483001));
-		$this->assertTrue($this->SeoBlacklist->isBanned(2147483002));
-		$this->assertFalse($this->SeoBlacklist->isBanned(2147483003));
-		$this->assertFalse($this->SeoBlacklist->isBanned(2147483100));
+		$this->assertTrue($this->SeoBlacklist->isBanned(174325761));
+		$this->assertTrue($this->SeoBlacklist->isBanned(174325762));
+		$this->assertTrue($this->SeoBlacklist->isBanned(174325763));
+		$this->assertFalse($this->SeoBlacklist->isBanned(174325775));
+		$this->assertFalse($this->SeoBlacklist->isBanned(3232235828));
 	}
 
 	public function testAddSingleIp() {

@@ -31,20 +31,20 @@ class SeoHelperTest extends CakeTestCase {
 	}
 
 	public function testGetABTestJS() {
-		$result = $this->Seo->getABTestJS(array('SeoABTest' => array('slug' => 'test') ));
-		$this->assertEquals('_gaq.push([\'_setCustompublic\',4,\'ABTest\',\'test\',3]);', $result);
+		$result = $this->Seo->getABTestJS(array('SeoABTest' => array('slug' => 'home') ));
+		$this->assertEquals('_gaq.push([\'_setCustompublic\',4,\'ABTest\',\'home\',3]);', $result);
 	}
 
 	public function testCanonical() {
-		$result = $this->Seo->canonical('/example-url');
-		$this->assertEquals('<link rel="canonical" href="http://localhost/example-url">', $result);
+		$result = $this->Seo->canonical('/');
+		$this->assertEquals('<link rel="canonical" href="http://localhost/">', $result);
 
 		$result = $this->Seo->canonical();
 		$this->assertEquals('', $result);
 
-		$_SERVER['REQUEST_URI'] = '/dogs';
+		$_SERVER['REQUEST_URI'] = '/about';
 		$result = $this->Seo->canonical();
-		$this->assertEquals('<link rel="canonical" href="http://localhost/puppies">', $result);
+		$this->assertEquals('<link rel="canonical" href="http://localhost/about_us">', $result);
 	}
 
 	public function testHoneyPot() {
@@ -53,21 +53,21 @@ class SeoHelperTest extends CakeTestCase {
 	}
 
 	public function testMetaTags() {
-		$_SERVER['REQUEST_URI'] = '/dogs';
+		$_SERVER['REQUEST_URI'] = '/';
 		$result = $this->Seo->metaTags();
-		$this->assertEquals('<meta http-equiv="description" content="MICKEY AND WESLEY ARE TERRIBLE" /><meta http-equiv="charset" content="UTF-8" /><meta name="cache-control" content="NO-CACHE" />', $result);
+		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" />', $result);
 
 		$result = $this->Seo->metaTags(array('keywords' => 'ignore me'));
-		$this->assertEquals('<meta http-equiv="description" content="MICKEY AND WESLEY ARE TERRIBLE" /><meta http-equiv="charset" content="UTF-8" /><meta name="cache-control" content="NO-CACHE" /><meta name="keywords" content="ignore me" />', $result);
+		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" />', $result);
 
-		$result = $this->Seo->metaTags(array('no_ignore' => 'showme'));
-		$this->assertEquals('<meta http-equiv="description" content="MICKEY AND WESLEY ARE TERRIBLE" /><meta http-equiv="charset" content="UTF-8" /><meta name="cache-control" content="NO-CACHE" /><meta name="no_ignore" content="showme" />', $result);
+		$result = $this->Seo->metaTags(array('insert' => 'me'));
+		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" /><meta name="insert" content="me" />', $result);
 	}
 
 	public function testMetaTagsWithHttpEquiv() {
-		$_SERVER['REQUEST_URI'] = '/index';
+		$_SERVER['REQUEST_URI'] = '/';
 		$result = $this->Seo->metaTags();
-		$this->assertEquals('<meta http-equiv="Copyright" content="&amp;copy; 20014 Stone Lasley" />', $result);
+		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" />', $result);
 	}
 
 	public function testMetaTagsWithOutAny() {

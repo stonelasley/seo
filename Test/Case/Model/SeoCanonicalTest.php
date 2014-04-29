@@ -60,7 +60,7 @@ class SeoCanonicalTest extends CakeTestCase {
  */
 	public function testFindByUri() {
 		$canonical = $this->SeoCanonical->findByUri('/');
-		$this->assertEquals('/index2', $canonical);
+		$this->assertEquals('/index', $canonical);
 	}
 
 }
