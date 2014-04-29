@@ -31,6 +31,15 @@ class SeoStatusCodeFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
+		array(
+			'id' => 'e55bf308-a6c2-486b-8504-d5baca9f9fee',
+			'seo_uri_id' => '535f0ce3-bc44-4327-2345-066d173cdfff',
+			'status_code' => 302,
+			'priority' => 100,
+			'is_active' => 1,
+			'created' => '2011-07-25 17:06:20',
+			'modified' => '2011-07-25 17:06:20'
+		),
 	);
 
 }
