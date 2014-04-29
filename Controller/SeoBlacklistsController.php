@@ -26,12 +26,18 @@ class SeoBlacklistsController extends SeoAppController {
 		$this->set('seoBlacklists', $this->Paginator->paginate($this->SeoBlacklist->alias));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo blacklist'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoBlacklist->exists($id)) {
+			throw new NotFoundException(__('Invalid seo blacklist'));
 		}
-		$this->set('seoBlacklist', $this->SeoBlacklist->read(null, $id));
+		$options = array('conditions' => array('SeoBlacklist.' . $this->SeoBlacklist->primaryKey => $id));
+		$this->set('seoBlacklist', $this->SeoBlacklist->find('first', $options));
 	}
 
 	public function admin_add() {
@@ -64,16 +70,23 @@ class SeoBlacklistsController extends SeoAppController {
 		}
 	}
 
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo blacklist'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoBlacklist->id = $id;
+		if (!$this->SeoBlacklist->exists()) {
+			throw new NotFoundException(__('Invalid seo blacklist'));
 		}
-		if ($this->SeoBlacklist->delete($id)) {
-			$this->Session->setFlash(__('Seo blacklist deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoBlacklist->delete()) {
+			$this->Session->setFlash(__('The seo blacklist has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo blacklist could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo blacklist was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 }

@@ -70,7 +70,7 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
 			->method('create');
 		$SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('save')
-			->will($this->returnValue(true)); //success
+			->will($this->returnValue(true));
 		unset($this->testData['id']);
 		$this->testAction(
 			'admin/seo/seo_meta_tags/add',
@@ -102,7 +102,7 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
 			->method('create');
 		$SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		unset($this->testData['id']);
 		$result = $this->testAction(
 			'admin/seo/seo_meta_tags/add',
@@ -187,7 +187,7 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
 			->with(__('The seo meta tag could not be saved. Please, try again.'), 'default');
 		$SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		$result = $this->testAction(
 			'admin/seo/seo_meta_tags/edit',
 			array (

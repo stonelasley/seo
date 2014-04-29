@@ -70,7 +70,7 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
 			->method('create');
 		$SeoStatusCodes->SeoStatusCode->expects($this->once())
 			->method('save')
-			->will($this->returnValue(true)); //success
+			->will($this->returnValue(true));
 		unset($this->testData['id']);
 		$this->testAction(
 			'admin/seo/seo_status_codes/add',
@@ -102,7 +102,7 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
 			->method('create');
 		$SeoStatusCodes->SeoStatusCode->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		unset($this->testData['id']);
 		$result = $this->testAction(
 			'admin/seo/seo_status_codes/add',
@@ -187,7 +187,7 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
 			->with(__('The seo status code could not be saved. Please, try again.'), 'default');
 		$SeoStatusCodes->SeoStatusCode->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		$result = $this->testAction(
 			'admin/seo/seo_status_codes/edit',
 			array (

@@ -7,6 +7,10 @@ App::uses('SeoABTestsController', 'Seo.Controller');
  */
 class SeoABTestsControllerTest extends ControllerTestCase {
 
+/**
+ * Mock Controller
+ *
+ */
 	public $mockController;
 
 /**
@@ -96,7 +100,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
 			->method('create');
 		$this->mockController->SeoABTest->expects($this->once())
 			->method('save')
-			->will($this->returnValue(true)); //success
+			->will($this->returnValue(true));
 		unset($this->testData['id']);
 		$this->testAction(
 			'admin/seo/seo_a_b_tests/add',
@@ -122,7 +126,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
 			->method('create');
 		$this->mockController->SeoABTest->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		unset($this->testData['id']);
 		$result = $this->testAction(
 			'admin/seo/seo_a_b_tests/add',
@@ -147,7 +151,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
 			->with(__('The seo AB Test has been saved'), 'default');
 		$this->mockController->SeoABTest->expects($this->once())
 			->method('save')
-			->will($this->returnValue(true)); //success
+			->will($this->returnValue(true));
 		$this->testAction(
 			'admin/seo/seo_a_b_tests/edit',
 			array (
@@ -189,7 +193,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
 			->with(__('The seo AB Test could not be saved. Please, try again.'), 'default');
 		$this->mockController->SeoABTest->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		$this->testAction(
 			'admin/seo/seo_a_b_tests/edit',
 			array (

@@ -9,12 +9,18 @@ class SeoCanonicalsController extends SeoAppController {
 		$this->set('seoCanonicals', $this->Paginator->paginate($this->SeoCanonical->alias));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo canonical'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoCanonical->exists($id)) {
+			throw new NotFoundException(__('Invalid seo canonical'));
 		}
-		$this->set('seoCanonical', $this->SeoCanonical->read(null, $id));
+		$options = array('conditions' => array('SeoCanonical.' . $this->SeoCanonical->primaryKey => $id));
+		$this->set('seoCanonical', $this->SeoCanonical->find('first', $options));
 	}
 
 	public function admin_add() {
@@ -47,16 +53,24 @@ class SeoCanonicalsController extends SeoAppController {
 		}
 	}
 
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo canonical'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoCanonical->id = $id;
+		if (!$this->SeoCanonical->exists()) {
+			throw new NotFoundException(__('Invalid seo canonical'));
 		}
-		if ($this->SeoCanonical->delete($id)) {
-			$this->Session->setFlash(__('Seo canonical deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoCanonical->delete()) {
+			$this->Session->setFlash(__('The seo canonical has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo canonical could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo canonical was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
+
 }

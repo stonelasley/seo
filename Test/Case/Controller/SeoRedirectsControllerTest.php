@@ -71,7 +71,7 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
 			->method('create');
 		$SeoRedirects->SeoRedirect->expects($this->once())
 			->method('save')
-			->will($this->returnValue(true)); //success
+			->will($this->returnValue(true));
 		unset($this->testData['id']);
 		$this->testAction(
 			'admin/seo/seo_redirects/add',
@@ -103,7 +103,7 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
 			->method('create');
 		$SeoRedirects->SeoRedirect->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		unset($this->testData['id']);
 		$result = $this->testAction(
 			'admin/seo/seo_redirects/add',
@@ -188,7 +188,7 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
 			->with(__('The seo redirect could not be saved. Please, try again.'), 'default');
 		$SeoRedirects->SeoRedirect->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		$result = $this->testAction(
 			'admin/seo/seo_redirects/edit',
 			array (

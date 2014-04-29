@@ -8,6 +8,12 @@ App::uses('SeoBlacklistsController', 'Seo.Controller');
 class SeoBlacklistsControllerTest extends ControllerTestCase {
 
 /**
+ * Mock Controller
+ *
+ */
+	public $mockController;
+
+/**
  * Fixtures
  *
  * @var array
@@ -23,12 +29,20 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		$this->mockController = $this->generate(
+			'Seo.SeoBlacklists', array (
+				'models' => array ('Seo.SeoBlacklist' => array ('save', 'create', 'exists', 'delete')),
+				'components' => array ('Session', 'Security')
+			)
+		);
 		$this->testData = array (
-			'id' => '535dda88-f5bc-4942-b9b2-1174173cdfff',
-			'ip_range_start' => '10.100.0.1',
-			'ip_range_end' => '10.100.0.2',
-			'note' => 50,
-			'is_active' => true
+			'id' => '535f0ae0-29a4-4034-b44e-0bd0173cdfff',
+			'ip_range_start' => '174325761',
+			'ip_range_end' => '174325762',
+			'note' => 'blacklist one',
+			'created' => '2014-04-28 20:13:52',
+			'modified' => '2014-04-28 20:13:52',
+			'is_active' => 1
 		);
 	}
 /**
@@ -40,11 +54,22 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
 	}
 
 /**
- * testAdminIndex method
+ * testAdminView method
  *
  * @return void
  */
-	public function testAdminIndex() {
+	public function testAdminView() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoBlacklist->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+
+		$this->testAction(
+			"admin/seo/seo_blacklists/view/$id",
+			array('return' => 'vars')
+		);
+		$this->assertTrue(isset($this->vars['seoBlacklist']));
+		$this->assertEquals($this->vars['model'], 'SeoBlacklist');
 	}
 
 /**
@@ -52,7 +77,16 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  *
  * @return void
  */
-	public function testAdminView() {
+	public function testAdminViewInvalidId() {
+		$id = 'Invalid';
+		$this->mockController->SeoBlacklist->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_blacklists/view/$id",
+			array('return' => 'vars')
+		);
 	}
 
 /**
@@ -61,23 +95,18 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$SeoBlacklists = $this->generate(
-			'Seo.SeoBlacklists', array (
-				'models' => array ('Seo.SeoBlacklist' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoBlacklists->Session->expects($this->once())
+
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo blacklist has been saved'), 'default');
-		$SeoBlacklists->SeoBlacklist->expects($this->once())
+		$this->mockController->SeoBlacklist->expects($this->once())
 			->method('create');
-		$SeoBlacklists->SeoBlacklist->expects($this->once())
+		$this->mockController->SeoBlacklist->expects($this->once())
 			->method('save')
-			->will($this->returnValue(true)); //success
+			->will($this->returnValue(true));
 		unset($this->testData['id']);
 		$this->testAction(
-			'admin/seo/seo_a_b_tests/add',
+			'admin/seo/seo_blacklists/add',
 			array (
 				'data' => array ('SeoBlacklist' => $this->testData),
 				'method' => 'post'
@@ -93,23 +122,17 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$SeoBlacklists = $this->generate(
-			'Seo.SeoBlacklists', array (
-				'models' => array ('Seo.SeoBlacklist' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoBlacklists->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo blacklist could not be saved. Please, try again.'), 'default');
-		$SeoBlacklists->SeoBlacklist->expects($this->once())
+		$this->mockController->SeoBlacklist->expects($this->once())
 			->method('create');
-		$SeoBlacklists->SeoBlacklist->expects($this->once())
+		$this->mockController->SeoBlacklist->expects($this->once())
 			->method('save')
-			->will($this->returnValue(false)); //success
+			->will($this->returnValue(false));
 		unset($this->testData['id']);
-		$result = $this->testAction(
-			'admin/seo/seo_a_b_tests/add',
+		$this->testAction(
+			'admin/seo/seo_blacklists/add',
 			array (
 				'data' => array ('SeoBlacklist' => $this->testData),
 				'method' => 'post',
@@ -126,20 +149,14 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$SeoBlacklists = $this->generate(
-			'Seo.SeoBlacklists', array (
-				'models' => array ('Seo.SeoBlacklist' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoBlacklists->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo blacklist has been saved'), 'default');
-		$SeoBlacklists->SeoBlacklist->expects($this->once())
+		$this->mockController->SeoBlacklist->expects($this->once())
 			->method('save')
-			->will($this->returnValue(true)); //success
+			->will($this->returnValue(true));
 		$this->testAction(
-			'admin/seo/seo_a_b_tests/edit',
+			'admin/seo/seo_blacklists/edit',
 			array (
 				'data' => array ('SeoBlacklist' => $this->testData),
 				'method' => 'post'
@@ -155,17 +172,11 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$SeoBlacklists = $this->generate(
-			'Seo.SeoBlacklists', array (
-				'models' => array ('Seo.SeoBlacklist' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoBlacklists->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo blacklist'), 'default');
 		$this->testAction(
-			'admin/seo/seo_a_b_tests/edit',
+			'admin/seo/seo_blacklists/edit',
 			array (
 				'method' => 'get'
 			)
@@ -180,6 +191,39 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminDelete() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoBlacklist->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoBlacklist->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(true));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo blacklist has been deleted.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_blacklists/delete/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo/seo_blacklists', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDelete methodSeo blacklist was not deleted
+ *
+ * @return void
+ */
+	public function testAdminDeleteInvalidId() {
+		$id = 'Invalid';
+		$this->mockController->SeoBlacklist->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_blacklists/delete/$id",
+			array('return' => 'vars')
+		);
 	}
 
 }
