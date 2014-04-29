@@ -1,60 +1,11 @@
 <?php
 App::uses('SeoUrlsController', 'Seo.Controller');
 
-
-/**
- * TestSeoUrlsController
- *
- * @package tags
- * @subpackage tags.tests.cases.controllers
- */
-class TestSeoUrlsController extends SeoUrlsController {
-
-/**
- * Auto render
- *
- * @var boolean
- */
-	public $autoRender = false;
-
-/**
- * Redirect URL
- *
- * @var mixed
- */
-	public $redirectUrl = null;
-
-/**
- * Override controller method for testing
- *
- * @param array|string $url
- * @param null $status
- * @param bool $exit
- * @return void
- */
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-/**
- * Override controller method for testing
- *
- * @param null $action
- * @param null $layout
- * @param null $file
- * @return void
- */
-	public function render($action = null, $layout = null, $file = null) {
-		$this->renderedView = $action;
-	}
-
-}
-
 /**
  * SeoUrlsController Test Case
  *
  */
-class SeoUrlsControllerTestCase extends CakeTestCase {
+class SeoUrlsControllerTestCase extends ControllerTestCase {
 
 /**
  * Name
@@ -80,44 +31,19 @@ class SeoUrlsControllerTestCase extends CakeTestCase {
 	public $SeoUrls = null;
 
 /**
- * setUp
+ * setUp method
  *
  * @return void
  */
 	public function setUp() {
 		parent::setUp();
-
-		$request = new CakeRequest();
-		$response = $this->getMock('CakeResponse');
-
-		$this->SeoUrls = new TestSeoUrlsController($request, $response);
-
-		$this->SeoUrls->params = array(
-			'named' => array(),
-			'url' => array());
-		$this->SeoUrls->constructClasses();
-		$this->SeoUrls->Session = $this->getMock('SessionComponent', array(), array(), '', false);
-		$this->SeoUrls->SeoUrl = $this->getMock('SeoUrl', array('parseCriteria'));
-		$this->SeoUrls->Prg = $this->getMock('Prg', array('commonProcess'));
-	}
-
-/**
- * tearDown
- *
- * @return void
- */
-	public function tearDown() {
-		parent::tearDown();
-		unset($this->SeoUrls);
-	}
-
-/**
- * testSeoUrlsControllerInstance
- *
- * @return void
- */
-	public function testSeoUrlsControllerInstance() {
-		$this->assertTrue(is_a($this->SeoUrls, 'SeoUrlsController'));
+		$this->testData = array (
+			'id' => '535f2962-efd0-4ae7-80c5-066c173cdfff',
+			'url' => '/products',
+			'priority' => '1',
+			'created' => '2014-04-28 22:24:02',
+			'modified' => '2014-04-28 22:24:39'
+		);
 	}
 
 /**
@@ -142,15 +68,149 @@ class SeoUrlsControllerTestCase extends CakeTestCase {
  * @return void
  */
 	public function testAdminAdd() {
+		$SeoUrls = $this->generate(
+			'Seo.SeoUrls', array (
+				'models' => array ('Seo.SeoUrl' => array ('save', 'create')),
+				'components' => array ('Session', 'Security')
+			)
+		);
+		$SeoUrls->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo url has been saved'), 'default');
+		$SeoUrls->SeoUrl->expects($this->once())
+			->method('create');
+		$SeoUrls->SeoUrl->expects($this->once())
+			->method('save')
+			->will($this->returnValue(true)); //success
+		unset($this->testData['id']);
+		$this->testAction(
+			'admin/seo/seo_Urls/add',
+			array (
+				'data' => array ('SeoUrl' => $this->testData),
+				'method' => 'post'
+			)
+		);
+		$this->assertTrue(isset($this->vars['model']));
+		$this->assertEquals($this->vars['model'], 'SeoUrl');
 	}
 
 /**
- * testAdminEdit method
+ * testAdminAddFail method
  *
  * @return void
  */
-	public function testAdminEdit() {
+	public function testAdminAddFail() {
+		$SeoUrls = $this->generate(
+			'Seo.SeoUrls', array (
+				'models' => array ('Seo.SeoUrl' => array ('save', 'create')),
+				'components' => array ('Session', 'Security')
+			)
+		);
+		$SeoUrls->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo url could not be saved. Please, try again.'), 'default');
+		$SeoUrls->SeoUrl->expects($this->once())
+			->method('create');
+		$SeoUrls->SeoUrl->expects($this->once())
+			->method('save')
+			->will($this->returnValue(false));
+		unset($this->testData['id']);
+		$result = $this->testAction(
+			'admin/seo/seo_Urls/add',
+			array (
+				'data' => array ('SeoUrl' => $this->testData),
+				'method' => 'post',
+				'return' => 'vars'
+			)
+		);
+		$this->assertTrue(isset($this->vars['model']));
+		$this->assertEquals($this->vars['model'], 'SeoUrl');
 	}
+
+/**
+ * testAdminEditWithData method
+ *
+ * @return void
+ */
+	public function testAdminEditWithData() {
+		$SeoUrls = $this->generate(
+			'Seo.SeoUrls', array (
+				'models' => array ('Seo.SeoUrl' => array ('save', 'create')),
+				'components' => array ('Session', 'Security')
+			)
+		);
+		$SeoUrls->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo url has been saved'), 'default');
+		$SeoUrls->SeoUrl->expects($this->once())
+			->method('save')
+			->will($this->returnValue(true));
+		$this->testAction(
+			'admin/seo/seo_Urls/edit',
+			array (
+				'data' => array ('SeoUrl' => $this->testData),
+				'method' => 'post'
+			)
+		);
+		$this->assertTrue(isset($this->vars['model']));
+		$this->assertEquals($this->vars['model'], 'SeoUrl');
+	}
+
+/**
+ * testAdminEditWithNoId method
+ *
+ * @return void
+ */
+	public function testAdminEditWithNoId() {
+		$SeoUrls = $this->generate(
+			'Seo.SeoUrls', array (
+				'models' => array ('Seo.SeoUrl' => array ('save', 'create')),
+				'components' => array ('Session', 'Security')
+			)
+		);
+		$SeoUrls->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('Invalid seo url'), 'default');
+		$this->testAction(
+			'admin/seo/seo_Urls/edit',
+			array (
+				'method' => 'get'
+			)
+		);
+		$this->assertTrue(isset($this->vars['model']));
+		$this->assertEquals($this->vars['model'], 'SeoUrl');
+	}
+
+/**
+ * testAdminEditSaveFail method
+ *
+ * @return void
+ */
+	public function testAdminEditSaveFail() {
+		$SeoUrls = $this->generate(
+			'Seo.SeoUrls', array (
+				'models' => array ('Seo.SeoUrl' => array ('save', 'create')),
+				'components' => array ('Session', 'Security')
+			)
+		);
+		$SeoUrls->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo url could not be saved. Please, try again.'), 'default');
+		$SeoUrls->SeoUrl->expects($this->once())
+			->method('save')
+			->will($this->returnValue(false)); //success
+		$result = $this->testAction(
+			'admin/seo/seo_Urls/edit',
+			array (
+				'data' => array ('SeoUrl' => $this->testData),
+				'method' => 'post',
+				'return' => 'vars'
+			)
+		);
+		$this->assertTrue(isset($this->vars['model']));
+		$this->assertEquals($this->vars['model'], 'SeoUrl');
+	}
+
 
 /**
  * testAdminDelete method
@@ -166,6 +226,16 @@ class SeoUrlsControllerTestCase extends CakeTestCase {
  * @return void
  */
 	public function testAdminApprove() {
+	}
+
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		unset($this->SeoUrls);
 	}
 
 }
