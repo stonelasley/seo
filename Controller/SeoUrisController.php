@@ -3,6 +3,7 @@ App::uses('SeoAppController', 'Seo.Controller');
 class SeoUrisController extends SeoAppController {
 
 	private function __clearAssociatesIfEmpty() {
+		debug($this->request->data); die();
 		foreach ($this->request->data['SeoMetaTag'] as $key => $metatag) {
 			if (isset($metatag['name']) && empty($metatag['name'])) {
 				unset($this->request->data['SeoMetaTag'][$key]);
@@ -42,8 +43,8 @@ class SeoUrisController extends SeoAppController {
 	}
 
 	public function admin_add() {
-		if (!empty($this->request->data)) {
-			$this->SeoUri->clear();
+		if ($this->request->is('post')) {
+			$this->SeoUri->create();
 			$this->__clearAssociatesIfEmpty();
 			if ($this->SeoUri->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The seo uri has been saved'));
