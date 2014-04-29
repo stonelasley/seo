@@ -1,4 +1,5 @@
 <?php
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoStatusCode extends SeoAppModel {
 
 	public $name = 'SeoStatusCode';

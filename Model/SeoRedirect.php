@@ -1,4 +1,5 @@
 <?php
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoRedirect extends SeoAppModel {
 
 	public $name = 'SeoRedirect';

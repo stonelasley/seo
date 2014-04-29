@@ -1,11 +1,12 @@
 <?php
+App::import('Lib', 'Seo.SeoUtil');
+App::uses('SeoAppModel', 'Seo.Model');
 /**
  * CakePHP Seo Plugin
  * @link https://github.com/webtechnick/CakePHP-Seo-Plugin
  *
  * App Model
  */
-App::import('Lib', 'Seo.SeoUtil');
 class SeoAppModel extends AppModel {
 
 /**

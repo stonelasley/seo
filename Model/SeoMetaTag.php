@@ -1,4 +1,5 @@
 <?php
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoMetaTag extends SeoAppModel {
 
 	public $name = 'SeoMetaTag';

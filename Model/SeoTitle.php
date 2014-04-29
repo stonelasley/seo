@@ -6,6 +6,7 @@
  * SeoTitle Model
  * Automatically set the Title based on the URI
  */
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoTitle extends SeoAppModel {
 
 /**

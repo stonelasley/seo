@@ -1,4 +1,5 @@
 <?php
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoHoneypotVisit extends SeoAppModel {
 
 	public $name = 'SeoHoneypotVisit';

@@ -1,5 +1,6 @@
 <?php
 App::uses('SeoUtil', 'Seo.Lib');
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoUrl extends SeoAppModel {
 
 	public $name = 'SeoUrl';

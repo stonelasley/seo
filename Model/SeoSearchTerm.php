@@ -5,6 +5,7 @@
  * @version 6.0
  */
 App::uses('SeoUtil', 'Seo.Lib');
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoSearchTerm extends SeoAppModel {
 
 	public $name = 'SeoSearchTerm';
