@@ -5,11 +5,11 @@
  */
 class SeoCanonicalFixture extends CakeTestFixture {
 
-/**
- * Fields
- *
- * @var array
- */
+	/**
+	 * Fields
+	 *
+	 * @var array
+	 */
 	public $fields = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'seo_uri_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -24,43 +24,35 @@ class SeoCanonicalFixture extends CakeTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
 
-/**
- * Records
- *
- * @var array
- */
+	/**
+	 * Records
+	 *
+	 * @var array
+	 */
 	public $records = array(
 		array(
-			'id' => '5312c3aa-dc20-441c-984c-0c06ccb469e7',
-			'seo_uri_id' => '531288d1-4c4c-46ab-b1e2-0bc4ccb469e7',
-			'canonical' => '/index2',
-			'is_active' => 1,
-			'created' => '2014-03-01 22:37:46',
-			'modified' => '2014-03-02 14:40:21'
-		),
-		array(
-			'id' => '5312c3c0-691c-46c0-aa3a-0c05ccb469e7',
-			'seo_uri_id' => '5312925f-d9e8-41c5-8d10-0bddccb469e7',
-			'canonical' => '/puppies',
-			'is_active' => 1,
-			'created' => '2014-03-01 22:38:08',
-			'modified' => '2014-03-01 22:38:08'
-		),
-		array(
-			'id' => '5313a493-32a4-4b6f-a365-0bc2ccb469e7',
-			'seo_uri_id' => '5313a493-7274-413e-aa8b-0bc2ccb469e7',
-			'canonical' => '/big/dummy',
-			'is_active' => 1,
-			'created' => '2014-03-02 14:37:23',
-			'modified' => '2014-03-02 14:37:23'
-		),
-		array(
-			'id' => '5313a54c-8cd8-4ad3-a911-0bc2ccb469e7',
-			'seo_uri_id' => '531288d1-4c4c-46ab-b1e2-0bc4ccb469e7',
+			'id' => '535dac20-60b4-46de-b842-19b8173cdfff',
+			'seo_uri_id' => '535da751-0100-409c-9adb-1173173cdfff',
 			'canonical' => '/index',
 			'is_active' => 1,
-			'created' => '2014-03-02 14:40:28',
-			'modified' => '2014-03-02 20:00:14'
+			'created' => '2014-04-27 19:17:20',
+			'modified' => '2014-04-27 19:17:20'
+		),
+		array(
+			'id' => '535f0c92-36d8-4e7b-99d4-066c173cdfff',
+			'seo_uri_id' => '535f0b80-131c-486b-8069-066d173cdfff',
+			'canonical' => 'about_us',
+			'is_active' => 1,
+			'created' => '2014-04-28 20:21:06',
+			'modified' => '2014-04-28 20:21:06'
+		),
+		array(
+			'id' => '535f0c9f-c6a0-4136-ada5-0dfb173cdfff',
+			'seo_uri_id' => '535f0bbe-9c70-4442-95f0-0bd0173cdfff',
+			'canonical' => '/contact_us',
+			'is_active' => 1,
+			'created' => '2014-04-28 20:21:19',
+			'modified' => '2014-04-28 20:21:19'
 		),
 	);
 

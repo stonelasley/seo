@@ -1,4 +1,5 @@
 <?php
+App::uses('SeoAppModel', 'Seo.Model');
 class SeoCanonical extends SeoAppModel {
 
 	public $name = 'SeoCanonical';
