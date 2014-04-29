@@ -57,16 +57,23 @@ class SeoABTestsController extends SeoAppController {
 		$this->set('id', $id);
 	}
 
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo AB Test'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoABTest->id = $id;
+		if (!$this->SeoABTest->exists()) {
+			throw new NotFoundException(__('Invalid seo AB Test'));
 		}
-		if ($this->SeoABTest->delete($id)) {
-			$this->Session->setFlash(__('Seo AB Test deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoABTest->delete()) {
+			$this->Session->setFlash(__('The seo AB Test has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo AB Test could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo AB Test was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 }

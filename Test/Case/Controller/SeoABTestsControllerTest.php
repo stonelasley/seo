@@ -28,7 +28,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
 		parent::setUp();
 		$this->mockController = $this->generate(
 			'Seo.SeoABTests', array (
-				'models' => array ('Seo.SeoABTest' => array ('save', 'create', 'exists')),
+				'models' => array ('Seo.SeoABTest' => array ('save', 'create', 'exists', 'delete')),
 				'components' => array ('Session', 'Security')
 			)
 		);
@@ -208,6 +208,39 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminDelete() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoABTest->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoABTest->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(true));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo AB Test has been deleted.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_a_b_tests/delete/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo/seo_a_b_tests', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDelete method
+ *
+ * @return void
+ */
+	public function testAdminDeleteInvalidId() {
+		$id = 'Invalid';
+		$this->mockController->SeoABTest->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_a_b_tests/delete/$id",
+			array('return' => 'vars')
+		);
 	}
 
 }
