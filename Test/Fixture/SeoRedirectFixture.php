@@ -33,34 +33,34 @@ class SeoRedirectFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => '5313a8f2-c6d8-44c2-9e04-0bc3ccb469e7',
-			'seo_uri_id' => '5312925f-d9e8-41c5-8d10-0bddccb469e7',
-			'redirect' => '/puppies',
+			'id' => '535f0cbe-cd64-4ca6-ae77-066f173cdfff',
+			'seo_uri_id' => '535f0cbe-ba00-4403-a69d-066f173cdfff',
+			'redirect' => '/about',
 			'priority' => '1',
 			'is_active' => 1,
 			'callback' => '',
-			'created' => '2014-03-02 14:56:02',
-			'modified' => '2014-03-02 14:56:02'
+			'created' => '2014-04-28 20:21:50',
+			'modified' => '2014-04-28 20:21:50'
 		),
 		array(
-			'id' => '5313b3c4-cf4c-42ff-a6a8-0c06ccb469e7',
-			'seo_uri_id' => '5313a904-ca7c-4cee-9aed-0c05ccb469e7',
+			'id' => '535f0cce-f4f8-488b-ba69-066e173cdfff',
+			'seo_uri_id' => '535f0cce-de10-4496-9950-066e173cdfff',
+			'redirect' => '/contact',
+			'priority' => '1',
+			'is_active' => 1,
+			'callback' => '',
+			'created' => '2014-04-28 20:22:06',
+			'modified' => '2014-04-28 20:22:06'
+		),
+		array(
+			'id' => '535f0ce3-ccec-4a19-80b5-066d173cdfff',
+			'seo_uri_id' => '535f0ce3-bc44-4327-91c6-066d173cdfff',
 			'redirect' => '/',
 			'priority' => '1',
 			'is_active' => 1,
 			'callback' => '',
-			'created' => '2014-03-02 15:42:12',
-			'modified' => '2014-03-02 15:42:12'
-		),
-		array(
-			'id' => '5313a950-9610-4e76-880a-0bc2ccb469e7',
-			'seo_uri_id' => '5313a5c0-51f0-49a3-a68b-0c05ccb469e7',
-			'redirect' => '/',
-			'priority' => '2',
-			'is_active' => 1,
-			'callback' => '',
-			'created' => '2014-03-02 14:57:36',
-			'modified' => '2014-03-02 14:58:09'
+			'created' => '2014-04-28 20:22:27',
+			'modified' => '2014-04-28 20:22:27'
 		),
 	);
 
