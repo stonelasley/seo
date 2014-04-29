@@ -33,32 +33,32 @@ class SeoBlacklistFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => '5313e5d1-ce10-41e3-8ca1-0bc5ccb469e7',
-			'ip_range_start' => '2147483000',
-			'ip_range_end' => '2147483000',
-			'note' => '',
-			'created' => '2014-03-02 19:15:45',
-			'modified' => '2014-03-02 19:15:45',
+			'id' => '535f0ae0-29a4-4034-b44e-0bd0173cdfff',
+			'ip_range_start' => '174325761',
+			'ip_range_end' => '174325762',
+			'note' => 'blacklist one',
+			'created' => '2014-04-28 20:13:52',
+			'modified' => '2014-04-28 20:13:52',
 			'is_active' => 1
 		),
 		array(
-			'id' => '5313e5dc-9c70-4772-9484-0bc3ccb469e7',
-			'ip_range_start' => '2147483001',
-			'ip_range_end' => '2147483001',
-			'note' => '',
-			'created' => '2014-03-02 19:15:56',
-			'modified' => '2014-03-02 19:15:56',
+			'id' => '535f0af9-8130-4081-89dc-066b173cdfff',
+			'ip_range_start' => '174325763',
+			'ip_range_end' => '174325764',
+			'note' => 'blacklist two',
+			'created' => '2014-04-28 20:14:17',
+			'modified' => '2014-04-28 20:14:17',
 			'is_active' => 1
 		),
 		array(
-			'id' => '5313e5ef-c128-47af-876b-0c06ccb469e7',
-			'ip_range_start' => '2147483002',
-			'ip_range_end' => '2147483002',
-			'note' => '',
-			'created' => '2014-03-02 19:16:15',
-			'modified' => '2014-03-02 19:16:15',
+			'id' => '535f0b14-8ef4-44a0-a214-066c173cdfff',
+			'ip_range_start' => '174325764',
+			'ip_range_end' => '174325765',
+			'note' => 'Blacklist three',
+			'created' => '2014-04-28 20:14:44',
+			'modified' => '2014-04-28 20:14:44',
 			'is_active' => 1
-		)
+		),
 	);
 
 }

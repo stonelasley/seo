@@ -30,32 +30,25 @@ class SeoTitleFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => '53129048-060c-4241-bfb3-0c07ccb469e7',
-			'seo_uri_id' => '531288d1-4c4c-46ab-b1e2-0bc4ccb469e7',
-			'title' => 'THIS IS MY TITLE',
-			'created' => '2014-03-01 18:58:32',
-			'modified' => '2014-03-01 18:58:32'
+			'id' => '535dab35-c600-4721-8a78-1175173cdfff',
+			'seo_uri_id' => '535da751-0100-409c-9adb-1173173cdfff',
+			'title' => 'home page',
+			'created' => '2014-04-27 19:13:25',
+			'modified' => '2014-04-27 19:37:52'
 		),
 		array(
-			'id' => '5312925f-fe7c-44d9-a6c6-0bddccb469e7',
-			'seo_uri_id' => '5312925f-d9e8-41c5-8d10-0bddccb469e7',
-			'title' => 'MICK AND WESS!!',
-			'created' => '2014-03-01 19:07:27',
-			'modified' => '2014-03-01 19:07:27'
+			'id' => '535f0b80-86fc-4068-8a37-066d173cdfff',
+			'seo_uri_id' => '535f0b80-131c-486b-8069-066d173cdfff',
+			'title' => 'about page',
+			'created' => '2014-04-28 20:16:32',
+			'modified' => '2014-04-28 20:16:32'
 		),
 		array(
-			'id' => '5313ac12-d390-4dba-b78a-0c05ccb469e7',
-			'seo_uri_id' => '5313a493-7274-413e-aa8b-0bc2ccb469e7',
-			'title' => 'Pondy is funny',
-			'created' => '2014-03-02 15:09:22',
-			'modified' => '2014-03-02 15:09:22'
-		),
-		array(
-			'id' => '5313b3d2-56b4-41ae-a7a8-0bc1ccb469e7',
-			'seo_uri_id' => '5313a904-ca7c-4cee-9aed-0c05ccb469e7',
-			'title' => 'MICKEY AND WESLEY',
-			'created' => '2014-03-02 15:42:26',
-			'modified' => '2014-03-02 15:42:26'
+			'id' => '535f0bbe-0df8-4464-8327-0bd0173cdfff',
+			'seo_uri_id' => '535f0bbe-9c70-4442-95f0-0bd0173cdfff',
+			'title' => 'contact page',
+			'created' => '2014-04-28 20:17:34',
+			'modified' => '2014-04-28 20:17:34'
 		),
 	);
 

@@ -42,32 +42,46 @@ class SeoABTestFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => '53139bc7-ee10-4f5b-8c9f-0bddccb469e7',
-			'seo_uri_id' => '531288d1-4c4c-46ab-b1e2-0bc4ccb469e7',
+			'id' => '535dda88-f5bc-4942-b9b2-1174173cdfff',
+			'seo_uri_id' => '535da751-0100-409c-9adb-1173173cdfff',
 			'is_active' => 1,
 			'slug' => 'home',
-			'roll' => '25',
-			'priority' => '100',
+			'roll' => '50',
+			'priority' => '1',
 			'redmine' => null,
-			'description' => 'description',
-			'start_date' => '2014-03-02',
-			'end_date' => '2014-03-02',
-			'created' => '2014-03-02 13:59:51',
-			'modified' => '2014-03-02 13:59:51'
+			'description' => 'home test description',
+			'start_date' => '2014-04-27',
+			'end_date' => '2034-04-27',
+			'created' => '2014-04-27 22:35:20',
+			'modified' => '2014-04-28 20:20:17'
 		),
 		array(
-			'id' => '53139850-bacc-4141-8aeb-0bc5ccb469e7',
-			'seo_uri_id' => '53139850-c644-4836-905c-0bc5ccb469e7',
+			'id' => '535f0c1d-daec-444d-9958-066e173cdfff',
+			'seo_uri_id' => '535f0b80-131c-486b-8069-066d173cdfff',
 			'is_active' => 1,
-			'slug' => 'mickey',
-			'roll' => '10',
-			'priority' => '999',
-			'redmine' => '12',
-			'description' => 'mickey has a pink nose',
-			'start_date' => '2014-03-02',
-			'end_date' => '2014-03-02',
-			'created' => '2014-03-02 13:45:04',
-			'modified' => '2014-03-02 13:56:02'
+			'slug' => 'about_slug',
+			'roll' => '25',
+			'priority' => '1',
+			'redmine' => null,
+			'description' => 'about test description',
+			'start_date' => '2014-04-28',
+			'end_date' => '2034-04-28',
+			'created' => '2014-04-28 20:19:09',
+			'modified' => '2014-04-28 20:20:29'
+		),
+		array(
+			'id' => '535f0c52-a2e0-4808-be00-066d173cdfff',
+			'seo_uri_id' => '535f0bbe-9c70-4442-95f0-0bd0173cdfff',
+			'is_active' => 1,
+			'slug' => 'contact_slug',
+			'roll' => '75',
+			'priority' => '1',
+			'redmine' => null,
+			'description' => 'contact test description',
+			'start_date' => '2014-04-28',
+			'end_date' => '2034-04-28',
+			'created' => '2014-04-28 20:20:02',
+			'modified' => '2014-04-28 20:20:37'
 		),
 	);
 

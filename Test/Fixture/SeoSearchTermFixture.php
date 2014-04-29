@@ -28,13 +28,6 @@ class SeoSearchTermFixture extends CakeTestFixture {
  * @var array
  */
 	public $records = array(
-		array(
-			'id' => '72D0BD2C-A291-11E3-B11E-D0101D5D46B0',
-			'term' => 'Search Term',
-			'uri' => '/some_url',
-			'count' => 1,
-			'created' => '2011-11-18 23:27:41'
-		),
 	);
 
 }

@@ -31,53 +31,46 @@ class SeoUriFixture extends CakeTestFixture {
  */
 	public $records = array(
 		array(
-			'id' => '531288d1-4c4c-46ab-b1e2-0bc4ccb469e7',
+			'id' => '535da751-0100-409c-9adb-1173173cdfff',
 			'uri' => '/',
 			'is_approved' => 1,
-			'created' => '2014-03-01 18:26:41',
-			'modified' => '2014-03-01 18:58:32'
+			'created' => '2014-04-27 18:56:49',
+			'modified' => '2014-04-27 19:37:52'
 		),
 		array(
-			'id' => '5312925f-d9e8-41c5-8d10-0bddccb469e7',
-			'uri' => '/dogs',
+			'id' => '535f0b80-131c-486b-8069-066d173cdfff',
+			'uri' => '/about',
 			'is_approved' => 1,
-			'created' => '2014-03-01 19:07:27',
-			'modified' => '2014-03-01 19:07:27'
+			'created' => '2014-04-28 20:16:32',
+			'modified' => '2014-04-28 20:16:32'
 		),
 		array(
-			'id' => '53139850-c644-4836-905c-0bc5ccb469e7',
-			'uri' => '/mickey boy',
+			'id' => '535f0bbe-9c70-4442-95f0-0bd0173cdfff',
+			'uri' => '/contact',
 			'is_approved' => 1,
-			'created' => '2014-03-02 13:45:04',
-			'modified' => '2014-03-02 13:45:04'
+			'created' => '2014-04-28 20:17:34',
+			'modified' => '2014-04-28 20:17:34'
 		),
 		array(
-			'id' => '5313a493-7274-413e-aa8b-0bc2ccb469e7',
-			'uri' => '/pond',
+			'id' => '535f0cbe-ba00-4403-a69d-066f173cdfff',
+			'uri' => '/about_us',
 			'is_approved' => 1,
-			'created' => '2014-03-02 14:37:23',
-			'modified' => '2014-03-02 14:37:23'
+			'created' => '2014-04-28 20:21:50',
+			'modified' => '2014-04-28 20:21:50'
 		),
 		array(
-			'id' => '5313a5c0-51f0-49a3-a68b-0c05ccb469e7',
+			'id' => '535f0cce-de10-4496-9950-066e173cdfff',
+			'uri' => '/contact_us',
+			'is_approved' => 1,
+			'created' => '2014-04-28 20:22:06',
+			'modified' => '2014-04-28 20:22:06'
+		),
+		array(
+			'id' => '535f0ce3-bc44-4327-91c6-066d173cdfff',
 			'uri' => '/index',
 			'is_approved' => 1,
-			'created' => '2014-03-02 14:42:24',
-			'modified' => '2014-03-02 14:42:24'
-		),
-		array(
-			'id' => '5313a904-ca7c-4cee-9aed-0c05ccb469e7',
-			'uri' => '/doggies',
-			'is_approved' => 0,
-			'created' => '2014-03-02 14:56:20',
-			'modified' => '2014-03-02 15:31:34'
-		),
-		array(
-			'id' => '5313a904-abcd-4cee-9aed-0c05ccb469e7',
-			'uri' => '/posts',
-			'is_approved' => 0,
-			'created' => '2014-03-02 14:56:20',
-			'modified' => '2014-03-02 15:31:34'
+			'created' => '2014-04-28 20:22:27',
+			'modified' => '2014-04-28 20:22:27'
 		),
 	);
 

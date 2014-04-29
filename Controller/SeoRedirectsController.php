@@ -20,7 +20,7 @@ class SeoRedirectsController extends SeoAppController {
 
 	public function admin_add() {
 		if (!empty($this->request->data)) {
-			$this->SeoRedirect->clear();
+			$this->SeoRedirect->create();
 			if ($this->SeoRedirect->save($this->request->data)) {
 				$this->Session->setFlash(__('The seo redirect has been saved'));
 				$this->redirect(array('action' => 'index'));
