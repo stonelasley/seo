@@ -51,7 +51,7 @@ class SeoUriTest extends CakeTestCase {
 		$this->assertTrue($this->SeoUri->field('is_approved'));
 	}
 
-	//@TODO get this puppy running
+
 	//	public function testSendNotification() {
 	//		$this->SeoUri->id = '5313a904-ca7c-4cee-9aed-0c05ccb469e7';
 	//		//$this->SeoUri->Email->expectOnce('send');
