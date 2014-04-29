@@ -18,6 +18,12 @@ class SeoABTestsController extends SeoAppController {
 		$this->set('seoABTests', $this->Paginator->paginate($this->SeoABTest->alias));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
 		if (!$this->SeoABTest->exists($id)) {
 			throw new NotFoundException(__('Invalid seo AB Test'));
