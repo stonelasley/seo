@@ -14,7 +14,12 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.seo.seo_uri'
+		'plugin.seo.seo_uri',
+		'plugin.seo.seo_meta_tag',
+		'plugin.seo.seo_title',
+		'plugin.seo.seo_redirect',
+		'plugin.seo.seo_canonical',
+		'plugin.seo.seo_status_code'
 	);
 
 /**
@@ -24,16 +29,36 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->testData = array (
+		$this->testData = array(
 			'SeoUri' => array(
 				'id' => '535da751-0100-409c-9adb-1173173cdfff',
 				'uri' => '/',
-				'is_approved' => 1,
-				'created' => '2014-04-27 18:56:49',
-				'modified' => '2014-04-27 19:37:52',
+				'is_approved' => '1'
 			),
-			'SeoMetaTag' => array(),
-			'SeoTitle' => array()
+			'SeoTitle' => array(
+				'id' => '535dab35-c600-4721-8a78-1175173cdfff',
+				'title' => 'home page'
+			),
+			'SeoMetaTag' => array(
+				0 => array(
+					'id' => '535da751-922c-4089-8779-1173173cdfff',
+					'name' => 'description',
+					'content' => 'home page description content',
+					'is_http_equiv' => '1'
+				),
+				1 => array(
+					'id' => '535da751-dc40-4991-a9a9-1173173cdfff',
+					'name' => 'keywords',
+					'content' => 'home page keywords content',
+					'is_http_equiv' => '1'
+				),
+				2 => array(
+					'id' => '535da751-1524-42f9-a722-1173173cdfff',
+					'name' => 'robots',
+					'content' => 'home page robots content',
+					'is_http_equiv' => '1'
+				)
+			)
 		);
 	}
 
@@ -69,30 +94,26 @@ class SeoUrisControllerTest extends ControllerTestCase {
 	public function testAdminAdd() {
 		$SeoUris = $this->generate(
 			'Seo.SeoUris', array (
-				'methods' => array ('__clearAssociatesIfEmpty'),
-				'models' => array ('Seo.SeoUri' => array ('save', 'create')),
+				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
 		$SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri has been saved'), 'default');
-		$SeoUris->expects($this->once())
-			->method('__clearAssociatesIfEmpty');
 		$SeoUris->SeoUri->expects($this->any())
 			->method('create');
 		$SeoUris->SeoUri->expects($this->once())
-			->method('save')
+			->method('saveAll')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
 		$this->testAction(
 			'admin/seo/seo_uris/add',
 			array (
-				'data' => array ($this->testData),
+				'data' => $this->testData,
 				'method' => 'post'
 			)
 		);
-		debug($this);
 		$this->assertTrue(isset($this->vars['model']));
 		$this->assertEquals($this->vars['model'], 'SeoUri');
 	}
@@ -105,28 +126,23 @@ class SeoUrisControllerTest extends ControllerTestCase {
 	public function testAdminAddFail() {
 		$SeoUris = $this->generate(
 			'Seo.SeoUris', array (
-				'methods' => array ('__clearAssociatesIfEmpty'),
-				'models' => array ('Seo.SeoUri' => array ('save', 'create')),
+				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
 		$SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri could not be saved. Please, try again.'), 'default');
-		$SeoUris->expects($this->once())
-			->method('__clearAssociatesIfEmpty')
-
-			->with($this->equalTo('something'));
 		$SeoUris->SeoUri->expects($this->any())
 			->method('create');
 		$SeoUris->SeoUri->expects($this->once())
-			->method('save')
-			->will($this->returnValue(false)); //success
+			->method('saveAll')
+			->will($this->returnValue(false));
 		unset($this->testData['id']);
 		$result = $this->testAction(
 			'admin/seo/seo_uris/add',
 			array (
-				'data' => array ($this->testData),
+				'data' => $this->testData,
 				'method' => 'post',
 				'return' => 'vars'
 			)
@@ -143,7 +159,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
 	public function testAdminEditWithData() {
 		$SeoUris = $this->generate(
 			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('save', 'create')),
+				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
@@ -151,12 +167,12 @@ class SeoUrisControllerTest extends ControllerTestCase {
 			->method('setFlash')
 			->with(__('The seo uri has been saved'), 'default');
 		$SeoUris->SeoUri->expects($this->once())
-			->method('save')
+			->method('saveAll')
 			->will($this->returnValue(true));
 		$this->testAction(
 			'admin/seo/seo_uris/edit',
 			array (
-				'data' => array ($this->testData),
+				'data' => $this->testData,
 				'method' => 'post'
 			)
 		);
@@ -172,7 +188,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
 	public function testAdminEditWithNoId() {
 		$SeoUris = $this->generate(
 			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('save', 'create')),
+				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
@@ -197,7 +213,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
 	public function testAdminEditSaveFail() {
 		$SeoUris = $this->generate(
 			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('save', 'create')),
+				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
@@ -205,12 +221,12 @@ class SeoUrisControllerTest extends ControllerTestCase {
 			->method('setFlash')
 			->with(__('The seo uri could not be saved. Please, try again.'), 'default');
 		$SeoUris->SeoUri->expects($this->once())
-			->method('save')
-			->will($this->returnValue(false)); //success
+			->method('saveAll')
+			->will($this->returnValue(false));
 		$result = $this->testAction(
 			'admin/seo/seo_uris/edit',
 			array (
-				'data' => array ('SeoUri' => $this->testData),
+				'data' => $this->testData,
 				'method' => 'post',
 				'return' => 'vars'
 			)

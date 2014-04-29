@@ -3,7 +3,6 @@ App::uses('SeoAppController', 'Seo.Controller');
 class SeoUrisController extends SeoAppController {
 
 	private function __clearAssociatesIfEmpty() {
-		debug($this->request->data); die();
 		foreach ($this->request->data['SeoMetaTag'] as $key => $metatag) {
 			if (isset($metatag['name']) && empty($metatag['name'])) {
 				unset($this->request->data['SeoMetaTag'][$key]);
