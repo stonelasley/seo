@@ -5,11 +5,11 @@
  */
 class SeoMetaTagFixture extends CakeTestFixture {
 
-/**
- * Fields
- *
- * @var array
- */
+	/**
+	 * Fields
+	 *
+	 * @var array
+	 */
 	public $fields = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'seo_uri_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -25,110 +25,92 @@ class SeoMetaTagFixture extends CakeTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
 
-/**
- * Records
- *
- * @var array
- */
+	/**
+	 * Records
+	 *
+	 * @var array
+	 */
 	public $records = array(
 		array(
-			'id' => '53129048-f904-4a25-9f0d-0c07ccb469e7',
-			'seo_uri_id' => '531288d1-4c4c-46ab-b1e2-0bc4ccb469e7',
+			'id' => '535da751-922c-4089-8779-1173173cdfff',
+			'seo_uri_id' => '535da751-0100-409c-9adb-1173173cdfff',
 			'name' => 'description',
-			'content' => 'THIS IS THE DESCRIPTION TAG',
+			'content' => 'home page description content',
 			'is_http_equiv' => 1,
-			'created' => '2014-03-01 18:58:32',
-			'modified' => '2014-03-01 18:58:32'
+			'created' => '2014-04-27 18:56:49',
+			'modified' => '2014-04-27 19:37:52'
 		),
 		array(
-			'id' => '53129048-ebfc-49d0-a2b2-0c07ccb469e7',
-			'seo_uri_id' => '531288d1-4c4c-46ab-b1e2-0bc4ccb469e7',
+			'id' => '535da751-dc40-4991-a9a9-1173173cdfff',
+			'seo_uri_id' => '535da751-0100-409c-9adb-1173173cdfff',
 			'name' => 'keywords',
-			'content' => 'KEY WORDS HERE',
+			'content' => 'home page keywords content',
 			'is_http_equiv' => 1,
-			'created' => '2014-03-01 18:58:32',
-			'modified' => '2014-03-01 18:58:32'
+			'created' => '2014-04-27 18:56:49',
+			'modified' => '2014-04-27 19:37:52'
 		),
 		array(
-			'id' => '53129048-c84c-4e8b-a2d8-0c07ccb469e7',
-			'seo_uri_id' => '531288d1-4c4c-46ab-b1e2-0bc4ccb469e7',
-			'name' => 'author',
-			'content' => 'THE AUTHOR TAG',
+			'id' => '535da751-1524-42f9-a722-1173173cdfff',
+			'seo_uri_id' => '535da751-0100-409c-9adb-1173173cdfff',
+			'name' => 'robots',
+			'content' => 'home page robots content',
 			'is_http_equiv' => 1,
-			'created' => '2014-03-01 18:58:32',
-			'modified' => '2014-03-01 18:58:32'
+			'created' => '2014-04-27 18:56:49',
+			'modified' => '2014-04-27 19:37:52'
 		),
 		array(
-			'id' => '5312925f-e1d4-454f-830e-0bddccb469e7',
-			'seo_uri_id' => '5312925f-d9e8-41c5-8d10-0bddccb469e7',
+			'id' => '535f0b80-c814-4722-8344-066d173cdfff',
+			'seo_uri_id' => '535f0b80-131c-486b-8069-066d173cdfff',
 			'name' => 'description',
-			'content' => 'MICKEY AND WESLEY ARE TERRIBLE',
-			'is_http_equiv' => 1,
-			'created' => '2014-03-01 19:07:27',
-			'modified' => '2014-03-02 14:42:06'
-		),
-		array(
-			'id' => '5312925f-9f48-466a-9965-0bddccb469e7',
-			'seo_uri_id' => '5312925f-d9e8-41c5-8d10-0bddccb469e7',
-			'name' => 'charset',
-			'content' => 'UTF-8',
-			'is_http_equiv' => 1,
-			'created' => '2014-03-01 19:07:27',
-			'modified' => '2014-03-01 19:07:27'
-		),
-		array(
-			'id' => '5312925f-4e48-439b-bb30-0bddccb469e7',
-			'seo_uri_id' => '5312925f-d9e8-41c5-8d10-0bddccb469e7',
-			'name' => 'cache-control',
-			'content' => 'NO-CACHE',
+			'content' => 'about page description content',
 			'is_http_equiv' => 0,
-			'created' => '2014-03-01 19:07:27',
-			'modified' => '2014-03-01 19:07:27'
+			'created' => '2014-04-28 20:16:32',
+			'modified' => '2014-04-28 20:17:58'
 		),
 		array(
-			'id' => '5313a5c0-efc0-4738-b307-0c05ccb469e7',
-			'seo_uri_id' => '5313a5c0-51f0-49a3-a68b-0c05ccb469e7',
-			'name' => 'Copyright',
-			'content' => '&copy; 20014 Stone Lasley',
-			'is_http_equiv' => 1,
-			'created' => '2014-03-02 14:42:24',
-			'modified' => '2014-03-02 14:42:24'
+			'id' => '535f0b80-047c-4ab3-b121-066d173cdfff',
+			'seo_uri_id' => '535f0b80-131c-486b-8069-066d173cdfff',
+			'name' => 'keywords',
+			'content' => 'about page keywords content',
+			'is_http_equiv' => 0,
+			'created' => '2014-04-28 20:16:32',
+			'modified' => '2014-04-28 20:18:11'
 		),
 		array(
-			'id' => '5313b146-55d8-46a8-890a-0c05ccb469e7',
-			'seo_uri_id' => '5313a904-ca7c-4cee-9aed-0c05ccb469e7',
-			'name' => 'EXPIRES',
-			'content' => 'Mon, 22 Jul 20014 11:12:01 GMT',
-			'is_http_equiv' => 1,
-			'created' => '2014-03-02 15:31:34',
-			'modified' => '2014-03-02 15:31:34'
+			'id' => '535f0b80-320c-4fbb-a487-066d173cdfff',
+			'seo_uri_id' => '535f0b80-131c-486b-8069-066d173cdfff',
+			'name' => 'robots',
+			'content' => 'about page robots content',
+			'is_http_equiv' => 0,
+			'created' => '2014-04-28 20:16:32',
+			'modified' => '2014-04-28 20:18:21'
 		),
 		array(
-			'id' => '5313b146-fa28-490c-a0b0-0c05ccb469e7',
-			'seo_uri_id' => '5313a904-ca7c-4cee-9aed-0c05ccb469e7',
-			'name' => 'ROBOTS',
-			'content' => 'ALL',
-			'is_http_equiv' => 1,
-			'created' => '2014-03-02 15:31:34',
-			'modified' => '2014-03-02 15:31:34'
+			'id' => '535f0bbe-a118-42fe-b49c-0bd0173cdfff',
+			'seo_uri_id' => '535f0bbe-9c70-4442-95f0-0bd0173cdfff',
+			'name' => 'description',
+			'content' => 'contact page description content',
+			'is_http_equiv' => 0,
+			'created' => '2014-04-28 20:17:34',
+			'modified' => '2014-04-28 20:17:34'
 		),
 		array(
-			'id' => '5313b146-074c-42a2-b85c-0c05ccb469e7',
-			'seo_uri_id' => '5313a904-ca7c-4cee-9aed-0c05ccb469e7',
-			'name' => 'GOOGLEBOT',
-			'content' => 'NOARCHIVE',
-			'is_http_equiv' => 1,
-			'created' => '2014-03-02 15:31:34',
-			'modified' => '2014-03-02 15:31:34'
+			'id' => '535f0bbe-f554-4187-8830-0bd0173cdfff',
+			'seo_uri_id' => '535f0bbe-9c70-4442-95f0-0bd0173cdfff',
+			'name' => 'keywords',
+			'content' => 'contact page keywords content',
+			'is_http_equiv' => 0,
+			'created' => '2014-04-28 20:17:34',
+			'modified' => '2014-04-28 20:17:34'
 		),
 		array(
-			'id' => '5313b146-111-42a2-b85c-0c05ccb469e7',
-			'seo_uri_id' => '5313a904-abcd-4cee-9aed-0c05ccb469e7',
-			'name' => 'GOOGLEBOT',
-			'content' => 'NOARCHIVE',
-			'is_http_equiv' => 1,
-			'created' => '2014-03-02 15:31:34',
-			'modified' => '2014-03-02 15:31:34'
+			'id' => '535f0bbe-3d10-4493-af47-0bd0173cdfff',
+			'seo_uri_id' => '535f0bbe-9c70-4442-95f0-0bd0173cdfff',
+			'name' => 'robots',
+			'content' => 'contact page robots content',
+			'is_http_equiv' => 0,
+			'created' => '2014-04-28 20:17:34',
+			'modified' => '2014-04-28 20:17:34'
 		),
 	);
 
