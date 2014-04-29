@@ -49,11 +49,11 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
 	public function testAdminView() {
 	}
 
-	/**
-	 * testAdminAdd method
-	 *
-	 * @return void
-	 */
+/**
+ * testAdminAdd method
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
 		$SeoCanonicals = $this->generate(
 			'Seo.SeoCanonicals', array (
