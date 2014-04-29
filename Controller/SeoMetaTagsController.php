@@ -19,11 +19,11 @@ class SeoMetaTagsController extends SeoAppController {
 	}
 
 	public function admin_add() {
-		if (!empty($this->request->data)) {
-			$this->SeoMetaTag->clear();
+		if ($this->request->is('post')) {
+			$this->SeoMetaTag->create();
 			if ($this->SeoMetaTag->save($this->request->data)) {
 				$this->Session->setFlash(__('The seo meta tag has been saved'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The seo meta tag could not be saved. Please, try again.'));
 			}
