@@ -19,12 +19,11 @@ class SeoABTestsController extends SeoAppController {
 	}
 
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo AB Test'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoABTest->exists($id)) {
+			throw new NotFoundException(__('Invalid seo AB Test'));
 		}
-		$this->set('seoABTest', $this->SeoABTest->read(null, $id));
-		$this->set('id', $id);
+		$options = array('conditions' => array('SeoABTest.' . $this->SeoABTest->primaryKey => $id));
+		$this->set('seoABTest', $this->SeoABTest->find('first', $options));
 	}
 
 	public function admin_add() {
