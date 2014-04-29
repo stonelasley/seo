@@ -19,7 +19,6 @@ env:
   matrix:
     - DB=mysql CAKE_VERSION=2.3
     - DB=mysql CAKE_VERSION=2.4
-    - DB=mysql CAKE_VERSION=2.5
 
 matrix:
   include:
