@@ -7,12 +7,12 @@ App::uses('SeoTitlesController', 'Seo.Controller');
  */
 class SeoTitlesControllerTest extends ControllerTestCase {
 
-
 /**
  * Mock Controller
  *
  */
 	public $mockController;
+
 /**
  * Fixtures
  *
