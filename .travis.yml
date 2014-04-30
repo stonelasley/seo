@@ -34,7 +34,7 @@ matrix:
 
 before_script:
   - pear config-set auto_discover 1
-  - pear uninstall phpunit/PHPUnit
+  - pear uninstall pear.phpunit.de/PHPUnit
   - pear channel-update pear.phpunit.de
   - pear install pear.phpunit.de/PHPUnit-3.7.0
   - git clone -b master https://github.com/FriendsOfCake/travis.git --depth 1 ../travis
