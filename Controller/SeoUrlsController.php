@@ -74,13 +74,23 @@ class SeoUrlsController extends SeoAppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * admin_approve method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_approve($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo url'));
-		} elseif ($this->SeoUrl->setApproved($id)) {
-			$this->Session->setFlash(__('Seo Uri approved'));
+		$this->SeoUrl->id = $id;
+		if (!$this->SeoUrl->exists()) {
+			throw new NotFoundException(__('Invalid seo url.'));
 		}
-		$this->redirect(array('admin' => true, 'action' => 'index'));
+		if ($this->SeoUrl->setApproved($id)) {
+			$this->Session->setFlash(__('The seo url has been approved.'));
+		} else {
+			$this->Session->setFlash(__('The seo url could not be approved. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'index'));
 	}
 
 }
