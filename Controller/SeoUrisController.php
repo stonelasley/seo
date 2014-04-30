@@ -32,13 +32,18 @@ class SeoUrisController extends SeoAppController {
 		$this->redirect(array('action' => 'view', $id));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo uri'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoUri->exists($id)) {
+			throw new NotFoundException(__('Invalid seo uri.'));
 		}
-		$this->set('seoUri', $this->SeoUri->findForViewById($id));
-		$this->set('id', $id);
+		$options = array('conditions' => array('SeoUri.' . $this->SeoUri->primaryKey => $id));
+		$this->set('seoUri', $this->SeoUri->find('first', $options));
 	}
 
 	public function admin_add() {
@@ -56,7 +61,7 @@ class SeoUrisController extends SeoAppController {
 
 	public function admin_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid seo uri'));
+			$this->Session->setFlash(__('Invalid seo uri.'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
@@ -75,25 +80,42 @@ class SeoUrisController extends SeoAppController {
 		$this->set('id', $id);
 	}
 
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo uri'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoUri->id = $id;
+		if (!$this->SeoUri->exists()) {
+			throw new NotFoundException(__('Invalid seo uri.'));
 		}
-		if ($this->SeoUri->delete($id)) {
-			$this->Session->setFlash(__('Seo uri deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoUri->delete()) {
+			$this->Session->setFlash(__('The seo uri has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo uri could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo uri was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * admin_approve method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_approve($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo uri'));
-		} elseif ($this->SeoUri->setApproved($id)) {
-			$this->Session->setFlash(__('Seo Uri approved'));
+		$this->SeoUri->id = $id;
+		if (!$this->SeoUri->exists()) {
+			throw new NotFoundException(__('Invalid seo uri.'));
 		}
-		$this->redirect(array('admin' => true, 'action' => 'index'));
+		if ($this->SeoUri->setApproved($id)) {
+			$this->Session->setFlash(__('The seo uri has been approved.'));
+		} else {
+			$this->Session->setFlash(__('The seo uri could not be approved. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'index'));
 	}
 }
