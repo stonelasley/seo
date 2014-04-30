@@ -35,7 +35,8 @@ matrix:
 before_script:
   - phpunit --version
   - pear uninstall PHPUnit
-  - pear install phpunit/PHPUnit-3.7.0
+  - pear channel-discover pear.phpunit.de
+  - pear install pear.phpunit.de/PHPUnit-3.7.0
   - phpunit --version
   - git clone -b master https://github.com/FriendsOfCake/travis.git --depth 1 ../travis
   - ../travis/before_script.sh
