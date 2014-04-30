@@ -9,13 +9,18 @@ class SeoMetaTagsController extends SeoAppController {
 		$this->set('seoMetaTags', $this->Paginator->paginate($this->SeoMetaTag->alias));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo meta tag'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoMetaTag->exists($id)) {
+			throw new NotFoundException(__('Invalid seo meta tag'));
 		}
-		$this->set('seoMetaTag', $this->SeoMetaTag->read(null, $id));
-		$this->set('id', $id);
+		$options = array('conditions' => array('SeoMetaTag.' . $this->SeoMetaTag->primaryKey => $id));
+		$this->set('seoMetaTag', $this->SeoMetaTag->find('first', $options));
 	}
 
 	public function admin_add() {
@@ -48,17 +53,23 @@ class SeoMetaTagsController extends SeoAppController {
 		}
 		$this->set('id', $id);
 	}
-
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo meta tag'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoMetaTag->id = $id;
+		if (!$this->SeoMetaTag->exists()) {
+			throw new NotFoundException(__('Invalid seo meta tag'));
 		}
-		if ($this->SeoMetaTag->delete($id)) {
-			$this->Session->setFlash(__('Seo meta tag deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoMetaTag->delete()) {
+			$this->Session->setFlash(__('The seo meta tag has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo meta tag could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo meta tag was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 }
