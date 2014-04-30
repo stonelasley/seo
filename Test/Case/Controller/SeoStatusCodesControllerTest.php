@@ -106,12 +106,6 @@ public $mockController;
  * @return void
  */
 	public function testAdminAddFail() {
-		$this->mockController = $this->generate(
-			'Seo.SeoStatusCodes', array (
-				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
 		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo status code could not be saved. Please, try again.'), 'default');
@@ -139,12 +133,6 @@ public $mockController;
  * @return void
  */
 	public function testAdminEditWithData() {
-		$this->mockController = $this->generate(
-			'Seo.SeoStatusCodes', array (
-				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
 		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo status code has been saved'), 'default');
@@ -168,12 +156,6 @@ public $mockController;
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$this->mockController = $this->generate(
-			'Seo.SeoStatusCodes', array (
-				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
 		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo status code'), 'default');
@@ -193,19 +175,13 @@ public $mockController;
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$this->mockController = $this->generate(
-			'Seo.SeoStatusCodes', array (
-				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
 		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo status code could not be saved. Please, try again.'), 'default');
 		$this->mockController->SeoStatusCode->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
-		$result = $this->testAction(
+		$this->testAction(
 			'admin/seo/seo_status_codes/edit',
 			array (
 				'data' => array ('SeoStatusCode' => $this->testData),
