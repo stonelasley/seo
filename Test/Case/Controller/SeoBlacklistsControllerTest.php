@@ -95,7 +95,6 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-
 		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo blacklist has been saved'), 'default');
@@ -210,7 +209,29 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
 	}
 
 /**
- * testAdminDelete methodSeo blacklist was not deleted
+ * testAdminDeleteFails method
+ *
+ * @return void
+ */
+	public function testAdminDeleteFails() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoBlacklist->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoBlacklist->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(false));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo blacklist could not be deleted. Please, try again.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_blacklists/delete/$id",
+			array('return' => 'vars')
+		);
+	}
+
+/**
+ * testAdminDelete method
  *
  * @return void
  */
@@ -224,6 +245,7 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
 			"admin/seo/seo_blacklists/delete/$id",
 			array('return' => 'vars')
 		);
+		$this->assertStringEndsWith('/admin/seo/seo_blacklists', $this->headers['Location']);
 	}
 
 }
