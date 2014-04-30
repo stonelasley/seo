@@ -9,6 +9,12 @@ App::uses('SeoUrisController', 'Seo.Controller');
 class SeoUrisControllerTest extends ControllerTestCase {
 
 /**
+ * Mock Controller
+ *
+ */
+	public $mockController;
+
+/**
  * Fixtures
  *
  * @var array
@@ -29,6 +35,12 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		$this->mockController = $this->generate(
+			'Seo.SeoUris', array (
+				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create', 'exists', 'delete')),
+				'components' => array ('Session', 'Security')
+			)
+		);
 		$this->testData = array(
 			'SeoUri' => array(
 				'id' => '535da751-0100-409c-9adb-1173173cdfff',
@@ -84,6 +96,17 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminView() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoUri->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+
+		$this->testAction(
+			"admin/seo/seo_uris/view/$id",
+			array('return' => 'vars')
+		);
+		$this->assertTrue(isset($this->vars['seoUri']));
+		$this->assertEquals($this->vars['model'], 'SeoUri');
 	}
 
 /**
@@ -92,18 +115,12 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$SeoUris = $this->generate(
-			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoUris->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri has been saved'), 'default');
-		$SeoUris->SeoUri->expects($this->any())
+		$this->mockController->SeoUri->expects($this->any())
 			->method('create');
-		$SeoUris->SeoUri->expects($this->once())
+		$this->mockController->SeoUri->expects($this->once())
 			->method('saveAll')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
@@ -124,18 +141,12 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$SeoUris = $this->generate(
-			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoUris->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri could not be saved. Please, try again.'), 'default');
-		$SeoUris->SeoUri->expects($this->any())
+		$this->mockController->SeoUri->expects($this->any())
 			->method('create');
-		$SeoUris->SeoUri->expects($this->once())
+		$this->mockController->SeoUri->expects($this->once())
 			->method('saveAll')
 			->will($this->returnValue(false));
 		unset($this->testData['id']);
@@ -157,16 +168,10 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$SeoUris = $this->generate(
-			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoUris->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri has been saved'), 'default');
-		$SeoUris->SeoUri->expects($this->once())
+		$this->mockController->SeoUri->expects($this->once())
 			->method('saveAll')
 			->will($this->returnValue(true));
 		$this->testAction(
@@ -186,13 +191,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$SeoUris = $this->generate(
-			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoUris->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo uri'), 'default');
 		$this->testAction(
@@ -211,16 +210,10 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$SeoUris = $this->generate(
-			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoUris->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri could not be saved. Please, try again.'), 'default');
-		$SeoUris->SeoUri->expects($this->once())
+		$this->mockController->SeoUri->expects($this->once())
 			->method('saveAll')
 			->will($this->returnValue(false));
 		$result = $this->testAction(
@@ -241,6 +234,63 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminDelete() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoUri->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoUri->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(true));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo uri has been deleted.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_uris/delete/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo/seo_uris', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDeleteFails method
+ *
+ * @return void
+ */
+	public function testAdminDeleteFails() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoUri->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoUri->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(false));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo uri could not be deleted. Please, try again.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_uris/delete/$id",
+			array('return' => 'vars')
+		);
+		$this->assertStringEndsWith('/admin/seo/seo_uris', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDeleteInvalidId method
+ *
+ * @return void
+ */
+	public function testAdminDeleteInvalidId() {
+		$id = 'Invalid';
+		$this->mockController->SeoUri->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_uris/delete/$id",
+			array('return' => 'vars')
+		);
+		$this->assertStringEndsWith('/admin/seo/seo_uris', $this->headers['Location']);
 	}
 
 /**
