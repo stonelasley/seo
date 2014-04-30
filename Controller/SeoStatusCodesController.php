@@ -10,13 +10,18 @@ class SeoStatusCodesController extends SeoAppController {
 		$this->set('seoStatusCodes', $this->Paginator->paginate($this->SeoStatusCode->alias));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo status code'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoStatusCode->exists($id)) {
+			throw new NotFoundException(__('Invalid seo status code'));
 		}
-		$this->set('seoStatusCode', $this->SeoStatusCode->read(null, $id));
-		$this->set('id', $id);
+		$options = array('conditions' => array('SeoStatusCode.' . $this->SeoStatusCode->primaryKey => $id));
+		$this->set('seoStatusCode', $this->SeoStatusCode->find('first', $options));
 	}
 
 	public function admin_add() {
@@ -52,16 +57,23 @@ class SeoStatusCodesController extends SeoAppController {
 		$this->set('id', $id);
 	}
 
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo status code'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoStatusCode->id = $id;
+		if (!$this->SeoStatusCode->exists()) {
+			throw new NotFoundException(__('Invalid seo status code'));
 		}
-		if ($this->SeoStatusCode->delete($id)) {
-			$this->Session->setFlash(__('Seo status code deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoStatusCode->delete()) {
+			$this->Session->setFlash(__('The seo status code has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo status code could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo status code was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 }
