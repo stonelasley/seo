@@ -32,7 +32,7 @@ class SeoTitlesControllerTest extends ControllerTestCase {
 		parent::setUp();
 		$this->mockController = $this->generate(
 			'Seo.SeoTitles', array (
-				'models' => array ('Seo.SeoTitle' => array ('save', 'create')),
+				'models' => array ('Seo.SeoTitle' => array ('save', 'create', 'exists', 'delete')),
 				'components' => array ('Session', 'Security')
 			)
 		);

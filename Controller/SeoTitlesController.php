@@ -9,12 +9,18 @@ class SeoTitlesController extends SeoAppController {
 		$this->set('seoTitles', $this->Paginator->paginate($this->SeoTitle->alias));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo title'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoTitle->exists($id)) {
+			throw new NotFoundException(__('Invalid seoTitle'));
 		}
-		$this->set('seoTitle', $this->SeoTitle->read(null, $id));
+		$options = array('conditions' => array('SeoTitle.' . $this->SeoTitle->primaryKey => $id));
+		$this->set('seoTitle', $this->SeoTitle->find('first', $options));
 	}
 
 	public function admin_add() {
@@ -51,16 +57,23 @@ class SeoTitlesController extends SeoAppController {
 		$this->set(compact('seoUris'));
 	}
 
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo title'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoTitle->id = $id;
+		if (!$this->SeoTitle->exists()) {
+			throw new NotFoundException(__('Invalid seo title'));
 		}
-		if ($this->SeoTitle->delete($id)) {
-			$this->Session->setFlash(__('Seo title deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoTitle->delete()) {
+			$this->Session->setFlash(__('The seo title has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo title could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo title was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 }
