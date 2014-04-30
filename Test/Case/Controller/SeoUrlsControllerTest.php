@@ -61,17 +61,22 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
 	}
 
 /**
- * admin_view method
+ * testAdminView method
  *
- * @throws NotFoundException
- * @param string $id
+ * @return void
  */
-	public function admin_view($id = null) {
-		if (!$this->SeoUrl->exists($id)) {
-			throw new NotFoundException(__('Invalid seo url'));
-		}
-		$options = array('conditions' => array('SeoUrl.' . $this->SeoUrl->primaryKey => $id));
-		$this->set('seoUrl', $this->SeoUrl->find('first', $options));
+	public function testAdminView() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoUrl->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+
+		$this->testAction(
+			"admin/seo/seo_urls/view/$id",
+			array('return' => 'vars')
+		);
+		$this->assertTrue(isset($this->vars['seoUrl']));
+		$this->assertEquals($this->vars['model'], 'SeoUrl');
 	}
 
 /**
