@@ -51,6 +51,14 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testBanned() {
+		$this->testAction(
+			"seo/seo_blacklists/banned",
+			array(
+				'return' => 'contents',
+				'method' => 'GET'
+			)
+		);
+		$this->assertContains('<h1>You are BANNED!</h1>', $this->contents);
 	}
 
 /**
