@@ -191,7 +191,6 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-
 		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo canonical could not be saved. Please, try again.'), 'default');
