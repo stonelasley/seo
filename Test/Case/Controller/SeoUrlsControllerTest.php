@@ -39,7 +39,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
 		parent::setUp();
 		$this->mockController = $this->generate(
 			'Seo.SeoUrls', array (
-				'models' => array ('Seo.SeoUrl' => array ('save', 'create', 'exists', 'delete', 'approve')),
+				'models' => array ('Seo.SeoUrl' => array ('save', 'create', 'exists', 'delete', 'setApproved')),
 				'components' => array ('Session', 'Security')
 			)
 		);
@@ -269,6 +269,65 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testAdminApprove() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoUrl->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoUrl->expects($this->once())
+			->method('setApproved')
+			->will($this->returnValue(true));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo url has been approved.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_urls/approve/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo/seo_urls', $this->headers['Location']);
+	}
+
+/**
+ * testAdminApproveInvalidId method
+ *
+ * @return void
+ */
+	public function testAdminApproveInvalidId() {
+		$id = 'invalid';
+		$this->mockController->SeoUrl->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_urls/approve/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo/seo_urls', $this->headers['Location']);
+	}
+
+/**
+ * testAdminApprove method
+ *
+ * @return void
+ */
+	public function testAdminApproveFails() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoUrl->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoUrl->expects($this->once())
+			->method('setApproved')
+			->will($this->returnValue(false));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo url could not be approved. Please, try again.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_urls/approve/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo/seo_urls', $this->headers['Location']);
 	}
 
 /**
