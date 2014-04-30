@@ -283,6 +283,9 @@ class SeoUri extends SeoAppModel {
 	}
 
 	public function clearAssociatesIfEmpty(&$data = array()) {
+		if (!isset($data['SeoMetaTag'])) {
+			return;
+		}
 		foreach ($data['SeoMetaTag'] as $key => $metatag) {
 			if (isset($metatag['name']) && empty($metatag['name'])) {
 				unset($data['SeoMetaTag'][$key]);
