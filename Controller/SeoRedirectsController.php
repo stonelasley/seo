@@ -9,13 +9,18 @@ class SeoRedirectsController extends SeoAppController {
 		$this->set('seoRedirects', $this->Paginator->paginate($this->SeoRedirect->alias));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo redirect'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoRedirect->exists($id)) {
+			throw new NotFoundException(__('Invalid seo redirect'));
 		}
-		$this->set('seoRedirect', $this->SeoRedirect->read(null, $id));
-		$this->set('id', $id);
+		$options = array('conditions' => array('SeoRedirect.' . $this->SeoRedirect->primaryKey => $id));
+		$this->set('seoRedirect', $this->SeoRedirect->find('first', $options));
 	}
 
 	public function admin_add() {
@@ -49,16 +54,23 @@ class SeoRedirectsController extends SeoAppController {
 		$this->set('id', $id);
 	}
 
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo redirect'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoRedirect->id = $id;
+		if (!$this->SeoRedirect->exists()) {
+			throw new NotFoundException(__('Invalid seo redirect'));
 		}
-		if ($this->SeoRedirect->delete($id)) {
-			$this->Session->setFlash(__('Seo redirect deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoRedirect->delete()) {
+			$this->Session->setFlash(__('The seo redirect has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo redirect could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo redirect was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 }
