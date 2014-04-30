@@ -11,7 +11,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  * Mock Controller
  *
  */
-	public $mockController;
+	public $SeoUrls;
 
 /**
  * Name
@@ -38,7 +38,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->mockController = $this->generate(
+		$this->SeoUrls = $this->generate(
 			'Seo.SeoUrls', array (
 				'models' => array ('Seo.SeoUrl' => array ('save', 'create', 'exists', 'delete', 'setApproved')),
 				'components' => array ('Session', 'Security')
@@ -76,7 +76,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public function testAdminView() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
 
@@ -94,12 +94,12 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo url has been saved'), 'default');
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('create');
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
@@ -120,12 +120,12 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo url could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('create');
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		unset($this->testData['id']);
@@ -147,10 +147,10 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo url has been saved'), 'default');
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		$this->testAction(
@@ -170,7 +170,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo url'), 'default');
 		$this->testAction(
@@ -189,10 +189,10 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo url could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		$this->testAction(
@@ -214,13 +214,13 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public function testAdminDelete() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(true));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo url has been deleted.'), 'default');
 		$this->testAction(
@@ -238,13 +238,13 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public function testAdminDeleteFails() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(false));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo url could not be deleted. Please, try again.'), 'default');
 		$this->testAction(
@@ -261,7 +261,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public function testAdminDeleteInvalidId() {
 		$id = 'Invalid';
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
@@ -279,13 +279,13 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public function testAdminApprove() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('setApproved')
 			->will($this->returnValue(true));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo url has been approved.'), 'default');
 		$this->testAction(
@@ -303,7 +303,7 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public function testAdminApproveInvalidId() {
 		$id = 'invalid';
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
@@ -322,13 +322,13 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public function testAdminApproveFails() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUrl->expects($this->once())
+		$this->SeoUrls->SeoUrl->expects($this->once())
 			->method('setApproved')
 			->will($this->returnValue(false));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUrls->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo url could not be approved. Please, try again.'), 'default');
 		$this->testAction(

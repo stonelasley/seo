@@ -11,7 +11,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  * Mock Controller
  *
  */
-	public $mockController;
+	public $SeoCanonicals;
 
 /**
  * Fixtures
@@ -31,7 +31,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->mockController = $this->generate(
+		$this->SeoCanonicals = $this->generate(
 			'Seo.SeoCanonicals', array (
 				'models' => array ('Seo.SeoCanonical' => array ('save', 'create', 'exists', 'delete')),
 				'components' => array ('Session', 'Security')
@@ -70,7 +70,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  */
 	public function testAdminView() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
 
@@ -89,7 +89,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  */
 	public function testAdminViewInvalidId() {
 		$id = 'Invalid';
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
@@ -105,12 +105,12 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoCanonicals->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo canonical has been saved'), 'default');
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('create');
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
@@ -131,12 +131,12 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoCanonicals->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo canonical could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('create');
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		unset($this->testData['id']);
@@ -158,10 +158,10 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoCanonicals->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo canonical has been saved'), 'default');
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		$this->testAction(
@@ -181,7 +181,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoCanonicals->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo canonical'), 'default');
 		$this->testAction(
@@ -200,10 +200,10 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoCanonicals->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo canonical could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		$this->testAction(
@@ -225,13 +225,13 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDelete() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(true));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoCanonicals->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo canonical has been deleted.'), 'default');
 		$this->testAction(
@@ -249,13 +249,13 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDeleteFails() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(false));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoCanonicals->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo canonical could not be deleted. Please, try again.'), 'default');
 		$this->testAction(
@@ -271,7 +271,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDeleteInvalidId() {
 		$id = 'Invalid';
-		$this->mockController->SeoCanonical->expects($this->once())
+		$this->SeoCanonicals->SeoCanonical->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');

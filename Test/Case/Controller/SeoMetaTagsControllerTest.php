@@ -11,7 +11,7 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  * Mock Controller
  *
  */
-	public $mockController;
+	public $SeoMetaTags;
 
 /**
  * Fixtures
@@ -31,7 +31,7 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->mockController = $this->generate(
+		$this->SeoMetaTags = $this->generate(
 			'Seo.SeoMetaTags', array (
 				'models' => array ('Seo.SeoMetaTag' => array ('save', 'create', 'exists', 'delete')),
 				'components' => array ('Session', 'Security')
@@ -71,7 +71,7 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  */
 	public function testAdminView() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
 
@@ -89,12 +89,12 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoMetaTags->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo meta tag has been saved'), 'default');
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('create');
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
@@ -115,12 +115,12 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoMetaTags->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo meta tag could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('create');
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		unset($this->testData['id']);
@@ -142,10 +142,10 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoMetaTags->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo meta tag has been saved'), 'default');
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		$this->testAction(
@@ -165,7 +165,7 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoMetaTags->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo meta tag'), 'default');
 		$this->testAction(
@@ -184,10 +184,10 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoMetaTags->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo meta tag could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		$this->testAction(
@@ -209,13 +209,13 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDelete() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(true));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoMetaTags->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo meta tag has been deleted.'), 'default');
 		$this->testAction(
@@ -233,13 +233,13 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDeleteFails() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(false));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoMetaTags->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo meta tag could not be deleted. Please, try again.'), 'default');
 		$this->testAction(
@@ -256,7 +256,7 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDeleteInvalidId() {
 		$id = 'Invalid';
-		$this->mockController->SeoMetaTag->expects($this->once())
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');

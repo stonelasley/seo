@@ -12,7 +12,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * Mock Controller
  *
  */
-	public $mockController;
+	public $SeoUris;
 
 /**
  * Fixtures
@@ -35,7 +35,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->mockController = $this->generate(
+		$this->SeoUris = $this->generate(
 			'Seo.SeoUris', array (
 				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create', 'exists', 'delete', 'setApproved', 'urlEncode')),
 				'components' => array ('Session', 'Security')
@@ -98,7 +98,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminView() {
 		$id = $this->testData['SeoUri']['id'];
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
 
@@ -121,7 +121,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminViewInvalidId() {
 		$id = 'invalid';
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
@@ -137,12 +137,12 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri has been saved'), 'default');
-		$this->mockController->SeoUri->expects($this->any())
+		$this->SeoUris->SeoUri->expects($this->any())
 			->method('create');
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('saveAll')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
@@ -163,12 +163,12 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoUri->expects($this->any())
+		$this->SeoUris->SeoUri->expects($this->any())
 			->method('create');
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('saveAll')
 			->will($this->returnValue(false));
 		unset($this->testData['id']);
@@ -190,10 +190,10 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri has been saved'), 'default');
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('saveAll')
 			->will($this->returnValue(true));
 		$this->testAction(
@@ -213,7 +213,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo uri.'), 'default');
 		$this->testAction(
@@ -232,10 +232,10 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('saveAll')
 			->will($this->returnValue(false));
 		$this->testAction(
@@ -257,13 +257,13 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminDelete() {
 		$id = $this->testData['SeoUri']['id'];
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(true));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri has been deleted.'), 'default');
 		$this->testAction(
@@ -281,13 +281,13 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminDeleteFails() {
 		$id = $this->testData['SeoUri']['id'];
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(false));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri could not be deleted. Please, try again.'), 'default');
 		$this->testAction(
@@ -304,7 +304,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminDeleteInvalidId() {
 		$id = 'Invalid';
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
@@ -322,13 +322,13 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminApprove() {
 		$id = $this->testData['SeoUri']['id'];
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('setApproved')
 			->will($this->returnValue(true));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri has been approved.'), 'default');
 		$this->testAction(
@@ -346,7 +346,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminApproveInvalidId() {
 		$id = 'invalid';
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
@@ -365,13 +365,13 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminApproveFails() {
 		$id = $this->testData['SeoUri']['id'];
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('setApproved')
 			->will($this->returnValue(false));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri could not be approved. Please, try again.'), 'default');
 		$this->testAction(
@@ -389,13 +389,13 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminUrlEncode() {
 		$id = $this->testData['SeoUri']['id'];
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('urlEncode')
 			->will($this->returnValue(true));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri has been encoded sucessfully.'), 'default');
 		$this->testAction(
@@ -413,7 +413,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminUrlEncodeInvalidId() {
 		$id = 'invalid';
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
@@ -432,13 +432,13 @@ class SeoUrisControllerTest extends ControllerTestCase {
  */
 	public function testAdminUrlEncodeFails() {
 		$id = $this->testData['SeoUri']['id'];
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoUri->expects($this->once())
+		$this->SeoUris->SeoUri->expects($this->once())
 			->method('urlEncode')
 			->will($this->returnValue(false));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoUris->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo uri could not be encoded. Please, try again.'), 'default');
 		$this->testAction(

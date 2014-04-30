@@ -11,7 +11,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  * Mock Controller
  *
  */
-	public $mockController;
+	public $SeoABTests;
 
 /**
  * Fixtures
@@ -30,7 +30,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->mockController = $this->generate(
+		$this->SeoABTests = $this->generate(
 			'Seo.SeoABTests', array (
 				'models' => array ('Seo.SeoABTest' => array ('save', 'create', 'exists', 'delete')),
 				'components' => array ('Session', 'Security')
@@ -73,7 +73,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  */
 	public function testAdminView() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
 
@@ -93,7 +93,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  */
 	public function testAdminViewInvalidId() {
 		$id = 'Invalid';
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
@@ -109,12 +109,12 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoABTests->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo AB Test has been saved'), 'default');
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('create');
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
@@ -135,12 +135,12 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoABTests->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo AB Test could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('create');
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		unset($this->testData['id']);
@@ -162,10 +162,10 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoABTests->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo AB Test has been saved'), 'default');
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		$this->testAction(
@@ -185,7 +185,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoABTests->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo AB Test'), 'default');
 		$this->testAction(
@@ -204,10 +204,10 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$this->mockController->Session->expects($this->once())
+		$this->SeoABTests->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo AB Test could not be saved. Please, try again.'), 'default');
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		$this->testAction(
@@ -229,13 +229,13 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDelete() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(true));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoABTests->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo AB Test has been deleted.'), 'default');
 		$this->testAction(
@@ -253,13 +253,13 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDeleteFails() {
 		$id = $this->testData['id'];
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(true));
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('delete')
 			->will($this->returnValue(false));
-		$this->mockController->Session->expects($this->once())
+		$this->SeoABTests->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo AB Test could not be deleted. Please, try again.'), 'default');
 		$this->testAction(
@@ -275,7 +275,7 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  */
 	public function testAdminDeleteInvalidId() {
 		$id = 'Invalid';
-		$this->mockController->SeoABTest->expects($this->once())
+		$this->SeoABTests->SeoABTest->expects($this->once())
 			->method('exists')
 			->will($this->returnValue(false));
 		$this->setExpectedException('NotFoundException');
