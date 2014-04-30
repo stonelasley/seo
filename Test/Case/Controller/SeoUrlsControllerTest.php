@@ -27,7 +27,8 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.seo.seo_url',
-		'plugin.seo.seo_uri'
+		'plugin.seo.seo_uri',
+		'plugin.seo.seo_title'
 	);
 
 /**

@@ -20,7 +20,8 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.seo.seo_status_code',
-		'plugin.seo.seo_uri'
+		'plugin.seo.seo_uri',
+		'plugin.seo.seo_title'
 	);
 
 /**

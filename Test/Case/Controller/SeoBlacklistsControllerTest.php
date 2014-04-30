@@ -19,7 +19,8 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.seo.seo_blacklist'
+		'plugin.seo.seo_blacklist',
+		'plugin.seo.seo_title'
 	);
 
 /**
