@@ -11,7 +11,7 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * Mock Controller
  *
  */
-public $mockController;
+	public $mockController;
 
 /**
  * Fixtures
