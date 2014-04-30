@@ -8,6 +8,12 @@ App::uses('SeoRedirectsController', 'Seo.Controller');
 class SeoRedirectsControllerTest extends ControllerTestCase {
 
 /**
+ * Mock Controller
+ *
+ */
+	public $mockController;
+
+/**
  * Fixtures
  *
  * @var array
@@ -24,6 +30,12 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		$this->mockController = $this->generate(
+			'Seo.SeoRedirects', array (
+				'models' => array ('Seo.SeoRedirect' => array ('save', 'create', 'exists', 'delete')),
+				'components' => array ('Session', 'Security')
+			)
+		);
 		$this->testData = array (
 			'id' => '535f0cbe-cd64-4ca6-ae77-066f173cdfff',
 			'seo_uri_id' => '535f0cbe-ba00-4403-a69d-066f173cdfff',
@@ -50,6 +62,17 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminView() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoRedirect->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+
+		$this->testAction(
+			"admin/seo/seo_redirects/view/$id",
+			array('return' => 'vars')
+		);
+		$this->assertTrue(isset($this->vars['seoRedirect']));
+		$this->assertEquals($this->vars['model'], 'SeoRedirect');
 	}
 
 /**
@@ -58,18 +81,12 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$SeoRedirects = $this->generate(
-			'Seo.SeoRedirects', array (
-				'models' => array ('Seo.SeoRedirect' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoRedirects->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo redirect has been saved'), 'default');
-		$SeoRedirects->SeoRedirect->expects($this->once())
+		$this->mockController->SeoRedirect->expects($this->once())
 			->method('create');
-		$SeoRedirects->SeoRedirect->expects($this->once())
+		$this->mockController->SeoRedirect->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
@@ -90,22 +107,16 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$SeoRedirects = $this->generate(
-			'Seo.SeoRedirects', array (
-				'models' => array ('Seo.SeoRedirect' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoRedirects->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo redirect could not be saved. Please, try again.'), 'default');
-		$SeoRedirects->SeoRedirect->expects($this->once())
+		$this->mockController->SeoRedirect->expects($this->once())
 			->method('create');
-		$SeoRedirects->SeoRedirect->expects($this->once())
+		$this->mockController->SeoRedirect->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		unset($this->testData['id']);
-		$result = $this->testAction(
+		$this->testAction(
 			'admin/seo/seo_redirects/add',
 			array (
 				'data' => array ('SeoRedirect' => $this->testData),
@@ -123,16 +134,10 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$SeoRedirects = $this->generate(
-			'Seo.SeoRedirects', array (
-				'models' => array ('Seo.SeoRedirect' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoRedirects->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo redirect has been saved'), 'default');
-		$SeoRedirects->SeoRedirect->expects($this->once())
+		$this->mockController->SeoRedirect->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		$this->testAction(
@@ -152,13 +157,7 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$SeoRedirects = $this->generate(
-			'Seo.SeoRedirects', array (
-				'models' => array ('Seo.SeoRedirect' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoRedirects->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo redirect'), 'default');
 		$this->testAction(
@@ -177,19 +176,13 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$SeoRedirects = $this->generate(
-			'Seo.SeoRedirects', array (
-				'models' => array ('Seo.SeoRedirect' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoRedirects->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo redirect could not be saved. Please, try again.'), 'default');
-		$SeoRedirects->SeoRedirect->expects($this->once())
+		$this->mockController->SeoRedirect->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
-		$result = $this->testAction(
+		$this->testAction(
 			'admin/seo/seo_redirects/edit',
 			array (
 				'data' => array ('SeoRedirect' => $this->testData),
@@ -207,6 +200,63 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminDelete() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoRedirect->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoRedirect->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(true));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo redirect has been deleted.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_redirects/delete/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo/seo_redirects', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDeleteFails method
+ *
+ * @return void
+ */
+	public function testAdminDeleteFails() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoRedirect->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoRedirect->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(false));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo redirect could not be deleted. Please, try again.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_redirects/delete/$id",
+			array('return' => 'vars')
+		);
+		$this->assertStringEndsWith('/admin/seo/seo_redirects', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDeleteInvalidId method
+ *
+ * @return void
+ */
+	public function testAdminDeleteInvalidId() {
+		$id = 'Invalid';
+		$this->mockController->SeoRedirect->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_redirects/delete/$id",
+			array('return' => 'vars')
+		);
+		$this->assertStringEndsWith('/admin/seo/seo_redirects', $this->headers['Location']);
 	}
 
 }
