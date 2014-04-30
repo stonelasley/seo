@@ -235,7 +235,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
 	}
 
 /**
- * testAdminDeleteFails methodSeo canonical was not deleted
+ * testAdminDeleteFails method
  *
  * @return void
  */
@@ -257,7 +257,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
 	}
 
 /**
- * testAdminDelete method Seo canonical was not deleted
+ * testAdminDelete method
  *
  * @return void
  */
