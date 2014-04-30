@@ -20,7 +20,8 @@ class SeoABTestsControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.seo.seo_a_b_test',
-		'plugin.seo.seo_uri'
+		'plugin.seo.seo_uri',
+		'plugin.seo.seo_title'
 	);
 
 /**
