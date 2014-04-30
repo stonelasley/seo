@@ -37,10 +37,11 @@ class SeoUrisControllerTest extends ControllerTestCase {
 		parent::setUp();
 		$this->mockController = $this->generate(
 			'Seo.SeoUris', array (
-				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create', 'exists', 'delete', 'setApproved')),
+				'models' => array ('Seo.SeoUri' => array ('saveAll', 'create', 'exists', 'delete', 'setApproved', 'urlEncode')),
 				'components' => array ('Session', 'Security')
 			)
 		);
+
 		$this->testData = array(
 			'SeoUri' => array(
 				'id' => '535da751-0100-409c-9adb-1173173cdfff',
@@ -66,7 +67,7 @@ class SeoUrisControllerTest extends ControllerTestCase {
 				),
 				2 => array(
 					'id' => '535da751-1524-42f9-a722-1173173cdfff',
-					'name' => 'robots',
+					'name' => '',
 					'content' => 'home page robots content',
 					'is_http_equiv' => '1'
 				)
@@ -80,14 +81,14 @@ class SeoUrisControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-	}
-
-/**
- * testAdminUrlencode method
- *
- * @return void
- */
-	public function testAdminUrlencode() {
+		$this->testAction(
+			"admin/seo/seo_uris",
+			array(
+				'return' => 'vars',
+				'method' => 'GET'
+			)
+		);
+		$this->assertTrue(isset($this->vars['seoUris']));
 	}
 
 /**
@@ -111,6 +112,23 @@ class SeoUrisControllerTest extends ControllerTestCase {
 		$this->assertTrue(isset($this->vars['seoUri']['SeoCanonical']));
 		$this->assertTrue(isset($this->vars['seoUri']['SeoStatusCode']));
 		$this->assertEquals($this->vars['model'], 'SeoUri');
+	}
+
+/**
+ * testAdminView method
+ *
+ * @return void
+ */
+	public function testAdminViewInvalidId() {
+		$id = 'invalid';
+		$this->mockController->SeoUri->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_uris/view/$id",
+			array('return' => 'vars')
+		);
 	}
 
 /**
@@ -362,6 +380,73 @@ class SeoUrisControllerTest extends ControllerTestCase {
 		);
 
 		$this->assertStringEndsWith('/admin/seo/seo_uris', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDelete method
+ *
+ * @return void
+ */
+	public function testAdminUrlEncode() {
+		$id = $this->testData['SeoUri']['id'];
+		$this->mockController->SeoUri->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoUri->expects($this->once())
+			->method('urlEncode')
+			->will($this->returnValue(true));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo uri has been encoded sucessfully.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_uris/urlencode/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith("/admin/seo/seo_uris/view/$id", $this->headers['Location']);
+	}
+
+/**
+ * testAdminApproveInvalidId method
+ *
+ * @return void
+ */
+	public function testAdminUrlEncodeInvalidId() {
+		$id = 'invalid';
+		$this->mockController->SeoUri->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_uris/urlencode/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo/seo_uris', $this->headers['Location']);
+	}
+
+/**
+ * testAdminApprove method
+ *
+ * @return void
+ */
+	public function testAdminUrlEncodeFails() {
+		$id = $this->testData['SeoUri']['id'];
+		$this->mockController->SeoUri->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoUri->expects($this->once())
+			->method('urlEncode')
+			->will($this->returnValue(false));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo uri could not be encoded. Please, try again.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_uris/urlencode/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith("/admin/seo/seo_uris/view/$id", $this->headers['Location']);
 	}
 
 }

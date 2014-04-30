@@ -98,6 +98,7 @@ class SeoUri extends SeoAppModel {
  * @return true
  */
 	public function beforeSave($options = array()) {
+		$this->clearAssociatesIfEmpty($this->data);
 		//url encode the uri, but only once.
 		if (!empty($this->data[$this->alias]['uri']) && $this->isRegEx($this->data[$this->alias]['uri'])) {
 			if (empty($this->data[$this->alias]['is_approved'])) {
@@ -279,5 +280,19 @@ class SeoUri extends SeoAppModel {
 			$uri = $this->field('uri', array('SeoUri.id' => $uri));
 		}
 		return SeoUtil::requestMatch($request, $uri);
+	}
+
+	public function clearAssociatesIfEmpty(&$data = array()) {
+		foreach ($data['SeoMetaTag'] as $key => $metatag) {
+			if (isset($metatag['name']) && empty($metatag['name'])) {
+				unset($data['SeoMetaTag'][$key]);
+			}
+		}
+		if (empty($data['SeoMetaTag'])) {
+			unset($data['SeoMetaTag']);
+		}
+		if (isset($data['SeoTitle']['title']) && empty($data['SeoTitle']['title'])) {
+			unset($data['SeoTitle']);
+		}
 	}
 }

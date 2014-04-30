@@ -2,20 +2,6 @@
 App::uses('SeoAppController', 'Seo.Controller');
 class SeoUrisController extends SeoAppController {
 
-	private function __clearAssociatesIfEmpty() {
-		foreach ($this->request->data['SeoMetaTag'] as $key => $metatag) {
-			if (isset($metatag['name']) && empty($metatag['name'])) {
-				unset($this->request->data['SeoMetaTag'][$key]);
-			}
-		}
-		if (empty($this->request->data['SeoMetaTag'])) {
-			unset($this->request->data['SeoMetaTag']);
-		}
-		if (isset($this->request->data['SeoTitle']['title']) && empty($this->request->data['SeoTitle']['title'])) {
-			unset($this->request->data['SeoTitle']);
-		}
-	}
-
 	public function admin_index() {
 		$this->Prg->commonProcess(null, array('action' => 'index'));
 		$this->Paginator->settings['conditions']
@@ -23,13 +9,22 @@ class SeoUrisController extends SeoAppController {
 		$this->set('seoUris', $this->Paginator->paginate($this->SeoUri->alias));
 	}
 
+/**
+ * admin_urlencode method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_urlencode($id = null) {
-		if ($this->SeoUri->urlEncode($id)) {
-			$this->Session->setFlash("uri Successfully Url Encoded.");
-		} else {
-			$this->Session->setFlash("Erorr URL Encoding uri");
+		if (!$this->SeoUri->exists($id)) {
+			throw new NotFoundException(__('Invalid seo uri.'));
 		}
-		$this->redirect(array('action' => 'view', $id));
+		if ($this->SeoUri->urlEncode($id)) {
+			$this->Session->setFlash(__('The seo uri has been encoded sucessfully.'));
+		} else {
+			$this->Session->setFlash(__('The seo uri could not be encoded. Please, try again.'));
+		}
+		return $this->redirect(array('action' => 'view', $id));
 	}
 
 /**
@@ -49,7 +44,6 @@ class SeoUrisController extends SeoAppController {
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->SeoUri->create();
-			$this->__clearAssociatesIfEmpty();
 			if ($this->SeoUri->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The seo uri has been saved'));
 				$this->redirect(array('action' => 'index'));
@@ -65,7 +59,6 @@ class SeoUrisController extends SeoAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
-			$this->__clearAssociatesIfEmpty();
 			if ($this->SeoUri->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The seo uri has been saved'));
 				$this->redirect(array('action' => 'index'));
