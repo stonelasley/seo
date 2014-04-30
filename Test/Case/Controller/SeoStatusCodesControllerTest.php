@@ -8,6 +8,12 @@ App::uses('SeoStatusCodesController', 'Seo.Controller');
 class SeoStatusCodesControllerTest extends ControllerTestCase {
 
 /**
+ * Mock Controller
+ *
+ */
+public $mockController;
+
+/**
  * Fixtures
  *
  * @var array
@@ -24,6 +30,12 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		$this->mockController = $this->generate(
+			'Seo.SeoStatusCodes', array (
+				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create', 'exists', 'delete')),
+				'components' => array ('Session', 'Security')
+			)
+		);
 		$this->testData = array (
 			'id' => 'e55bf308-a6c2-486b-8504-d5baca9f9fee',
 			'seo_uri_id' => '535f0ce3-bc44-4327-2345-066d173cdfff',
@@ -49,6 +61,17 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminView() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoStatusCode->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+
+		$this->testAction(
+			"admin/seo/seo_status_codes/view/$id",
+			array('return' => 'vars')
+		);
+		$this->assertTrue(isset($this->vars['seoStatusCode']));
+		$this->assertEquals($this->vars['model'], 'SeoStatusCode');
 	}
 
 /**
@@ -57,18 +80,12 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$SeoStatusCodes = $this->generate(
-			'Seo.SeoStatusCodes', array (
-				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
-				'components' => array ('Session', 'Security')
-			)
-		);
-		$SeoStatusCodes->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo status code has been saved'), 'default');
-		$SeoStatusCodes->SeoStatusCode->expects($this->once())
+		$this->mockController->SeoStatusCode->expects($this->once())
 			->method('create');
-		$SeoStatusCodes->SeoStatusCode->expects($this->once())
+		$this->mockController->SeoStatusCode->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		unset($this->testData['id']);
@@ -89,18 +106,18 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminAddFail() {
-		$SeoStatusCodes = $this->generate(
+		$this->mockController = $this->generate(
 			'Seo.SeoStatusCodes', array (
 				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
-		$SeoStatusCodes->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo status code could not be saved. Please, try again.'), 'default');
-		$SeoStatusCodes->SeoStatusCode->expects($this->once())
+		$this->mockController->SeoStatusCode->expects($this->once())
 			->method('create');
-		$SeoStatusCodes->SeoStatusCode->expects($this->once())
+		$this->mockController->SeoStatusCode->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		unset($this->testData['id']);
@@ -122,16 +139,16 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithData() {
-		$SeoStatusCodes = $this->generate(
+		$this->mockController = $this->generate(
 			'Seo.SeoStatusCodes', array (
 				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
-		$SeoStatusCodes->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo status code has been saved'), 'default');
-		$SeoStatusCodes->SeoStatusCode->expects($this->once())
+		$this->mockController->SeoStatusCode->expects($this->once())
 			->method('save')
 			->will($this->returnValue(true));
 		$this->testAction(
@@ -151,13 +168,13 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditWithNoId() {
-		$SeoStatusCodes = $this->generate(
+		$this->mockController = $this->generate(
 			'Seo.SeoStatusCodes', array (
 				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
-		$SeoStatusCodes->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('Invalid seo status code'), 'default');
 		$this->testAction(
@@ -176,16 +193,16 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminEditSaveFail() {
-		$SeoStatusCodes = $this->generate(
+		$this->mockController = $this->generate(
 			'Seo.SeoStatusCodes', array (
 				'models' => array ('Seo.SeoStatusCode' => array ('save', 'create')),
 				'components' => array ('Session', 'Security')
 			)
 		);
-		$SeoStatusCodes->Session->expects($this->once())
+		$this->mockController->Session->expects($this->once())
 			->method('setFlash')
 			->with(__('The seo status code could not be saved. Please, try again.'), 'default');
-		$SeoStatusCodes->SeoStatusCode->expects($this->once())
+		$this->mockController->SeoStatusCode->expects($this->once())
 			->method('save')
 			->will($this->returnValue(false));
 		$result = $this->testAction(
@@ -206,6 +223,63 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminDelete() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoStatusCode->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoStatusCode->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(true));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo status code has been deleted.'), 'default');
+		$this->testAction(
+			"admin/seo_status_codes/delete/$id",
+			array('return' => 'vars')
+		);
+
+		$this->assertStringEndsWith('/admin/seo_status_codes', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDeleteFails method
+ *
+ * @return void
+ */
+	public function testAdminDeleteFails() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoStatusCode->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoStatusCode->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(false));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo status code could not be deleted. Please, try again.'), 'default');
+		$this->testAction(
+			"admin/seo_status_codes/delete/$id",
+			array('return' => 'vars')
+		);
+		$this->assertStringEndsWith('/admin/seo_status_codes', $this->headers['Location']);
+	}
+
+/**
+ * testAdminDeleteInvalidId method
+ *
+ * @return void
+ */
+	public function testAdminDeleteInvalidId() {
+		$id = 'Invalid';
+		$this->mockController->SeoStatusCode->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo_status_codes/delete/$id",
+			array('return' => 'vars')
+		);
+		$this->assertStringEndsWith('/admin/seo_status_codes', $this->headers['Location']);
 	}
 
 }
