@@ -72,5 +72,4 @@ class SeoCanonicalsController extends SeoAppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
-
 }
