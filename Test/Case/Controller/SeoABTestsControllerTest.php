@@ -231,7 +231,29 @@ class SeoABTestsControllerTest extends ControllerTestCase {
 	}
 
 /**
- * testAdminDelete method
+ * testAdminDeleteFails method
+ *
+ * @return void
+ */
+	public function testAdminDeleteFails() {
+		$id = $this->testData['id'];
+		$this->mockController->SeoABTest->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(true));
+		$this->mockController->SeoABTest->expects($this->once())
+			->method('delete')
+			->will($this->returnValue(false));
+		$this->mockController->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo AB Test could not be deleted. Please, try again.'), 'default');
+		$this->testAction(
+			"admin/seo/seo_a_b_tests/delete/$id",
+			array('return' => 'vars')
+		);
+	}
+
+/**
+ * testAdminDeleteInvalidId method
  *
  * @return void
  */
