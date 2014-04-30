@@ -89,6 +89,22 @@ class SeoUrlsControllerTestCase extends ControllerTestCase {
 	}
 
 /**
+ * testAdminViewInvalidId method
+ *
+ * @return void
+ */
+	public function testAdminViewInvalidId() {
+		$id = 'Invalid';
+		$this->SeoUrls->SeoUrl->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_urls/view/$id",
+			array('return' => 'vars')
+		);
+	}
+/**
  * testAdminAdd method
  *
  * @return void

@@ -210,6 +210,31 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
 	}
 
 /**
+ * testAdminEditFail method
+ *
+ * @return void
+ */
+	public function testAdminEditFail() {
+		$this->SeoBlacklists->Session->expects($this->once())
+			->method('setFlash')
+			->with(__('The seo blacklist could not be saved. Please, try again.'), 'default');
+		$this->SeoBlacklists->SeoBlacklist->expects($this->once())
+			->method('save')
+			->will($this->returnValue(false));
+		unset($this->testData['id']);
+		$this->testAction(
+			'admin/seo/seo_blacklists/edit',
+			array (
+				'data' => array ('SeoBlacklist' => $this->testData),
+				'method' => 'post',
+				'return' => 'vars'
+			)
+		);
+		$this->assertTrue(isset($this->vars));
+		$this->assertEquals($this->vars['model'], 'SeoBlacklist');
+	}
+
+/**
  * testAdminDelete method
  *
  * @return void

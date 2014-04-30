@@ -85,6 +85,22 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
 	}
 
 /**
+ * testAdminViewInvalidId method
+ *
+ * @return void
+ */
+	public function testAdminViewInvalidId() {
+		$id = 'Invalid';
+		$this->SeoRedirects->SeoRedirect->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_redirects/view/$id",
+			array('return' => 'vars')
+		);
+	}
+/**
  * testAdminAdd method
  *
  * @return void

@@ -84,6 +84,22 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
 	}
 
 /**
+ * testAdminViewInvalidId method
+ *
+ * @return void
+ */
+	public function testAdminViewInvalidId() {
+		$id = 'Invalid';
+		$this->SeoMetaTags->SeoMetaTag->expects($this->once())
+			->method('exists')
+			->will($this->returnValue(false));
+		$this->setExpectedException('NotFoundException');
+		$this->testAction(
+			"admin/seo/seo_meta_tags/view/$id",
+			array('return' => 'vars')
+		);
+	}
+/**
  * testAdminAdd method
  *
  * @return void
