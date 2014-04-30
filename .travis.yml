@@ -33,10 +33,10 @@ matrix:
         - FOC_VALIDATE=1
 
 before_script:
-  - sudo pear config-set auto_discover 1
-  - sudo pear uninstall phpunit/PHPUnit
-  - sudo pear channel-update pear.phpunit.de
-  - sudo pear install pear.phpunit.de/PHPUnit-3.7.0
+  - pear config-set auto_discover 1
+  - pear uninstall phpunit/PHPUnit
+  - pear channel-update pear.phpunit.de
+  - pear install pear.phpunit.de/PHPUnit-3.7.0
   - git clone -b master https://github.com/FriendsOfCake/travis.git --depth 1 ../travis
   - ../travis/before_script.sh
   - git clone -b master https://github.com/CakeDC/search.git --depth 1 ../cakephp/app/Plugin/Search
