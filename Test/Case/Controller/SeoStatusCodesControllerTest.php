@@ -53,6 +53,14 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
+		$this->testAction(
+			"admin/seo/seo_status_codes",
+			array(
+				'return' => 'vars',
+				'method' => 'GET'
+			)
+		);
+		$this->assertTrue(isset($this->vars['seoStatusCodes']));
 	}
 
 /**

@@ -54,6 +54,22 @@ class SeoBlacklistsControllerTest extends ControllerTestCase {
 	}
 
 /**
+ * testAdminIndex method
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction(
+			"admin/seo/seo_blacklists",
+			array(
+				'return' => 'vars',
+				'method' => 'GET'
+			)
+		);
+		$this->assertTrue(isset($this->vars['seoBlacklists']));
+	}
+
+/**
  * testAdminView method
  *
  * @return void

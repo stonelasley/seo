@@ -51,6 +51,14 @@ class SeoTitlesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
+		$this->testAction(
+			"admin/seo/seo_titles",
+			array(
+				'return' => 'vars',
+				'method' => 'GET'
+			)
+		);
+		$this->assertTrue(isset($this->vars['seoTitles']));
 	}
 
 /**

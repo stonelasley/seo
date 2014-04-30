@@ -20,6 +20,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.seo.seo_canonical',
+		'plugin.seo.seo_title',
 		'plugin.seo.seo_uri'
 	);
 
@@ -52,6 +53,14 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
+		$this->testAction(
+			"admin/seo/seo_canonicals",
+			array(
+				'return' => 'vars',
+				'method' => 'GET'
+			)
+		);
+		$this->assertTrue(isset($this->vars['seoCanonicals']));
 	}
 
 /**

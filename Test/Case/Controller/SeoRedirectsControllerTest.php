@@ -20,7 +20,8 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.seo.seo_redirect',
-		'plugin.seo.seo_uri'
+		'plugin.seo.seo_uri',
+		'plugin.seo.seo_title'
 	);
 
 /**
@@ -54,6 +55,14 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
+		$this->testAction(
+			"admin/seo/seo_redirects",
+			array(
+				'return' => 'vars',
+				'method' => 'GET'
+			)
+		);
+		$this->assertTrue(isset($this->vars['seoRedirects']));
 	}
 
 /**

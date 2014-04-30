@@ -51,6 +51,22 @@ class SeoABTestsControllerTest extends ControllerTestCase {
 	}
 
 /**
+ * testAdminIndex method
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction(
+			"admin/seo/seo_a_b_tests",
+			array(
+				'return' => 'vars',
+				'method' => 'GET'
+			)
+		);
+		$this->assertTrue(isset($this->vars['seoABTests']));
+	}
+
+/**
  * testAdminView method
  *
  * @return void

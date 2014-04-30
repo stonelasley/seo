@@ -53,6 +53,14 @@ class SeoMetaTagsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
+		$this->testAction(
+			"admin/seo/seo_meta_tags",
+			array(
+				'return' => 'vars',
+				'method' => 'GET'
+			)
+		);
+		$this->assertTrue(isset($this->vars['seoMetaTags']));
 	}
 
 /**
