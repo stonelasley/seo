@@ -9,13 +9,18 @@ class SeoUrlsController extends SeoAppController {
 		$this->set('seoUrls', $this->Paginator->paginate($this->SeoUrl->alias));
 	}
 
+/**
+ * admin_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid seo url'));
-			$this->redirect(array('action' => 'index'));
+		if (!$this->SeoUrl->exists($id)) {
+			throw new NotFoundException(__('Invalid seo url'));
 		}
-		$this->set('seoUrl', $this->SeoUrl->findById($id));
-		$this->set('id', $id);
+		$options = array('conditions' => array('SeoUrl.' . $this->SeoUrl->primaryKey => $id));
+		$this->set('seoUrl', $this->SeoUrl->find('first', $options));
 	}
 
 	public function admin_add() {
@@ -49,17 +54,24 @@ class SeoUrlsController extends SeoAppController {
 		$this->set('id', $id);
 	}
 
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ */
 	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for seo url'));
-			$this->redirect(array('action' => 'index'));
+		$this->SeoUrl->id = $id;
+		if (!$this->SeoUrl->exists()) {
+			throw new NotFoundException(__('Invalid seo url'));
 		}
-		if ($this->SeoUrl->delete($id)) {
-			$this->Session->setFlash(__('Seo url deleted'));
-			$this->redirect(array('action' => 'index'));
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->SeoUrl->delete()) {
+			$this->Session->setFlash(__('The seo url has been deleted.'));
+		} else {
+			$this->Session->setFlash(__('The seo url could not be deleted. Please, try again.'));
 		}
-		$this->Session->setFlash(__('Seo url was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 	public function admin_approve($id = null) {
