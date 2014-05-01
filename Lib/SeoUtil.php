@@ -16,33 +16,6 @@ class SeoUtil extends Object {
 	public static $configs = array();
 
 /**
- * Return version number
- * @return string version number
- * @access public
- */
-	public static function version() {
-		return "6.1.0";
-	}
-
-/**
- * Return description
- * @return string description
- * @access public
- */
-	public static function description() {
-		return "CakePHP Search Engine Optimization Plugin";
-	}
-
-/**
- * Return author
- * @return string author
- * @access public
- */
-	public static function author() {
-		return "Nick Baker, Alan Blount";
-	}
-
-/**
  * Load the SeoAppError class
  */
 	public static function loadSeoError() {
@@ -54,7 +27,7 @@ class SeoUtil extends Object {
  */
 	public static function isBanned($ip = null) {
 		App::import('Model', 'Seo.SeoBlacklist');
-		return SeoBlacklist::isBanned($ip);
+		return ClassRegistry::init('Seo.SeoBlacklist')->isBanned($ip);
 	}
 
 /**
@@ -68,17 +41,12 @@ class SeoUtil extends Object {
 		if (isset(self::$configs[$key])) {
 			return self::$configs[$key];
 		}
-		//try configure setting
-		if (self::$configs[$key] = Configure::read("Seo.$key")) {
-			return self::$configs[$key];
-		}
 		//try load configuration file and try again.
 		try{
 			Configure::load('seo');
 		} catch(ConfigureException $e) {
 			Configure::load('Seo.seo');
 		}
-		//debug(Configure::load('seo'));
 		self::$configs = Configure::read('Seo');
 		if (self::$configs[$key] = Configure::read("Seo.$key")) {
 			return self::$configs[$key];
