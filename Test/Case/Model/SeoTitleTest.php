@@ -13,17 +13,47 @@ class SeoTitleTest extends CakeTestCase {
 		'plugin.seo.seo_canonical',
 	);
 
+/**
+ * setup Test
+ *
+ * @return void
+ */
 	public function setup() {
 		$this->SeoTitle = ClassRegistry::init('SeoTitle');
 	}
 
 /**
- *
+ * Test model Instance type
  *
  * @return void
  */
 	public function testInstance() {
 		$this->assertTrue(is_a($this->SeoTitle, 'SeoTitle'));
+	}
+
+/**
+ * testBeforeSave method
+ *
+ * @return void
+ */
+	public function testBeforeSave() {
+		$SeoTitle = $this->getMockForModel('SeoTitle', array('createOrSetUri'));
+		$SeoTitle->expects($this->once())
+			->method('createOrSetUri')
+			->will($this->returnValue(true));
+		$this->assertTrue($SeoTitle->beforeSave(array()));
+	}
+
+/**
+ * Test model Instance type
+ *
+ * @return void
+ */
+	public function testFind() {
+		$result = $this->SeoTitle->findTitleByUri('/');
+		$this->assertTrue(isset($result['SeoTitle']));
+		$this->assertTrue(isset($result['SeoTitle']['title']));
+		$this->assertEquals('home page', $result['SeoTitle']['title']);
 	}
 
 	public function tearDown() {
