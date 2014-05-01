@@ -12,6 +12,35 @@ class SeoBlacklistTest extends CakeTestCase {
 	}
 
 /**
+ * testAddToBannedNoIP
+ *
+ * @return void
+ */
+	public function testAddToBannedNoIP() {
+		$SeoBlacklist = $this->getMockForModel('SeoBlacklist', array('getIpFromServer'));
+		$SeoBlacklist->expects($this->once())
+			->method('getIpFromServer')
+			->will($this->returnValue('192.168.1.1'));
+		$result = $SeoBlacklist->addToBanned(null, null, true);
+		$this->assertTrue(isset($result[$this->SeoBlacklist->alias]));
+		$this->assertEquals('3232235777', $result[$this->SeoBlacklist->alias]['ip_range_start']);
+	}
+
+/**
+ * testAddToBannedNoIPWithAggressive
+ *
+ * @return void
+ */
+	public function testAddToBannedNoIPWithAggressive() {
+		$SeoBlacklist = $this->getMockForModel('SeoBlacklist', array('getIpFromServer'));
+		$SeoBlacklist->expects($this->once())
+			->method('getIpFromServer')
+			->will($this->returnValue('192.168.1.1'));
+		$result = $SeoBlacklist->addToBanned();
+		$this->assertTrue(isset($result[$this->SeoBlacklist->alias]));
+		$this->assertEquals('3232235777', $result[$this->SeoBlacklist->alias]['ip_range_start']);
+	}
+/**
  *
  *
  * @return void
@@ -50,6 +79,14 @@ class SeoBlacklistTest extends CakeTestCase {
 		$this->assertTrue($this->SeoBlacklist->isBanned('10.100.0.2'));
 		$this->assertTrue($this->SeoBlacklist->isBanned('10.100.0.3'));
 		$this->assertFalse($this->SeoBlacklist->isBanned('10.100.0.10'));
+	}
+
+	public function testIsBannedNoIp() {
+		$SeoBlacklist = $this->getMockForModel('SeoBlacklist', array('getIpFromServer'));
+		$SeoBlacklist->expects($this->once())
+			->method('getIpFromServer')
+			->will($this->returnValue('10.100.0.1'));
+		$this->assertTrue($result = $SeoBlacklist->isBanned());
 	}
 
 	public function testIsBannedByInt() {
