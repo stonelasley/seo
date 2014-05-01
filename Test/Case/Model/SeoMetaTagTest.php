@@ -45,6 +45,20 @@ class SeoMetaTagTest extends CakeTestCase {
 		$this->assertEquals(0, count($results));
 	}
 
+	public function testFindAllTagsByUriWithNoUri() {
+
+		$SeoMetaTag = $this->getMockForModel('SeoMetaTag', array('find'));
+		$SeoUri = $this->getMockForModel('SeoUri', array('findRegexUri'));
+		$SeoMetaTag->expects($this->exactly(2))
+			->method('find')
+			->will($this->returnValue(null));
+		$SeoUri->expects($this->once())
+			->method('findRegexUri')
+			->will($this->returnValue(array('notempty')));
+		$SeoMetaTag->SeoUri = $SeoUri;
+		$this->assertEquals(null, $SeoMetaTag->findAllTagsByUri(''));
+	}
+
 	public function testBeforeSaveShouldLinkToExistinUri() {
 		$this->SeoMetaTag->data = array(
 			'SeoMetaTag' => array(
