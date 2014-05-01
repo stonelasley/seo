@@ -45,14 +45,6 @@ class SeoRedirect extends SeoAppModel {
 	}
 
 /**
- * This is a helper function for testing.
- */
-	public function callbackTest($request) {
-		$this->uri_request = $request;
-		return 'ran_callback';
-	}
-
-/**
  * Named scope to find list of uri -> redirect by order and approved/active
  * @return list of active and approved uri -> redirects ordered by priority
  */
