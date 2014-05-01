@@ -45,7 +45,7 @@ class SeoCanonicalTest extends CakeTestCase {
 	}
 
 /**
- *
+ * testInstance method
  *
  * @return void
  */
