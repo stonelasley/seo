@@ -46,7 +46,6 @@ class SeoMetaTagTest extends CakeTestCase {
 	}
 
 	public function testFindAllTagsByUriWithNoUri() {
-
 		$SeoMetaTag = $this->getMockForModel('SeoMetaTag', array('find'));
 		$SeoUri = $this->getMockForModel('SeoUri', array('findRegexUri'));
 		$SeoMetaTag->expects($this->exactly(2))
