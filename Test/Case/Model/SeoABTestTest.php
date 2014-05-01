@@ -28,7 +28,7 @@ class SeoABTestTest extends CakeTestCase {
 		$this->data = array (
 			'id' => '535dda88-f5bc-4942-b9b2-1174173cdfff',
 			'uri' => '/',
-			'slug' => 'slug\'with\'quotes',
+			'slug' => 'home',
 			'title' => 'test_title',
 			'roll' => 50,
 			'priority' => 1,
@@ -48,83 +48,89 @@ class SeoABTestTest extends CakeTestCase {
 	}
 
 /**
- * tearDown method
+ * testNoquotesWithQuotedSlug method
  *
  * @return void
  */
-	public function tearDown() {
-		parent::tearDown();
-		unset($this->SeoABTest);
-		ClassRegistry::flush();
-}
-
-	public function testBlank() {
-	}
-
-/**
- * testNoQuotesFalse method
- *
- * @return void
- */
-	public function testNoQuotesFalse() {
-		$data[$this->SeoABTest->alias]['slug'] = "slug'with'quote";
+	public function testNoquotesWithQuotedSlug() {
+		$data = array(
+			$this->SeoABTest->alias => array (
+				'slug' => "slug'with'quote"
+			)
+		);
 		$this->SeoABTest->set($data);
 		$this->assertFalse($this->SeoABTest->noquotes());
 	}
 
 /**
- * testNoQuotesFalse method
+ * testNoquotesWithUnQuotedSlug method
  *
  * @return void
  */
-	public function testNoQuotesTrue() {
+	public function testNoquotesWithUnQuotedSlug() {
 		$data[$this->SeoABTest->alias]['slug'] = "slugwitoutquote";
 		$this->SeoABTest->set($data);
 		$this->assertTrue($this->SeoABTest->noquotes());
 	}
 
 /**
- * testRollorCallbackWithValidInteger method
+ * testNumberOrCallbackWithValidInteger method
  *
  * @return void
  */
-	public function testRollorCallbackWithValidInteger() {
-		$data[$this->SeoABTest->alias]['roll'] = 50;
+	public function testNumberOrCallbackWithValidInteger() {
+		$data = array(
+			$this->SeoABTest->alias => array (
+				'roll' => 50
+			)
+		);
 		$this->SeoABTest->set($data);
 		$this->assertTrue($this->SeoABTest->numberOrCallback());
 	}
 
 /**
- * testRollorCallbackWithInValidInteger method
+ * testNumberOrCallbackWithInvalidInteger method
  *
  * @return void
  */
-	public function testRollorCallbackWithInValidInteger() {
-		$data[$this->SeoABTest->alias]['roll'] = -1;
+	public function testNumberOrCallbackWithInvalidInteger() {
+		$data = array(
+			$this->SeoABTest->alias => array (
+				'roll' => -1
+			)
+		);
 		$this->SeoABTest->set($data);
 		$this->assertFalse($this->SeoABTest->numberOrCallback());
-		$data[$this->SeoABTest->alias]['roll'] = 99999;
+		$data = array(
+			$this->SeoABTest->alias => array (
+				'roll' => 9999
+			)
+		);
 		$this->SeoABTest->set($data);
 		$this->assertFalse($this->SeoABTest->numberOrCallback());
 	}
 
 /**
- * testRollorCallbackWithValidCallback method
+ * testNumberOrCallbackWithValidCallback method
  *
  * @return void
  */
-	public function testRollorCallbackWithValidCallback() {
-		$data[$this->SeoABTest->alias]['roll'] = 'Object::callback';
+	public function testNumberOrCallbackWithValidCallback() {
+		$data = array(
+			$this->SeoABTest->alias => array (
+				'roll' => 'Object::callback'
+			)
+		);
 		$this->SeoABTest->set($data);
 		$this->assertTrue($this->SeoABTest->numberOrCallback());
 	}
 
 /**
- * testRollorCallbackWithInValidCallback method
+ * testNumberOrCallbackWithInvalidCallback method
  *
  * @return void
  */
-	public function testRollorCallbackWithInValidCallback() {
+	public function testNumberOrCallbackWithInvalidCallback() {
 		$data = array(
 			$this->SeoABTest->alias => array (
 				'roll' => 'Object:callback'
@@ -135,11 +141,11 @@ class SeoABTestTest extends CakeTestCase {
 	}
 
 /**
- * testRollorCallbackWithNoRollData method
+ * testNumberOrCallbackWithNoRollData method
  *
  * @return void
  */
-	public function testRollorCallbackWithNoRollData() {
+	public function testNumberOrCallbackWithNoRollData() {
 		$data = array($this->SeoABTest->alias);
 		$this->SeoABTest->set($data);
 		$this->assertTrue($this->SeoABTest->numberOrCallback());
@@ -210,11 +216,11 @@ class SeoABTestTest extends CakeTestCase {
 	}
 
 /**
- * testFindTestableWithRollNoValidTest method
+ * testFindTestableWithRollWithInvalid method
  *
  * @return void
  */
-	public function testFindTestableWithRollNoValidTest() {
+	public function testFindTestableWithRollWithInvalid() {
 		$SeoABTest = $this->getMockForModel('SeoABTest', array('findTestByUri'));
 		$SeoABTest->expects($this->once())
 			->method('findTestByUri')
@@ -223,16 +229,107 @@ class SeoABTestTest extends CakeTestCase {
 	}
 
 /**
- * testRoll
+ * testRollWithRoll
  *
  * @return void
  */
-	public function testRollWithNonTestable() {
-		$data = array(
+	public function testRollWithRoll() {
+		$roll = array(
 			$this->SeoABTest->alias => array (
+				'roll' => 50
 			)
 		);
-		$SeoABTest = $this->getMockForModel('SeoABTest', array('callbackMethod'));
-		$this->assertTrue($SeoABTest->isTestable($data));
+		$this->assertInternalType("bool", $this->SeoABTest->roll($roll));
+	}
+
+/**
+ * testRollWithCallback
+ *
+ * @return void
+ */
+	public function testRollWithCallback() {
+		$roll = array(
+			$this->SeoABTest->alias => array (
+				'roll' => "SeoABTest::callback"
+			)
+		);
+		$SeoABTest = $this->getMockForModel('SeoABTest', array('callback'));
+		$SeoABTest->expects($this->once())
+			->method('callback')
+			->will($this->returnValue(true));
+		$this->assertTrue($SeoABTest->roll($roll));
+	}
+
+/**
+ * testRollWithEmpty
+ *
+ * @return void
+ */
+	public function testRollWithEmpty() {
+		$roll = array(
+		);
+		$this->assertFalse($this->SeoABTest->roll($roll));
+	}
+
+/**
+ * testTestableValidationWithValidCallback model
+ *
+ * @return void
+ */
+	public function testTestableValidationWithValidCallback() {
+		$data = array(
+			$this->SeoABTest->alias => array (
+				'testable' => 'SeoABTest::callBackMethod'
+			)
+		);
+		$this->SeoABTest->set($data);
+		$this->assertTrue($this->SeoABTest->testableValidation());
+	}
+
+/**
+ * testTestableValidationWithValidCallback model
+ *
+ * @return void
+ */
+	public function testTestableValidationWithInvalidCallback() {
+		$data = array(
+			$this->SeoABTest->alias => array (
+				'testable' => 'callBackMethod'
+			)
+		);
+		$this->SeoABTest->set($data);
+		$this->assertFalse($this->SeoABTest->testableValidation());
+	}
+
+/**
+ * testTestableValidationWithEmpty model
+ *
+ * @return void
+ */
+	public function testTestableValidationWithEmpty() {
+		$data = array(
+		);
+		$this->SeoABTest->set($data);
+		$this->assertTrue($this->SeoABTest->testableValidation());
+	}
+
+/**
+ * testFindTestByUri
+ *
+ * @return void
+ */
+	public function testFindTestByUriWithNoRequest() {
+		$this->assertFalse($this->SeoABTest->findTestByUri());
+	}
+
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		unset($this->SeoABTest);
+		ClassRegistry::flush();
 	}
 }
