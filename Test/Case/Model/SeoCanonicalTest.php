@@ -54,6 +54,19 @@ class SeoCanonicalTest extends CakeTestCase {
 	}
 
 /**
+ * testBeforeSave
+ *
+ * @return void
+ */
+	public function testRollWithCallback() {
+		$SeoCanonical = $this->getMockForModel('SeoCanonical', array('createOrSetUri'));
+		$SeoCanonical->expects($this->once())
+			->method('createOrSetUri')
+			->will($this->returnValue(true));
+		$this->assertTrue($SeoCanonical->beforeSave());
+	}
+
+/**
  * testFindByUri method
  *
  * @return void
