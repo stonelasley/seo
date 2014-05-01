@@ -172,14 +172,15 @@ class SeoABTestTest extends CakeTestCase {
 	public function testIsTestable() {
 		$data = array(
 			$this->SeoABTest->alias => array (
-				'testable' => 'SeoABTest::callBackMethod'
+				'testable' => 'SeoTitle::callbackMethod'
 			)
 		);
-		$SeoABTest = $this->getMockForModel('SeoABTest', array('callbackMethod'));
-		$SeoABTest->expects($this->once())
+		$SeoTitle = $this->getMockForModel('SeoTitle', array('callbackMethod'));
+		$SeoTitle->expects($this->once())
 			->method('callbackMethod')
 			->will($this->returnValue(true));
-		$this->assertTrue($SeoABTest->isTestable($data));
+
+		$this->assertTrue($this->SeoABTest->isTestable($data));
 	}
 
 /**
@@ -192,8 +193,10 @@ class SeoABTestTest extends CakeTestCase {
 			$this->SeoABTest->alias => array (
 			)
 		);
-		$SeoABTest = $this->getMockForModel('SeoABTest', array('callbackMethod'));
-		$this->assertTrue($SeoABTest->isTestable($data));
+		$SeoTitle = $this->getMockForModel('SeoTitle', array('callbackMethod'));
+		$SeoTitle->expects($this->never())
+			->method('callbackMethod');
+		$this->assertTrue($this->SeoABTest->isTestable($data));
 	}
 
 /**
