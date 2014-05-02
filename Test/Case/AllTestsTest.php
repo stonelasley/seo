@@ -19,7 +19,7 @@ class AllTests extends CakeTestSuite {
 		$suite->addTestDirectoryRecursive($path . DS . 'Controller');
 		$suite->addTestDirectoryRecursive($path . DS . 'Model');
 		$suite->addTestDirectoryRecursive($path . DS . 'Lib');
-		$suite->addTestDirectoryRecursive($path . DS . 'helpers');
+		$suite->addTestDirectoryRecursive($path . DS . 'Helper');
 		return $suite;
 	}
 }
