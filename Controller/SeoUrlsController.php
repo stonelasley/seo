@@ -3,7 +3,7 @@ App::uses('SeoAppController', 'Seo.Controller');
 class SeoUrlsController extends SeoAppController {
 
 	public function admin_index() {
-		$this->Prg->commonProcess(null, array('action' => 'index'));
+		$this->Prg->commonProcess($this->SeoUrl->alias, array('action' => 'index'));
 		$this->Paginator->settings['conditions']
 			= $this->SeoUrl->parseCriteria($this->passedArgs);
 		$this->set('seoUrls', $this->Paginator->paginate($this->SeoUrl->alias));

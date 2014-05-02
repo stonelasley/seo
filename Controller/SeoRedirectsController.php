@@ -3,7 +3,7 @@ App::uses('SeoAppController', 'Seo.Controller');
 class SeoRedirectsController extends SeoAppController {
 
 	public function admin_index() {
-		$this->Prg->commonProcess(null, array('action' => 'index'));
+		$this->Prg->commonProcess($this->SeoRedirect->alias, array('action' => 'index'));
 		$this->Paginator->settings['conditions']
 			= $this->SeoRedirect->parseCriteria($this->passedArgs);
 		$this->set('seoRedirects', $this->Paginator->paginate($this->SeoRedirect->alias));

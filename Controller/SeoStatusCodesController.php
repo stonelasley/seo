@@ -3,7 +3,7 @@ App::uses('SeoAppController', 'Seo.Controller');
 class SeoStatusCodesController extends SeoAppController {
 
 	public function admin_index() {
-		$this->Prg->commonProcess(null, array('action' => 'index'));
+		$this->Prg->commonProcess($this->SeoStatusCode->alias, array('action' => 'index'));
 		$this->Paginator->settings['conditions']
 			= $this->SeoStatusCode->parseCriteria($this->passedArgs);
 		$this->set('status_codes', $this->SeoStatusCode->findCodeList());

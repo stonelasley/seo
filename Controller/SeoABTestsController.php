@@ -12,7 +12,7 @@ class SeoABTestsController extends SeoAppController {
 	}
 
 	public function admin_index() {
-		$this->Prg->commonProcess(null, array('action' => 'index'));
+		$this->Prg->commonProcess($this->SeoABTest->alias, array('action' => 'index'));
 		$this->Paginator->settings['conditions']
 			= $this->SeoABTest->parseCriteria($this->passedArgs);
 		$this->set('seoABTests', $this->Paginator->paginate($this->SeoABTest->alias));
