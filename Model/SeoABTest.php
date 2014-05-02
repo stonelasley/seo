@@ -286,7 +286,7 @@ class SeoABTest extends SeoAppModel {
 		}
 
 		//Check Many to Many and Many to One
-		$cacheEngine = SeoUtil::getConfig('cacheEngine');
+		$cacheEngine = $this->getConfig('cacheEngine');
 		if (!empty($cacheEngine)) {
 			$cacheKey = 'seo_ab_tests';
 			$tests = Cache::read($cacheKey, $cacheEngine);
@@ -303,7 +303,7 @@ class SeoABTest extends SeoAppModel {
 			}
 		}
 		foreach ($tests as $test) {
-			if (SeoUtil::requestMatch($request, $test[$this->SeoUri->alias]['uri'])) {
+			if ($this->requestMatch($request, $test[$this->SeoUri->alias]['uri'])) {
 				return $test;
 			}
 		}
