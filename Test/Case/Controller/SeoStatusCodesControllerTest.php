@@ -38,13 +38,13 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
 			)
 		);
 		$this->testData = array (
-			'id' => 'e55bf308-a6c2-486b-8504-d5baca9f9fee',
-			'seo_uri_id' => '535f0ce3-bc44-4327-2345-066d173cdfff',
-			'status_code' => 302,
-			'priority' => 100,
+			'id' => '53630383-ca24-475f-a4d0-0e57173cdfff',
+			'seo_uri_id' => '536073fb-f8ac-49b5-9c0e-0e57173cdfff',
+			'status_code' => '200',
+			'priority' => '1',
 			'is_active' => 1,
-			'created' => '2011-07-25 17:06:20',
-			'modified' => '2011-07-25 17:06:20'
+			'created' => '2014-05-01 20:31:31',
+			'modified' => '2014-05-01 20:31:31'
 		);
 	}
 
