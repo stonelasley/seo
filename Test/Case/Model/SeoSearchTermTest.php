@@ -24,7 +24,7 @@ class SeoSearchTermTest extends CakeTestCase {
 		$_SERVER['HTTP_REFERER'] = 'https://www.google.com/#q=Some+search&hl=en&safe=off&prmd=imvns&ei=mUrHTuWSJo73sQLl5ZQ8&start=10&sa=N&bav=on.2,or.r_gc.r_pw.r_cp.,cf.osb&fp=5e5b3f07d49aeae4&biw=1397&bih=907';
 		$this->SeoSearchTerm->parseRequest("/some_url");
 		$result = $this->SeoSearchTerm->find('last');
-		$this->assertEquals('Search Term', $result['SeoSearchTerm']['term']);
+		$this->assertEquals('Some search', $result['SeoSearchTerm']['term']);
 		$this->assertEquals('/some_url', $result['SeoSearchTerm']['uri']);
 		$this->assertEquals(1, $result['SeoSearchTerm']['count']);
 	}
