@@ -143,6 +143,27 @@ class SeoAppModel extends AppModel {
 	}
 
 /**
+ * Get SeoUtil configuration value
+ *
+ * @param string $key
+ * @return string configuration value
+ */
+	public function getConfig($key = null) {
+		return SeoUtil::getConfig($key);
+	}
+
+/**
+ * Get SeoUtil request match
+ *
+ * @param $request
+ * @param null $uri
+ * @internal param string $key
+ * @return string configuration value
+ */
+	public function requestMatch($request, $uri = null) {
+		return SeoUtil::requestMatch($request, $uri);
+	}
+/**
  * Returns the server IP based on values from the $_SERVER, etc
  *
  * @return string $ip of incoming/client IP
@@ -159,15 +180,5 @@ class SeoAppModel extends AppModel {
 				return $ip;
 			}
 		}
-	}
-
-/**
- * This is what I want create to do, but without setting defaults.
- */
-	public function clear() {
-		$this->id = false;
-		$this->data = array();
-		$this->validationErrors = array();
-		return $this->data;
 	}
 }
