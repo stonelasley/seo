@@ -2,7 +2,6 @@
 App::import('Helper', 'Html');
 App::import('Model', 'Seo.SeoMetaTag');
 App::import('Model', 'Seo.SeoCanonical');
-//App::uses('Html', 'app.View/Helper');
 App::uses('Controller', 'Controller');
 App::uses('View', 'View');
 App::uses('SeoHelper', 'Seo.View/Helper');
@@ -40,11 +39,10 @@ class SeoHelperTest extends CakeTestCase {
 		$this->assertEquals('<link rel="canonical" href="http://localhost/">', $result);
 
 		$result = $this->Seo->canonical();
-		$this->assertEquals('', $result);
+		$this->assertTrue(empty($result));
 
-		$_SERVER['REQUEST_URI'] = '/about';
-		$result = $this->Seo->canonical();
-		$this->assertEquals('<link rel="canonical" href="http://localhost/about_us">', $result);
+		$result = $this->Seo->canonical('/about');
+		$this->assertEquals('<link rel="canonical" href="http://localhost/about">', $result);
 	}
 
 	public function testHoneyPot() {
