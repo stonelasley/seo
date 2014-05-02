@@ -5,11 +5,11 @@
  */
 class SeoStatusCodeFixture extends CakeTestFixture {
 
-	/**
-	 * Fields
-	 *
-	 * @var array
-	 */
+/**
+ * Fields
+ *
+ * @var array
+ */
 	public $fields = array(
 		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'seo_uri_id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'index', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
@@ -25,11 +25,11 @@ class SeoStatusCodeFixture extends CakeTestFixture {
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
 
-	/**
-	 * Records
-	 *
-	 * @var array
-	 */
+/**
+ * Records
+ *
+ * @var array
+ */
 	public $records = array(
 		array(
 			'id' => '53630383-ca24-475f-a4d0-0e57173cdfff',
