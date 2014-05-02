@@ -27,6 +27,30 @@ class SeoStatusCodeTest extends CakeTestCase {
 		$this->assertTrue(is_a($this->SeoStatusCode, 'SeoStatusCode'));
 	}
 
+/**
+ *testFindCodeList
+ *
+ * @return void
+ */
+	public function testFindCodeList() {
+		$list = $this->SeoStatusCode->findCodeList();
+		$this->assertEquals(21, count($list));
+		$this->assertTrue(isset($list[200]));
+		$this->assertEquals('200 : OK', $list[200]);
+	}
+
+/**
+ *testFindCodeList
+ *
+ * @return void
+ */
+	public function testFindStatusCodeListByPriority() {
+		$list = $this->SeoStatusCode->findStatusCodeListByPriority();
+		$this->assertEquals(3, count($list));
+		$this->assertTrue(isset($list[0]['SeoStatusCode']));
+		$this->assertTrue(isset($list[0]['SeoUri']));
+	}
+
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->SeoStatusCode);
