@@ -49,6 +49,16 @@ class SeoSearchTermTest extends CakeTestCase {
 		$this->assertEquals(1, $result['SeoSearchTerm']['count']);
 	}
 
+	public function testParseRequestIgnoreWithSearchTermsOff() {
+		$SeoSearchTerm = $this->getMockForModel('SeoSearchTerm', array('getConfig'));
+		$SeoSearchTerm->expects($this->once())
+			->method('getConfig')
+			->will($this->returnValue(false));
+		$_SERVER['HTTP_REFERER'] = 'https://www.google.com/';
+		$result = $SeoSearchTerm->parseRequest("/some_url");
+		$this->assertTrue(empty($result));
+	}
+
 	public function testParseRequestDelete() {
 		$_SERVER['HTTP_REFERER'] = 'https://www.google.com/#q=Search+Term&hl=en&safe=off&prmd=imvns&ei=mUrHTuWSJo73sQLl5ZQ8&sa=N&bav=on.2,or.r_gc.r_pw.r_cp.,cf.osb&fp=5e5b3f07d49aeae4&biw=1397&bih=907';
 		$count = $this->SeoSearchTerm->find('count');
@@ -56,6 +66,35 @@ class SeoSearchTermTest extends CakeTestCase {
 		$result = $this->SeoSearchTerm->findById('7');
 		$this->assertTrue($result === array());
 		$this->assertEquals($count - 1, $this->SeoSearchTerm->find('count'));
+	}
+
+/**
+ * testFindRandomTerms method
+ *
+ * @return void
+ */
+	public function testFindRandomTerms() {
+		$result = $this->SeoSearchTerm->findRandomTerms();
+		$this->assertTrue(isset($result[0]['SeoSearchTerm']));
+	}
+
+/**
+ * testFindTopTerms method
+ *
+ * @return void
+ */
+	public function testFindTopTerms() {
+		$result = $this->SeoSearchTerm->findTopTerms();
+		$this->assertTrue(isset($result[0]['SeoSearchTerm']));
+	}
+
+/**
+ * testFindTopTerms method
+ *
+ * @return void
+ */
+	public function testIterateCountWithNoId() {
+		$this->assertFalse($this->SeoSearchTerm->itterateCount());
 	}
 
 	public function tearDown() {

@@ -60,7 +60,7 @@ class SeoSearchTerm extends SeoAppModel {
 			$referrer = env('HTTP_REFERER');
 			// Check if from google and page 2
 			if (strpos($referrer, "google.com")) {
-				if (!SeoUtil::getConfig('searchTerms')) {
+				if (!$this->getConfig('searchTerms')) {
 					return;
 				}
 				//parse the term out.
