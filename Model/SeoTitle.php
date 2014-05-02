@@ -49,8 +49,16 @@ class SeoTitle extends SeoAppModel {
  * @var array
  */
 	public $filterArgs = array (
-		'title' => array ('type' => 'like'),
-		'uri' => array('type' => 'like', 'field' => array('SeoUri.uri')),
+		'title' => array ('type' => 'like', 'before' => true, 'after' => true),
+		'uri' => array(
+			'type' => 'like',
+			'encode' => true,
+			'before' => true,
+			'after' => true,
+			'field' => array(
+				'SeoUri.uri'
+			)
+		),
 	);
 
 /**

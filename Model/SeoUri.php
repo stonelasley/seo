@@ -86,7 +86,15 @@ class SeoUri extends SeoAppModel {
  * @var array
  */
 	public $filterArgs = array (
-		'uri' => array('type' => 'like', 'encode' => true),
+		'uri' => array(
+			'type' => 'like',
+			'encode' => true,
+			'before' => true,
+			'after' => true,
+			'field' => array(
+				'SeoUri.uri'
+			)
+		),
 		'is_approved' => array('type' => 'value', 'empty' => false),
 	);
 

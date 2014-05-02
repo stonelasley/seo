@@ -34,7 +34,15 @@ class SeoCanonical extends SeoAppModel {
  */
 	public $filterArgs = array (
 		'canonical' => array ('type' => 'like'),
-		'uri' => array('type' => 'like', 'field' => 'SeoUri.uri', 'encode' => true),
+		'uri' => array(
+			'type' => 'like',
+			'encode' => true,
+			'before' => true,
+			'after' => true,
+			'field' => array(
+				'SeoUri.uri'
+			)
+		),
 		'is_active' => array('type' => 'value', 'empty' => false),
 	);
 

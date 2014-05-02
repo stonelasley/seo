@@ -34,7 +34,15 @@ class SeoStatusCode extends SeoAppModel {
  */
 	public $filterArgs = array (
 		'status_code' => array('type' => 'like'),
-		'uri' => array('type' => 'like', 'encode' => true, 'field' => array('SeoUri.uri')),
+		'uri' => array(
+			'type' => 'like',
+			'encode' => true,
+			'before' => true,
+			'after' => true,
+			'field' => array(
+				'SeoUri.uri'
+			)
+		),
 		'is_active' => array('type' => 'value', 'empty' => false),
 	);
 
@@ -93,13 +101,15 @@ class SeoStatusCode extends SeoAppModel {
  * @return list of active and approved uri => status_codes ordered by priority
  */
 	public function findStatusCodeListByPriority() {
-		return $this->find('all', array(
-			'fields' => array("{$this->SeoUri->alias}.uri", "{$this->alias}.status_code"),
-			'order' => "{$this->alias}.priority ASC",
-			'conditions' => array(
-				"{$this->alias}.is_active" => true,
-				"{$this->SeoUri->alias}.is_approved" => true,
+		return $this->find('all',
+			array(
+				'fields' => array("{$this->SeoUri->alias}.uri", "{$this->alias}.status_code"),
+				'order' => "{$this->alias}.priority ASC",
+				'conditions' => array(
+					"{$this->alias}.is_active" => true,
+					//"{$this->SeoUri->alias}.is_approved" => true,
+				)
 			)
-		));
+		);
 	}
 }

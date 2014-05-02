@@ -81,7 +81,7 @@ class SeoAppModel extends AppModel {
 		case 'last':
 				$query = array_merge(
 					$query,
-					array('order' => "{$this->alias}.{$this->primaryKey} DESC")
+					array('order' => "{$this->alias}.created DESC")
 				);
 			return parent::find('first', $query);
 		default:

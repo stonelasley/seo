@@ -98,8 +98,16 @@ class SeoABTest extends SeoAppModel {
  * @var array
  */
 	public $filterArgs = array (
-		'slug' => array ('type' => 'like'),
-		'uri' => array('type' => 'like', 'encode' => true, 'field' => array('SeoUri.uri')),
+		'slug' => array ('type' => 'like', 'before' => true, 'after' => true),
+		'uri' => array(
+			'type' => 'like',
+			'encode' => true,
+			'before' => true,
+			'after' => true,
+			'field' => array(
+				'SeoUri.uri'
+			)
+		),
 		'is_active' => array ('type' => 'value', 'empty' => false),
 	);
 

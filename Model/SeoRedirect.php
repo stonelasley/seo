@@ -28,7 +28,15 @@ class SeoRedirect extends SeoAppModel {
  */
 	public $filterArgs = array (
 		'redirect' => array('type' => 'like', 'encode' => true),
-		'uri' => array('type' => 'like', 'encode' => true, 'field' => array('SeoUri.uri')),
+		'uri' => array(
+			'type' => 'like',
+			'encode' => true,
+			'before' => true,
+			'after' => true,
+			'field' => array(
+				'SeoUri.uri'
+			)
+		),
 		'is_active' => array('type' => 'value', 'empty' => false),
 	);
 

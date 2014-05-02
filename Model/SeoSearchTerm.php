@@ -37,7 +37,15 @@ class SeoSearchTerm extends SeoAppModel {
  */
 	public $filterArgs = array (
 		'term' => array ('type' => 'like'),
-		'uri' => array('type' => 'like', 'field' => array('SeoUri.uri')),
+		'uri' => array(
+			'type' => 'like',
+			'encode' => true,
+			'before' => true,
+			'after' => true,
+			'field' => array(
+				'SeoUri.uri'
+			)
+		),
 	);
 
 /**

@@ -40,7 +40,20 @@ class SeoMetaTag extends SeoAppModel {
  */
 	public $filterArgs = array (
 		'name' => array ('type' => 'like'),
-		'uri' => array('type' => 'like', 'encode' => true, 'field' => array('SeoUri.uri')),
+		'content' => array(
+			'type' => 'like',
+			'before' => true,
+			'after' => true
+		),
+		'uri' => array(
+			'type' => 'like',
+			'encode' => true,
+			'before' => true,
+			'after' => true,
+			'field' => array(
+				'SeoUri.uri'
+			)
+		),
 		'is_http_equiv' => array ('type' => 'value', 'empty' => false),
 	);
 

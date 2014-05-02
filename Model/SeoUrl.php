@@ -26,7 +26,7 @@ class SeoUrl extends SeoAppModel {
  * @public array
  */
 	public $filterArgs = array (
-		'url' => array('type' => 'like'),
+		'url' => array('type' => 'like')
 	);
 
 /**
