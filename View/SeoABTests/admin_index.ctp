@@ -44,7 +44,7 @@
 	</div>
 	<div class="actions">
 		<h3><?php echo __('Search'); ?></h3>
-		<?php echo $this->element('seo_admin_filter', array('plugin' => 'seo', 'model' => 'SeoTitle')); ?>
+		<?php echo $this->element('seo_admin_filter', array('plugin' => 'seo', 'model' => 'SeoABTest')); ?>
 		<h3><?php echo __('Actions'); ?></h3>
 		<ul>
 			<li><?php echo $this->Html->link(__('New Seo A B Test'), array('action' => 'add')); ?></li>
