@@ -1,5 +1,6 @@
 <?php
 App::uses('SeoUtil', 'Seo.Lib');
+App::uses('Component', 'Component');
 class BlackListComponent extends Component {
 
 /**
