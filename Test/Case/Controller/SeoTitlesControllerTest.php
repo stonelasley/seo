@@ -20,6 +20,8 @@ class SeoTitlesControllerTest extends ControllerTestCase {
  */
 	public $fixtures = array(
 		'plugin.seo.seo_title',
+		'plugin.seo.seo_meta_tag',
+		'plugin.seo.seo_canonical',
 		'plugin.seo.seo_uri'
 	);
 

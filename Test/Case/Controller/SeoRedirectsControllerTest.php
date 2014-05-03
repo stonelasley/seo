@@ -1,5 +1,6 @@
 <?php
 App::uses('SeoRedirectsController', 'Seo.Controller');
+App::uses('Session', 'Controller/Component');
 
 /**
  * SeoRedirectsController Test Case
@@ -19,9 +20,11 @@ class SeoRedirectsControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
+		'plugin.seo.seo_title',
+		'plugin.seo.seo_meta_tag',
+		'plugin.seo.seo_canonical',
 		'plugin.seo.seo_redirect',
-		'plugin.seo.seo_uri',
-		'plugin.seo.seo_title'
+		'plugin.seo.seo_uri'
 	);
 
 /**
