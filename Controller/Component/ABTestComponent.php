@@ -1,7 +1,6 @@
 <?php
-App::uses('SeoUtil', 'Seo.Lib');
-App::uses('Component', 'Controller');
-class ABTestComponent extends Component {
+App::uses('SeoAppComponent', 'Seo.Controller/Component');
+class ABTestComponent extends SeoAppComponent {
 
 /**
  * The Acutal AB test being tested.
@@ -44,7 +43,7 @@ class ABTestComponent extends Component {
 		if ($test = $this->SeoABTest->findTestByUri(null, $options['debug'])) {
 			if ($this->SeoABTest->isTestable($test)) {
 				$retval['test'] = $test;
-				if (SeoUtil::getConfig('abTesting.session')) {
+				if ($this->getConfig('abTesting.session')) {
 					$abTests = CakeSession::check('Seo.ABTests') ? CakeSession::read('Seo.ABTests') : array();
 				} else {
 					$abTests = array();
@@ -58,7 +57,7 @@ class ABTestComponent extends Component {
 					$abTests[$test['SeoABTest']['id']] = false;
 					$retval['roll'] = false;
 				}
-				if (SeoUtil::getConfig('abTesting.session')) {
+				if ($this->getConfig('abTesting.session')) {
 					CakeSession::write('Seo.ABTests', $abTests);
 				}
 				$this->test = $retval;
