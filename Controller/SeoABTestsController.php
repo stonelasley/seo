@@ -45,20 +45,20 @@ class SeoABTestsController extends SeoAppController {
 	}
 
 	public function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid seo AB Test'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->SeoABTest->save($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($this->SeoABTest->save($this->request->data)) {
 				$this->Session->setFlash(__('The seo AB Test has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The seo AB Test could not be saved. Please, try again.'));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->SeoABTest->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $this->SeoABTest->read(null, $id);
 		}
 		$this->set('id', $id);
 	}
