@@ -8,6 +8,9 @@ App::uses('SeoHelper', 'Seo.View/Helper');
 
 class SeoHelperTest extends CakeTestCase {
 
+/**
+ * fixtures
+ */
 	public $fixtures = array(
 		'plugin.seo.seo_meta_tag',
 		'plugin.seo.seo_redirect',
@@ -17,6 +20,9 @@ class SeoHelperTest extends CakeTestCase {
 		'plugin.seo.seo_a_b_test',
 	);
 
+/**
+ * setup
+ */
 	public function setUp() {
 		parent::setUp();
 		$Controller = new Controller();
@@ -29,81 +35,110 @@ class SeoHelperTest extends CakeTestCase {
 		}
 	}
 
+/**
+ * testGetABTestJS
+ */
 	public function testGetABTestJS() {
 		$result = $this->Seo->getABTestJS(array('SeoABTest' => array('slug' => 'home') ));
 		$this->assertEquals('_gaq.push([\'_setCustompublic\',4,\'ABTest\',\'home\',3]);', $result);
 	}
 
+/**
+ * testCanonicalWithEmpty test rendering of canonical link
+ */
 	public function testCanonical() {
-		$result = $this->Seo->canonical('/');
+		$path = 'http://localhost/';
+		$result = $this->Seo->canonical($path);
 		$this->assertEquals('<link rel="canonical" href="http://localhost/">', $result);
-
-		$result = $this->Seo->canonical();
-		$this->assertTrue(empty($result));
-
-		$result = $this->Seo->canonical('/about');
-		$this->assertEquals('<link rel="canonical" href="http://localhost/about">', $result);
 	}
 
+/**
+ * testCanonicalWithEmpty test rendering of canonical link with no variable
+ */
+	public function testCanonicalWithEmpty() {
+		$result = $this->Seo->canonical();
+		$this->assertTrue(empty($result));
+	}
+
+/**
+ * testHoneyPot
+ */
 	public function testHoneyPot() {
 		$result = $this->Seo->honeyPot();
 		$this->assertTrue(!empty($result));
 	}
 
+/**
+ * testMetaTags test rendering of meta tags
+ */
 	public function testMetaTags() {
-		$_SERVER['REQUEST_URI'] = '/';
-		$result = $this->Seo->metaTags();
-		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" />', $result);
-
-		$result = $this->Seo->metaTags(array('keywords' => 'ignore me'));
-		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" />', $result);
-
-		$result = $this->Seo->metaTags(array('insert' => 'me'));
-		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" /><meta name="insert" content="me" />', $result);
+		$tags = array(
+			0 => array(
+				'name' => 'description',
+				'content' => 'about page description content'
+			),
+			1 => array(
+				'name' => 'keywords',
+				'content' => 'about page keywords content'
+			),
+			2 => array(
+				'name' => 'robots',
+				'content' => 'about page robots content'
+			)
+		);
+		$result = $this->Seo->metaTags($tags);
+		$this->assertEquals('<meta name="description" content="about page description content" /><meta name="keywords" content="about page keywords content" /><meta name="robots" content="about page robots content" />', $result);
 	}
 
+/**
+ * testMetaTags test rendering of meta tags with http-equiv
+ */
 	public function testMetaTagsWithHttpEquiv() {
-		$_SERVER['REQUEST_URI'] = '/';
-		$result = $this->Seo->metaTags();
+		$tags = array(
+			0 => array(
+				'http-equiv' => 'description',
+				'content' => 'home page description content'
+			),
+			1 => array(
+				'http-equiv' => 'keywords',
+				'content' => 'home page keywords content'
+			),
+			2 => array(
+				'http-equiv' => 'robots',
+				'content' => 'home page robots content'
+			)
+		);
+		$result = $this->Seo->metaTags($tags);
 		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" />', $result);
 	}
 
-	public function testMetaTagsWithOutAny() {
-		$_SERVER['REQUEST_URI'] = '/uri_has_no_meta';
+/**
+ * testMetaTags test rendering of meta tags with no variable
+ */
+	public function testMetaTagsWithEmpty() {
 		$result = $this->Seo->metaTags();
 		$this->assertEquals('', $result);
 	}
 
-	public function testMetaTagsWithRegEx() {
-		$_SERVER['REQUEST_URI'] = '/posts';
-		$result = $this->Seo->metaTags();
-		//$this->assertEquals('<meta name="default" content="content_default" /><meta name="description_default" content="content_default_2" />', $result);
-	}
-
-	public function testmetaTagsTagsDirectMatchShouldOverwrite() {
-		$_SERVER['REQUEST_URI'] = '/doggies';
-		$result = $this->Seo->metaTags();
-		//$this->assertEquals('<meta name="direct_match" content="direct_match_content" />', $result);
-	}
-
-	public function testmetaTagsWithWildCard() {
-		$_SERVER['REQUEST_URI'] = '/uri_for_meta_wild_card/wild_card';
-		$result = $this->Seo->metaTags();
-		//$this->assertEquals('<meta name="wild_card_match" content="wild_card_match_content" />', $result);
-	}
-
-	public function testTitleForUri() {
-		$_SERVER['REQUEST_URI'] = '/doggies';
+/**
+ * testTitleWithEmpty test rendering of title with no variable
+ */
+	public function testTitleWithEmpty() {
 		$result = $this->Seo->title();
 		$this->assertEquals('<title></title>', $result);
 	}
 
-	public function testTitleForUriWithDefault() {
-		$_SERVER['REQUEST_URI'] = '/blahNotDefined';
+/**
+ * testTitleWithEmpty test rendering of title with value
+ */
+	public function testTitleWithDefault() {
 		$results = $this->Seo->title('default');
 		$this->assertEquals('<title>default</title>', $results);
 	}
 
+/**
+ * tear down test
+ */
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->SeometaTagsTag);

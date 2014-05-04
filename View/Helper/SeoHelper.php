@@ -8,13 +8,10 @@
 App::uses('SeoUtil', 'Seo.Lib');
 App::uses('SeoUri', 'Seo.Model');
 App::uses('SeoTitle', 'Seo.Model');
-App::uses('SeoMetaTag', 'Seo.Model');
 App::uses('SeoCanonical', 'Seo.Model');
 class SeoHelper extends AppHelper {
 
 	public $helpers = array('Html');
-
-	public $SeoMetaTag = null;
 
 	public $SeoTitle = null;
 
@@ -26,55 +23,34 @@ class SeoHelper extends AppHelper {
 
 /**
  * Show the meta tags designated for this uri
- * @param array of name => content meta tags to merge with giving priority to SEO meta tags
+ * @param array of name => content meta tags to display
  * @return string of meta tags to show.
  */
 	public function metaTags($metaData = array()) {
-		$this->SeoMetaTag = ClassRegistry::init('Seo.SeoMetaTag');
-		$request = env('REQUEST_URI');
-		$metaTags = $this->SeoMetaTag->findAllTagsByUri($request);
-		$retval = "";
-
-		foreach ($metaTags as $tag) {
-			if (isset($metaData[$tag['SeoMetaTag']['name']])) {
-				unset($metaData[$tag['SeoMetaTag']['name']]);
-			}
-			$data = array();
-			if ($tag['SeoMetaTag']['is_http_equiv']) {
-				$data['http-equiv'] = $tag['SeoMetaTag']['name'];
-			} else {
-				$data['name'] = $tag['SeoMetaTag']['name'];
-			}
-			$data['content'] = $tag['SeoMetaTag']['content'];
-			$retval .= $this->Html->meta($data);
-		}
+		$markup = '';
 		if (!empty($metaData)) {
-			foreach ($metaData as $name => $content) {
-				$retval .= $this->Html->meta(array('name' => $name, 'content' => $content));
+			foreach ($metaData as $tag) {
+				$name = 'name';
+				if (isset($tag['http-equiv'])) {
+					$name = 'http-equiv';
+				}
+					$markup .= $this->Html->meta(array($name => $tag[$name], 'content' => $tag['content']));
 			}
 		}
-		return $retval;
+		return $markup;
 	}
 
 /**
- * Return a canonical link tag for SEO purpolses
+ * Return a canonical link tag for SEO purposes
  * Utility method
  * @param router friendly URL
- * @param boolean full url or relative (default true)
  * @return HTMlElement of canonical link or empty string if none found/used
  */
-	public function canonical($url = null, $full = true) {
-		if ($url === null) {
-			$this->SeoCanonical = ClassRegistry::init('Seo.SeoCanonical');
-			$request = env('REQUEST_URI');
-			$url = $this->SeoCanonical->findByUri($request);
-		}
-
-		if ($url) {
-			$path = Router::url($url, $full);
+	public function canonical($path = null) {
+		if ($path) {
 			return $this->Html->tag('link', null, array('rel' => 'canonical', 'href' => $path));
 		}
-		return "";
+		return '';
 	}
 
 /**
@@ -112,11 +88,7 @@ class SeoHelper extends AppHelper {
  * @param string default title tag
  * @return string title for requested uri
  */
-	public function title($default = "") {
-		$this->SeoTitle = ClassRegistry::init('Seo.SeoTitle');
-		$request = env('REQUEST_URI');
-		$seoTitle = $this->SeoTitle->findTitleByUri($request);
-		$title = $seoTitle ? $seoTitle['SeoTitle']['title'] : $default;
+	public function title($title = '') {
 		return $this->Html->tag('title', $title);
 	}
 
