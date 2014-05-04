@@ -26,9 +26,9 @@ class SeoHelperTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$Controller = new Controller();
-		$View = new View($Controller);
-		$this->Seo = new SeoHelper($View);
-		$this->Seo->Html = new HtmlHelper($View);
+		$this->View = new View($Controller);
+		$this->Seo = new SeoHelper($this->View);
+		$this->Seo->Html = new HtmlHelper($this->View);
 		$cacheEngine = SeoUtil::getConfig('cacheEngine');
 		if (!empty($cacheEngine)) {
 			Cache::clear($cacheEngine);
@@ -36,19 +36,13 @@ class SeoHelperTest extends CakeTestCase {
 	}
 
 /**
- * testGetABTestJS
- */
-	public function testGetABTestJS() {
-		$result = $this->Seo->getABTestJS(array('SeoABTest' => array('slug' => 'home') ));
-		$this->assertEquals('_gaq.push([\'_setCustompublic\',4,\'ABTest\',\'home\',3]);', $result);
-	}
-
-/**
  * testCanonicalWithEmpty test rendering of canonical link
  */
 	public function testCanonical() {
 		$path = 'http://localhost/';
+
 		$result = $this->Seo->canonical($path);
+
 		$this->assertEquals('<link rel="canonical" href="http://localhost/">', $result);
 	}
 
@@ -57,6 +51,7 @@ class SeoHelperTest extends CakeTestCase {
  */
 	public function testCanonicalWithEmpty() {
 		$result = $this->Seo->canonical();
+
 		$this->assertTrue(empty($result));
 	}
 
@@ -65,6 +60,7 @@ class SeoHelperTest extends CakeTestCase {
  */
 	public function testHoneyPot() {
 		$result = $this->Seo->honeyPot();
+
 		$this->assertTrue(!empty($result));
 	}
 
@@ -86,7 +82,9 @@ class SeoHelperTest extends CakeTestCase {
 				'content' => 'about page robots content'
 			)
 		);
+
 		$result = $this->Seo->metaTags($tags);
+
 		$this->assertEquals('<meta name="description" content="about page description content" /><meta name="keywords" content="about page keywords content" /><meta name="robots" content="about page robots content" />', $result);
 	}
 
@@ -108,7 +106,9 @@ class SeoHelperTest extends CakeTestCase {
 				'content' => 'home page robots content'
 			)
 		);
+
 		$result = $this->Seo->metaTags($tags);
+
 		$this->assertEquals('<meta http-equiv="description" content="home page description content" /><meta http-equiv="keywords" content="home page keywords content" /><meta http-equiv="robots" content="home page robots content" />', $result);
 	}
 
@@ -117,7 +117,8 @@ class SeoHelperTest extends CakeTestCase {
  */
 	public function testMetaTagsWithEmpty() {
 		$result = $this->Seo->metaTags();
-		$this->assertEquals('', $result);
+
+		$this->assertTextEquals('', $result);
 	}
 
 /**
@@ -125,7 +126,8 @@ class SeoHelperTest extends CakeTestCase {
  */
 	public function testTitleWithEmpty() {
 		$result = $this->Seo->title();
-		$this->assertEquals('<title></title>', $result);
+
+		$this->assertTextEquals('<title></title>', $result);
 	}
 
 /**
@@ -133,7 +135,77 @@ class SeoHelperTest extends CakeTestCase {
  */
 	public function testTitleWithDefault() {
 		$results = $this->Seo->title('default');
-		$this->assertEquals('<title>default</title>', $results);
+
+		$this->assertTextEquals('<title>default</title>', $results);
+	}
+
+/**
+ * testRedmineLink test rendering of redmine link
+ */
+	public function testRedmineLink() {
+		$results = $this->Seo->redmineLink('foo');
+
+		$this->assertTextEquals('<a href="/foo" class="btn btn-mini btn-info" target="_blank">foo</a>', $results);
+	}
+
+/**
+ * testRedmineLinkWithNoId test rendering of redmine link with no id
+ */
+	public function testRedmineLinkWithNoId() {
+		$results = $this->Seo->redmineLink();
+
+		$this->assertNull($results);
+	}
+
+/**
+ * testGetABTestJS
+ */
+	public function testGetABTestJS() {
+		$result = $this->Seo->getABTestJS(array('SeoABTest' => array('slug' => 'home') ));
+
+		$this->assertEquals('_gaq.push([\'_setCustompublic\',4,\'ABTest\',\'home\',3]);', $result);
+	}
+
+/**
+ * testGetABTestJS with legacy
+ */
+	public function testGetABTestJSWithLegacy() {
+		$this->Seo = $this->getMock('SeoHelper', array('getConfig'), array($this->View));
+		$this->Seo->expects($this->any())
+			->method('getConfig')
+			->with()
+			->will($this->returnValue(true));
+		$test = array('SeoABTest' => array('slug' => 'home'));
+
+		$result = $this->Seo->getABTestJS($test);
+
+		$this->assertEquals("pageTracker._setCustompublic(1,'1','home',1);", $result);
+	}
+
+/**
+ * testGetABTestJS with legacy
+ */
+	public function testGetABTestJSWithNoTest() {
+		$this->Seo = $this->getMock('SeoHelper', array('getConfig'), array($this->View));
+		$this->Seo->expects($this->any())
+			->method('getConfig')
+			->with()
+			->will($this->returnValue(true));
+
+		$result = $this->Seo->getABTestJS();
+
+		$this->assertNull($result);
+	}
+
+/**
+ * testGetABTestJSWithScriptBlock
+ */
+	public function testGetABTestJSWithScriptBlock() {
+		$options = array('scriptBlock' => true);
+		$test = array('SeoABTest' => array('slug' => 'home'));
+
+		$result = $this->Seo->getABTestJS($test, $options);
+		$this->assertEquals("<script type=\"text/javascript\">\xA//<![CDATA[\xA_gaq.push(['_setCustompublic',4,'ABTest','home',3]);\xA//]]>\xA</script>", $result);
 	}
 
 /**

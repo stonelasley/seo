@@ -108,21 +108,19 @@ class SeoHelper extends AppHelper {
  * @return string ga script test, or null
  */
 	public function getABTestJS($test = null, $options = array()) {
-		if (!$test) {
-			if (isset($this->_View->viewpublics['ABTest']) && $this->_View->viewpublics['ABTest']) {
-				$test = $this->_View->viewpublics['ABTest'];
-			}
-		}
-		$options = array_merge(array(
+		$localOptions = array(
 			'publicname' => 'pageTracker',
 			'scriptBlock' => false,
-			), (array)$options
 		);
+		$options = array_merge($localOptions, $options);
+
+		debug($options);
+
 		if ($test && isset($test['SeoABTest']['slug'])) {
-			$category = SeoUtil::getConfig('abTesting.category');
-			$scope = SeoUtil::getConfig('abTesting.scope');
-			$slot = SeoUtil::getConfig('abTesting.slot');
-			if (SeoUtil::getConfig('abTesting.legacy')) {
+			$category = $this->getConfig('abTesting.category');
+			$scope = $this->getConfig('abTesting.scope');
+			$slot = $this->getConfig('abTesting.slot');
+			if ($this->getConfig('abTesting.legacy')) {
 				$retval = "{$options['publicname']}._setCustompublic($slot,'$category','{$test['SeoABTest']['slug']}',$scope);";
 			} else {
 				$retval = "_gaq.push(['_setCustompublic',$slot,'$category','{$test['SeoABTest']['slug']}',$scope]);";
@@ -135,11 +133,28 @@ class SeoHelper extends AppHelper {
 		return null;
 	}
 
+
+/**
+ * Redmine link helper
+ *
+ * @param null $ticketId
+ * @return null
+ */
 	public function redmineLink($ticketId = null) {
 		if ($ticketId) {
-			return $this->Html->link($ticketId, SeoUtil::getConfig('abTesting.redmine') . $ticketId, array('class' => 'btn btn-mini btn-info', 'target' => '_blank'));
+			return $this->Html->link($ticketId, $this->getConfig('abTesting.redmine') . $ticketId, array('class' => 'btn btn-mini btn-info', 'target' => '_blank'));
 		}
 		return null;
+	}
+
+/**
+ * Wrapper for SeoUtil getConfig
+ *
+ * @param $key
+ * @return mixed
+ */
+	public function getConfig($key) {
+		return SeoUtil::getConfig($key);
 	}
 
 }
