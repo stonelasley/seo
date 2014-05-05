@@ -1,13 +1,13 @@
 <?php
-App::import('Lib', 'Seo.SeoUtil');
-App::uses('SeoAppModel', 'Seo.Model');
+App::uses('SeoUtil', 'Seo.Lib');
+App::uses('Model', 'Model');
 /**
  * CakePHP Seo Plugin
  * @link https://github.com/webtechnick/CakePHP-Seo-Plugin
  *
  * App Model
  */
-class SeoAppModel extends AppModel {
+class SeoAppModel extends Model {
 
 /**
  * Always use Containable
@@ -30,6 +30,13 @@ class SeoAppModel extends AppModel {
  * @var array
  */
 	public $fieldsToLong = array();
+
+/**
+ * Lib/SeoUtil class name for forward_static_call_array
+ *
+ * @var string
+ */
+	protected $_seoUtilClass = 'SeoUtil';
 
 /**
  * standard beforeSave() callback
@@ -95,11 +102,14 @@ class SeoAppModel extends AppModel {
  * since we're storing ips as longs in our database
  * we need a custom validation.
  *
- * @param field to check
+ * @param array $ip
  * @return boolean
  */
-	public function isIp($check = null) {
-		$ipToCheck = array_shift($check);
+	public function isIp($ip = array()) {
+		$ipToCheck = $ip;
+		if (is_array($ip)) {
+			$ipToCheck = array_shift($ip);
+		}
 		return is_numeric(ip2long($ipToCheck));
 	}
 
@@ -139,7 +149,10 @@ class SeoAppModel extends AppModel {
  * @return boolean if is regular expression (as two # marks)
  */
 	public function isRegEx($uri) {
-		return SeoUtil::isRegEx($uri);
+		return forward_static_call_array(
+			array($this->_seoUtilClass, 'isRegEx'),
+			array($uri)
+		);
 	}
 
 /**
@@ -149,7 +162,10 @@ class SeoAppModel extends AppModel {
  * @return string configuration value
  */
 	public function getConfig($key = null) {
-		return SeoUtil::getConfig($key);
+		return forward_static_call_array(
+			array($this->_seoUtilClass, 'getConfig'),
+			array($key)
+		);
 	}
 
 /**
@@ -161,24 +177,9 @@ class SeoAppModel extends AppModel {
  * @return string configuration value
  */
 	public function requestMatch($request, $uri = null) {
-		return SeoUtil::requestMatch($request, $uri);
-	}
-/**
- * Returns the server IP based on values from the $_SERVER, etc
- *
- * @return string $ip of incoming/client IP
- */
-	public function getIpFromServer() {
-		$checkOrder = array(
-			'HTTP_CLIENT_IP', //shared client
-			'HTTP_X_FORWARDED_FOR', //proxy address (nginx, etc)
-			'REMOTE_ADDR', //fail safe
-			);
-		foreach ($checkOrder as $key) {
-			$ip = env($key);
-			if (!empty($ip)) {
-				return $ip;
-			}
-		}
+		return forward_static_call_array(
+			array($this->_seoUtilClass, 'requestMatch'),
+			array($request, $uri)
+		);
 	}
 }
