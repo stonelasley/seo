@@ -114,8 +114,6 @@ class SeoHelper extends AppHelper {
 		);
 		$options = array_merge($localOptions, $options);
 
-		debug($options);
-
 		if ($test && isset($test['SeoABTest']['slug'])) {
 			$category = $this->getConfig('abTesting.category');
 			$scope = $this->getConfig('abTesting.scope');
