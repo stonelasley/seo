@@ -41,7 +41,7 @@ class SeoUrl extends SeoAppModel {
  */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->settings = SeoUtil::getConfig('levenshtein');
+		$this->settings = $this->getConfig('levenshtein');
 	}
 
 /**

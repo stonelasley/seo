@@ -184,7 +184,7 @@ class SeoUri extends SeoAppModel {
  * @return array $uris array(id => uri)
  */
 	public function findAllRegexUris() {
-		$cacheEngine = SeoUtil::getConfig('cacheEngine');
+		$cacheEngine = $this->getConfig('cacheEngine');
 		if (!empty($cacheEngine)) {
 			$cacheKey = 'seo_findallregexuris';
 			$uris = Cache::read($cacheKey, $cacheEngine);
@@ -261,8 +261,8 @@ class SeoUri extends SeoAppModel {
 				App::import('Component', 'Email');
 				$this->Email = new EmailComponent();
 			}
-			$this->Email->to = SeoUtil::getConfig('approverEmail');
-			$this->Email->from = SeoUtil::getConfig('replyEmail');
+			$this->Email->to = $this->getConfig('approverEmail');
+			$this->Email->from = $this->getConfig('replyEmail');
 			$this->Email->subject = "301 Redirect: {$this->data[$this->alias]['uri']} to {$this->data[$this->SeoRedirect->alias]['redirect']} needs approval";
 			$this->Email->sendAs = 'html';
 			$this->Email->send("A new regular expression 301 redirect needs to be approved.<br /><br/>
@@ -272,7 +272,7 @@ class SeoUri extends SeoAppModel {
 				PRIORITY: {$this->data[$this->SeoRedirect->alias]['priority']}<br /><br />
 
 				Link to approve:<br />
-				" . SeoUtil::getConfig('parentDomain') . "/admin/seo/seo_redirects/approve/{$this->data[$this->SeoRedirect->alias]['id']}<br /><br />
+				" . $this->getConfig('parentDomain') . "/admin/seo/seo_redirects/approve/{$this->data[$this->SeoRedirect->alias]['id']}<br /><br />
 				");
 		}
 	}
@@ -287,7 +287,7 @@ class SeoUri extends SeoAppModel {
 		if (is_int($uri)) {
 			$uri = $this->field('uri', array('SeoUri.id' => $uri));
 		}
-		return SeoUtil::requestMatch($request, $uri);
+		return $this->requestMatch($request, $uri);
 	}
 
 	public function clearAssociatesIfEmpty(&$data = array()) {
