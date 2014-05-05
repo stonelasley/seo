@@ -131,7 +131,6 @@ class SeoHelper extends AppHelper {
 		return null;
 	}
 
-
 /**
  * Redmine link helper
  *
