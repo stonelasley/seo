@@ -29,7 +29,7 @@ class SeoHoneypotVisit extends SeoAppModel {
  */
 	public function add($ip = null) {
 		if (!$ip) {
-			$ip = $this->getIpFromServer();
+			return false;
 		}
 
 		$this->clear();
@@ -47,7 +47,7 @@ class SeoHoneypotVisit extends SeoAppModel {
  */
 	public function isTriggered($ip = null) {
 		if (!$ip) {
-			$ip = $this->getIpFromServer();
+			return false;
 		}
 		$ipQuery = is_numeric($ip) ? $ip : ip2long($ip);
 
@@ -61,7 +61,7 @@ class SeoHoneypotVisit extends SeoAppModel {
 			)
 		));
 
-		return (SeoUtil::getConfig('triggerCount') <= $count);
+		return ($this->getConfig('triggerCount') <= $count);
 	}
 
 /**
@@ -69,7 +69,7 @@ class SeoHoneypotVisit extends SeoAppModel {
  * @return boolean success
  */
 	public function clear() {
-		$cutoff = time() - SeoUtil::getConfig('timeBetweenTriggers');
+		$cutoff = time() - $this->getConfig('timeBetweenTriggers');
 		return $this->deleteAll(array(
 			"{$this->alias}.created <=" => date('Y-m-d g:i:s', $cutoff)
 		));
