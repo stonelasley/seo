@@ -46,9 +46,9 @@ class SeoUriTest extends CakeTestCase {
 
 	public function testSetApproved() {
 		$this->SeoUri->id = '535f0ce3-bc44-4327-2345-066d173cdfff';
-		$this->assertFalse($this->SeoUri->field('is_approved'));
+		$this->assertFalse((bool)$this->SeoUri->field('is_approved'));
 		$this->SeoUri->setApproved();
-		$this->assertTrue($this->SeoUri->field('is_approved'));
+		$this->assertTrue((bool)$this->SeoUri->field('is_approved'));
 	}
 
 	//	public function testSendNotification() {

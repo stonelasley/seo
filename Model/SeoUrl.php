@@ -69,7 +69,7 @@ class SeoUrl extends SeoAppModel {
 
 			$xml = simplexml_load_file($this->__getPathToSiteMap($sitemapPath));
 			foreach ($xml->url as $url) {
-				$this->clear();
+				$this->create();
 				$saveData = array(
 					'url' => parse_url((string)$url->loc, PHP_URL_PATH),
 					'priority' => (string)$url->priority

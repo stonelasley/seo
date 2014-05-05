@@ -124,7 +124,7 @@ class SeoAppModel extends AppModel {
 			} else {
 				$save = array();
 				$save[$ModelName][$field] = $this->data[$ModelName][$field];
-				$this->$ModelName->clear();
+				$this->$ModelName->create();
 				$this->$ModelName->save($save);
 				$this->data[$this->alias][$modelUnderscore . '_id'] = $this->$ModelName->id;
 			}

@@ -37,7 +37,7 @@ class SeoRedirectFixture extends CakeTestFixture {
 			'seo_uri_id' => '535f0cbe-ba00-4403-a69d-066f173cdfff',
 			'redirect' => '/about',
 			'priority' => '1',
-			'is_active' => 1,
+			'is_active' => true,
 			'callback' => '',
 			'created' => '2014-04-28 20:21:50',
 			'modified' => '2014-04-28 20:21:50'
@@ -47,7 +47,7 @@ class SeoRedirectFixture extends CakeTestFixture {
 			'seo_uri_id' => '535f0cce-de10-4496-9950-066e173cdfff',
 			'redirect' => '/contact',
 			'priority' => '1',
-			'is_active' => 1,
+			'is_active' => true,
 			'callback' => '',
 			'created' => '2014-04-28 20:22:06',
 			'modified' => '2014-04-28 20:22:06'
@@ -57,7 +57,7 @@ class SeoRedirectFixture extends CakeTestFixture {
 			'seo_uri_id' => '535f0ce3-bc44-4327-91c6-066d173cdfff',
 			'redirect' => '/',
 			'priority' => '1',
-			'is_active' => 1,
+			'is_active' => true,
 			'callback' => '',
 			'created' => '2014-04-28 20:22:27',
 			'modified' => '2014-04-28 20:22:27'

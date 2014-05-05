@@ -44,7 +44,7 @@ class SeoABTestFixture extends CakeTestFixture {
 		array(
 			'id' => '535dda88-f5bc-4942-b9b2-1174173cdfff',
 			'seo_uri_id' => '535da751-0100-409c-9adb-1173173cdfff',
-			'is_active' => 1,
+			'is_active' => true,
 			'slug' => 'home',
 			'roll' => '50',
 			'priority' => '1',
@@ -58,7 +58,7 @@ class SeoABTestFixture extends CakeTestFixture {
 		array(
 			'id' => '535f0c1d-daec-444d-9958-066e173cdfff',
 			'seo_uri_id' => '535f0b80-131c-486b-8069-066d173cdfff',
-			'is_active' => 1,
+			'is_active' => true,
 			'slug' => 'about_slug',
 			'roll' => '25',
 			'priority' => '1',
@@ -72,7 +72,7 @@ class SeoABTestFixture extends CakeTestFixture {
 		array(
 			'id' => '535f0c52-a2e0-4808-be00-066d173cdfff',
 			'seo_uri_id' => '535f0bbe-9c70-4442-95f0-0bd0173cdfff',
-			'is_active' => 1,
+			'is_active' => true,
 			'slug' => 'contact_slug',
 			'roll' => '75',
 			'priority' => '1',

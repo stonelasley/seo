@@ -44,7 +44,7 @@ class SeoStatusCodesControllerTest extends ControllerTestCase {
 			'seo_uri_id' => '536073fb-f8ac-49b5-9c0e-0e57173cdfff',
 			'status_code' => '200',
 			'priority' => '1',
-			'is_active' => 1,
+			'is_active' => true,
 			'created' => '2014-05-01 20:31:31',
 			'modified' => '2014-05-01 20:31:31'
 		);

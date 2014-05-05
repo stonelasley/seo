@@ -42,7 +42,7 @@ class SeoCanonicalsControllerTest extends ControllerTestCase {
 			'id' => '535dac20-60b4-46de-b842-19b8173cdfff',
 			'seo_uri_id' => '535da751-0100-409c-9adb-1173173cdfff',
 			'canonical' => '/index',
-			'is_active' => 1,
+			'is_active' => true,
 			'created' => '2014-04-27 19:17:20',
 			'modified' => '2014-04-27 19:17:20'
 		);

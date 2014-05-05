@@ -36,7 +36,7 @@ class SeoStatusCodeFixture extends CakeTestFixture {
 			'seo_uri_id' => '536073fb-f8ac-49b5-9c0e-0e57173cdfff',
 			'status_code' => '200',
 			'priority' => '1',
-			'is_active' => 1,
+			'is_active' => true,
 			'created' => '2014-05-01 20:31:31',
 			'modified' => '2014-05-01 20:31:31'
 		),
@@ -45,7 +45,7 @@ class SeoStatusCodeFixture extends CakeTestFixture {
 			'seo_uri_id' => '536073fb-f8ac-49b5-9c0e-0e57173cdfff',
 			'status_code' => '409',
 			'priority' => '5',
-			'is_active' => 1,
+			'is_active' => true,
 			'created' => '2014-05-01 20:31:50',
 			'modified' => '2014-05-01 20:31:50'
 		),
@@ -54,7 +54,7 @@ class SeoStatusCodeFixture extends CakeTestFixture {
 			'seo_uri_id' => '536073fb-f8ac-49b5-9c0e-0e57173cdfff',
 			'status_code' => '402',
 			'priority' => '10',
-			'is_active' => 1,
+			'is_active' => true,
 			'created' => '2014-05-01 20:32:09',
 			'modified' => '2014-05-01 20:32:09'
 		),

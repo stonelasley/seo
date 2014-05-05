@@ -42,7 +42,7 @@ class SeoRedirectTest extends CakeTestCase {
 			'SeoRedirect' => array(
 				'redirect' => '/',
 				'priority' => '5',
-				'is_active' => 1,
+				'is_active' => true,
 			),
 			'SeoUri' => array(
 				'uri' => '/newuri'
@@ -50,7 +50,7 @@ class SeoRedirectTest extends CakeTestCase {
 		);
 		$this->assertTrue($this->SeoRedirect->saveAll());
 		$result = $this->SeoRedirect->find('last');
-		$this->assertTrue($result['SeoUri']['is_approved']);
+		$this->assertTrue((bool)$result['SeoUri']['is_approved']);
 		// fix mocked email
 		//$this->SeoRedirect->SeoUri->Email->expectNever('send');
 	}
@@ -60,7 +60,7 @@ class SeoRedirectTest extends CakeTestCase {
 			'SeoRedirect' => array(
 				'redirect' => '/',
 				'priority' => '5',
-				'is_active' => 1,
+				'is_active' => true,
 			),
 			'SeoUri' => array(
 				'uri' => '#(somenewregex)#i',
@@ -68,7 +68,7 @@ class SeoRedirectTest extends CakeTestCase {
 		);
 		$this->assertTrue($this->SeoRedirect->saveAll());
 		$result = $this->SeoRedirect->find('last');
-		$this->assertFalse($result['SeoUri']['is_approved']);
+		$this->assertFalse((bool)$result['SeoUri']['is_approved']);
 		//fix mocked emails
 		//$this->SeoRedirect->SeoUri->Email->expectOnce('send');
 	}

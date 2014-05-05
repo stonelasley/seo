@@ -37,7 +37,7 @@ class SeoUrlsShell extends AppShell {
 		if ($this->SeoUrl->hasAny(array('SeoUrl.url' => $url))) {
 			$saveData['id'] = $this->SeoUrl->field('id', array('SeoUrl.url' => $url));
 		}
-		$this->SeoUrl->clear();
+		$this->SeoUrl->create();
 		if ($this->SeoUrl->save($saveData)) {
 			$this->out("$url $priority added.");
 		} else {
