@@ -18,28 +18,10 @@ class SeoBlacklistTest extends CakeTestCase {
  */
 	public function testAddToBannedNoIP() {
 		$SeoBlacklist = $this->getMockForModel('SeoBlacklist', array('getIpFromServer'));
-		$SeoBlacklist->expects($this->once())
-			->method('getIpFromServer')
-			->will($this->returnValue('192.168.1.1'));
 		$result = $SeoBlacklist->addToBanned(null, null, true);
-		$this->assertTrue(isset($result[$this->SeoBlacklist->alias]));
-		$this->assertEquals('3232235777', $result[$this->SeoBlacklist->alias]['ip_range_start']);
+		$this->assertFalse($result);
 	}
 
-/**
- * testAddToBannedNoIPWithAggressive
- *
- * @return void
- */
-	public function testAddToBannedNoIPWithAggressive() {
-		$SeoBlacklist = $this->getMockForModel('SeoBlacklist', array('getIpFromServer'));
-		$SeoBlacklist->expects($this->once())
-			->method('getIpFromServer')
-			->will($this->returnValue('192.168.1.1'));
-		$result = $SeoBlacklist->addToBanned();
-		$this->assertTrue(isset($result[$this->SeoBlacklist->alias]));
-		$this->assertEquals('3232235777', $result[$this->SeoBlacklist->alias]['ip_range_start']);
-	}
 /**
  *
  *
@@ -82,11 +64,7 @@ class SeoBlacklistTest extends CakeTestCase {
 	}
 
 	public function testIsBannedNoIp() {
-		$SeoBlacklist = $this->getMockForModel('SeoBlacklist', array('getIpFromServer'));
-		$SeoBlacklist->expects($this->once())
-			->method('getIpFromServer')
-			->will($this->returnValue('10.100.0.1'));
-		$this->assertTrue($result = $SeoBlacklist->isBanned());
+		$this->assertFalse($this->SeoBlacklist->isBanned());
 	}
 
 	public function testIsBannedByInt() {
@@ -107,18 +85,6 @@ class SeoBlacklistTest extends CakeTestCase {
 		$this->assertFalse($this->SeoBlacklist->isBanned('127.255.253.125'));
 		$this->SeoBlacklist->addToBanned('127.255.253.125', "note", false);
 		$this->assertFalse($this->SeoBlacklist->isBanned('127.255.253.125'));
-	}
-
-	public function testGetIpFromServer() {
-		$_SERVER['HTTP_CLIENT_IP'] = 'client';
-		$_SERVER['HTTP_X_FORWARDED_FOR'] = 'forwarded';
-		$_SERVER['REMOTE_ADDR'] = 'remote';
-
-		$this->assertEquals('client', $this->SeoBlacklist->getIpFromServer());
-		unset($_SERVER['HTTP_CLIENT_IP']);
-		$this->assertEquals('forwarded', $this->SeoBlacklist->getIpFromServer());
-		unset($_SERVER['HTTP_X_FORWARDED_FOR']);
-		$this->assertEquals('remote', $this->SeoBlacklist->getIpFromServer());
 	}
 
 	public function tearDown() {

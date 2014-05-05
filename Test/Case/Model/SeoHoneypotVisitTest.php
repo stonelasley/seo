@@ -42,19 +42,14 @@ class SeoHoneypotVisitTest extends CakeTestCase {
 	}
 
 /**
- * testAddNoIp
+ * testAdd method
  *
  * @return void
  */
 	public function testAddNoIp() {
-		$SeoHoneypotVisit = $this->getMockForModel('SeoHoneypotVisit', array('getIpFromServer', 'save'));
-		$SeoHoneypotVisit->expects($this->once())
-			->method('getIpFromServer')
-			->will($this->returnValue('10.100.0.1'));
-		$SeoHoneypotVisit->expects($this->once())
-			->method('save')
-			->will($this->returnValue(true));
-		$this->assertTrue($result = $SeoHoneypotVisit->add());
+		$result = $this->SeoHoneypotVisit->add();
+
+		$this->assertFalse($result);
 	}
 
 	public function testIsTriggered() {
@@ -75,16 +70,7 @@ class SeoHoneypotVisitTest extends CakeTestCase {
  */
 	public function testIsTriggeredNoIp() {
 		$SeoHoneypotVisit = $this->getMockForModel('SeoHoneypotVisit', array('getIpFromServer', 'clear', 'find'));
-		$SeoHoneypotVisit->expects($this->once())
-			->method('getIpFromServer')
-			->will($this->returnValue('10.100.0.1'));
-		$SeoHoneypotVisit->expects($this->once())
-			->method('clear')
-			->will($this->returnValue(true));
-		$SeoHoneypotVisit->expects($this->once())
-			->method('find')
-			->will($this->returnValue(5));
-		$this->assertTrue($result = $SeoHoneypotVisit->isTriggered());
+		$this->assertFalse($result = $SeoHoneypotVisit->isTriggered());
 	}
 
 	public function tearDown() {
