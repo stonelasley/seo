@@ -28,6 +28,18 @@ class SeoStatusCodeTest extends CakeTestCase {
 	}
 
 /**
+ * testBeforeSave method
+ *
+ * @return void
+ */
+	public function testBeforeSave() {
+		$SeoStatusCode = $this->getMockForModel('SeoStatusCode', array('createOrSetUri'));
+		$SeoStatusCode->expects($this->once())
+			->method('createOrSetUri')
+			->will($this->returnValue(true));
+		$this->assertTrue($SeoStatusCode->beforeSave(array()));
+	}
+/**
  *testFindCodeList
  *
  * @return void
