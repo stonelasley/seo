@@ -17,9 +17,28 @@ class SeoBlacklistTest extends CakeTestCase {
  * @return void
  */
 	public function testAddToBannedNoIP() {
-		$SeoBlacklist = $this->getMockForModel('SeoBlacklist', array('getIpFromServer'));
-		$result = $SeoBlacklist->addToBanned(null, null, true);
+		$result = $this->SeoBlacklist->addToBanned(null, null, true);
+
 		$this->assertFalse($result);
+	}
+
+/**
+ * testAddToBannedInactive
+ *
+ * @return void
+ */
+	public function testAddToBannedInactive() {
+		$SeoBlacklist = $this->getMockForModel('SeoBlacklist', array('save', 'getConfig'));
+		$SeoBlacklist->expects($this->once())
+			->method('getConfig')
+			->will($this->returnValue(true));
+		$SeoBlacklist->expects($this->once())
+			->method('save')
+			->will($this->returnValue(true));
+
+		$result = $SeoBlacklist->addToBanned('192.168.1.1', null, null);
+
+		$this->assertTrue($result);
 	}
 
 /**
