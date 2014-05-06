@@ -79,6 +79,20 @@ class SeoUriFixture extends CakeTestFixture {
 			'created' => '2014-04-28 20:22:27',
 			'modified' => '2014-04-28 20:22:27'
 		),
+		array(
+			'id' => '535f0ce3-bc44-3456-5234-066d173cdfff',
+			'uri' => '#\bregex(er|ing|ed|s)?\b#',
+			'is_approved' => true,
+			'created' => '2014-04-28 20:22:27',
+			'modified' => '2014-04-28 20:22:27'
+		),
+		array(
+			'id' => '535f0ce3-bc44-3456-2353-066d173cdfff',
+			'uri' => '/wildcard*',
+			'is_approved' => true,
+			'created' => '2014-04-28 20:22:27',
+			'modified' => '2014-04-28 20:22:27'
+		),
 	);
 
 }

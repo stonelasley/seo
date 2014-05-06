@@ -1,5 +1,6 @@
 <?php
 App::uses('SeoAppModel', 'Seo.Model');
+App::import('Component', 'Email');
 class SeoUri extends SeoAppModel {
 
 /**
@@ -106,7 +107,7 @@ class SeoUri extends SeoAppModel {
  * @return true
  */
 	public function beforeSave($options = array()) {
-		$this->clearAssociatesIfEmpty($this->data);
+		$this->clearAssociatesIfEmpty();
 		//url encode the uri, but only once.
 		if (!empty($this->data[$this->alias]['uri']) && $this->isRegEx($this->data[$this->alias]['uri'])) {
 			if (empty($this->data[$this->alias]['is_approved'])) {
@@ -184,6 +185,7 @@ class SeoUri extends SeoAppModel {
  * @return array $uris array(id => uri)
  */
 	public function findAllRegexUris() {
+		$uris = array();
 		$cacheEngine = $this->getConfig('cacheEngine');
 		if (!empty($cacheEngine)) {
 			$cacheKey = 'seo_findallregexuris';
@@ -205,9 +207,7 @@ class SeoUri extends SeoAppModel {
 				Cache::write($cacheKey, $uris, $cacheEngine);
 			}
 		}
-		if (!is_array($uris)) {
-			return array();
-		}
+
 		return $uris;
 	}
 
@@ -235,7 +235,7 @@ class SeoUri extends SeoAppModel {
 /**
  * Set as approved
  *
- * @param int id of seo redirect to approve
+ * @param int id of seo uri to approve
  * @return boolean result of save
  */
 	public function setApproved($id = null) {
@@ -251,30 +251,22 @@ class SeoUri extends SeoAppModel {
  * @param int id
  * @return void
  */
-	public function sendNotification($id = null) {
-		if ($id) {
-			$this->id = $id;
-		}
-		$this->read();
-		if (!empty($this->data)) {
-			if (!isset($this->Email)) {
-				App::import('Component', 'Email');
-				$this->Email = new EmailComponent();
-			}
-			$this->Email->to = $this->getConfig('approverEmail');
-			$this->Email->from = $this->getConfig('replyEmail');
-			$this->Email->subject = "301 Redirect: {$this->data[$this->alias]['uri']} to {$this->data[$this->SeoRedirect->alias]['redirect']} needs approval";
-			$this->Email->sendAs = 'html';
-			$this->Email->send("A new regular expression 301 redirect needs to be approved.<br /><br/>
-
-				URI: {$this->data[$this->alias]['uri']}<br />
-				REDIRECT: {$this->data[$this->SeoRedirect->alias]['redirect']}<br />
-				PRIORITY: {$this->data[$this->SeoRedirect->alias]['priority']}<br /><br />
-
-				Link to approve:<br />
-				" . $this->getConfig('parentDomain') . "/admin/seo/seo_redirects/approve/{$this->data[$this->SeoRedirect->alias]['id']}<br /><br />
-				");
-		}
+	public function sendNotification() {
+//		if (!empty($this->data)) {
+//			$this->Email->to = $this->getConfig('approverEmail');
+//			$this->Email->from = $this->getConfig('replyEmail');
+//			$this->Email->subject = "301 Redirect: {$this->data[$this->alias]['uri']} to {$this->data[$this->SeoRedirect->alias]['redirect']} needs approval";
+//			$this->Email->sendAs = 'html';
+//			$this->Email->send("A new regular expression 301 redirect needs to be approved.<br /><br/>
+//
+//				URI: {$this->data[$this->alias]['uri']}<br />
+//				REDIRECT: {$this->data[$this->SeoRedirect->alias]['redirect']}<br />
+//				PRIORITY: {$this->data[$this->SeoRedirect->alias]['priority']}<br /><br />
+//
+//				Link to approve:<br />
+//				" . $this->getConfig('parentDomain') . "/admin/seo/seo_redirects/approve/{$this->data[$this->SeoRedirect->alias]['id']}<br /><br />
+//				");
+//		}
 	}
 
 /**
@@ -284,26 +276,23 @@ class SeoUri extends SeoAppModel {
  * @return boolean if request matches the URI given
  */
 	public function requestMatch($request, $uri = null) {
-		if (is_int($uri)) {
+		if (preg_match('/^([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/', $uri)) {
 			$uri = $this->field('uri', array('SeoUri.id' => $uri));
 		}
-		return $this->requestMatch($request, $uri);
+
+		return parent::requestMatch($request, $uri);
 	}
 
-	public function clearAssociatesIfEmpty(&$data = array()) {
-		if (!isset($data['SeoMetaTag'])) {
-			return;
-		}
-		foreach ($data['SeoMetaTag'] as $key => $metatag) {
-			if (isset($metatag['name']) && empty($metatag['name'])) {
-				unset($data['SeoMetaTag'][$key]);
+	public function clearAssociatesIfEmpty() {
+		if (isset($this->data['SeoMetaTag'])) {
+			foreach ($this->data['SeoMetaTag'] as $key => $metatag) {
+				if (isset($metatag['name']) && empty($metatag['name'])) {
+					unset($this->data['SeoMetaTag'][$key]);
+				}
 			}
 		}
-		if (empty($data['SeoMetaTag'])) {
-			unset($data['SeoMetaTag']);
-		}
-		if (isset($data['SeoTitle']['title']) && empty($data['SeoTitle']['title'])) {
-			unset($data['SeoTitle']);
+		if (isset($this->data['SeoTitle']['title']) && empty($this->data['SeoTitle']['title'])) {
+			unset($this->data['SeoTitle']);
 		}
 	}
 }
