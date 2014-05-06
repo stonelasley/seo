@@ -252,21 +252,21 @@ class SeoUri extends SeoAppModel {
  * @return void
  */
 	public function sendNotification() {
-//		if (!empty($this->data)) {
-//			$this->Email->to = $this->getConfig('approverEmail');
-//			$this->Email->from = $this->getConfig('replyEmail');
-//			$this->Email->subject = "301 Redirect: {$this->data[$this->alias]['uri']} to {$this->data[$this->SeoRedirect->alias]['redirect']} needs approval";
-//			$this->Email->sendAs = 'html';
-//			$this->Email->send("A new regular expression 301 redirect needs to be approved.<br /><br/>
-//
-//				URI: {$this->data[$this->alias]['uri']}<br />
-//				REDIRECT: {$this->data[$this->SeoRedirect->alias]['redirect']}<br />
-//				PRIORITY: {$this->data[$this->SeoRedirect->alias]['priority']}<br /><br />
-//
-//				Link to approve:<br />
-//				" . $this->getConfig('parentDomain') . "/admin/seo/seo_redirects/approve/{$this->data[$this->SeoRedirect->alias]['id']}<br /><br />
-//				");
-//		}
+		//		if (!empty($this->data)) {
+		//			$this->Email->to = $this->getConfig('approverEmail');
+		//			$this->Email->from = $this->getConfig('replyEmail');
+		//			$this->Email->subject = "301 Redirect: {$this->data[$this->alias]['uri']} to {$this->data[$this->SeoRedirect->alias]['redirect']} needs approval";
+		//			$this->Email->sendAs = 'html';
+		//			$this->Email->send("A new regular expression 301 redirect needs to be approved.<br /><br/>
+		//
+		//				URI: {$this->data[$this->alias]['uri']}<br />
+		//				REDIRECT: {$this->data[$this->SeoRedirect->alias]['redirect']}<br />
+		//				PRIORITY: {$this->data[$this->SeoRedirect->alias]['priority']}<br /><br />
+		//
+		//				Link to approve:<br />
+		//				" . $this->getConfig('parentDomain') . "/admin/seo/seo_redirects/approve/{$this->data[$this->SeoRedirect->alias]['id']}<br /><br />
+		//				");
+		//		}
 	}
 
 /**
