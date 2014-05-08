@@ -1,5 +1,6 @@
 <?php
 App::uses('SeoABTest', 'Seo.Model');
+App::uses('SeoTitle', 'Seo.Model');
 
 /**
  * SeoABTest Test Case
@@ -175,7 +176,7 @@ class SeoABTestTest extends CakeTestCase {
 				'testable' => 'SeoTitle::callbackMethod'
 			)
 		);
-		$SeoTitle = $this->getMockForModel('SeoTitle', array('callbackMethod'));
+		$SeoTitle = $this->getMockForModel('Seo.SeoTitle', array('callbackMethod'));
 		$SeoTitle->expects($this->once())
 			->method('callbackMethod')
 			->will($this->returnValue(true));
@@ -193,7 +194,7 @@ class SeoABTestTest extends CakeTestCase {
 			$this->SeoABTest->alias => array (
 			)
 		);
-		$SeoTitle = $this->getMockForModel('SeoTitle', array('callbackMethod'));
+		$SeoTitle = $this->getMockForModel('Seo.SeoTitle', array('callbackMethod'));
 		$SeoTitle->expects($this->never())
 			->method('callbackMethod');
 		$this->assertTrue($this->SeoABTest->isTestable($data));
@@ -317,12 +318,71 @@ class SeoABTestTest extends CakeTestCase {
 	}
 
 /**
- * testFindTestByUri
+ * test findTestByUri method
  *
  * @return void
  */
 	public function testFindTestByUriWithNoRequest() {
-		$this->assertFalse($this->SeoABTest->findTestByUri());
+		$this->assertFalse($this->SeoABTest->findTestByUri(null, false));
+	}
+
+/**
+ * test findTestByUri method
+ *
+ * @return void
+ */
+	public function testFindTestByUri() {
+		$result = $this->SeoABTest->findTestByUri('/', false);
+
+		$this->assertTrue(isset($result[$this->SeoABTest->alias]));
+		$this->assertTrue(isset($result['SeoUri']));
+		$this->assertEquals('home', $result[$this->SeoABTest->alias]['slug']);
+		$this->assertEquals('/', $result['SeoUri']['uri']);
+	}
+
+/**
+ * test findTestByUri method with cache
+ *
+ * @return void
+ */
+	public function testFindTestByUriCached() {
+		Cache::clear();
+		$this->SeoABTest = $this->getMockForModel('SeoABTest', array('getConfig'));
+		$this->SeoABTest->expects($this->once())
+			->method('getConfig')
+			->will($this->returnValue(''));
+//		$this->SeoABTest->expects($this->at(0))
+//			->method('find')
+//			->will($this->returnValue(array()));
+//		$this->SeoABTest->expects($this->at(1))
+//			->method('find')
+//			->will($this->returnValue(array()));
+		$result = $this->SeoABTest->findTestByUri('/notfound', false);
+
+		$this->assertFalse($result);
+	}
+
+/**
+ * test findTestByUri method with requestMatch
+ *
+ * @return void
+ */
+	public function testFindTestByUriWithRequestMatch() {
+		Cache::clear();
+		$this->SeoABTest = $this->getMockForModel('SeoABTest', array('requestMatch', 'getConfig'));
+		$this->SeoABTest->expects($this->once())
+			->method('getConfig')
+			->will($this->returnValue('default'));
+		$this->SeoABTest->expects($this->once())
+			->method('requestMatch')
+			->will($this->returnValue(true));
+
+		$result = $this->SeoABTest->findTestByUri('/notfound', false);
+
+		$this->assertTrue(isset($result[$this->SeoABTest->alias]));
+		$this->assertTrue(isset($result['SeoUri']));
+		$this->assertEquals('home', $result[$this->SeoABTest->alias]['slug']);
+		$this->assertEquals('/', $result['SeoUri']['uri']);
 	}
 
 /**

@@ -272,21 +272,28 @@ class SeoABTest extends SeoAppModel {
 		if (!$debug) {
 			$conditions["{$this->alias}.is_active"] = true;
 		}
-		//Test one of one.
-		if ($test = $this->find('first', array(
-			'conditions' => array_merge(array(
-				"{$this->SeoUri->alias}.uri" => $request,
-				"{$this->SeoUri->alias}.is_approved" => true,
-			), $conditions),
-			'contain' => array("{$this->SeoUri->alias}.uri"),
-			'fields' => $fields,
-			'order' => "{$this->alias}.priority ASC"
-		))) {
+		$test = $this->find(
+			'first',
+			array(
+				'conditions' => array_merge(
+					array(
+					"{$this->SeoUri->alias}.uri" => $request,
+					"{$this->SeoUri->alias}.is_approved" => true,
+					),
+					$conditions
+				),
+				'contain' => array("{$this->SeoUri->alias}.uri"),
+				'fields' => $fields,
+				'order' => "{$this->alias}.priority ASC"
+			)
+		);
+
+		if (!empty($test)) {
 			return $test;
 		}
 
-		//Check Many to Many and Many to One
 		$cacheEngine = $this->getConfig('cacheEngine');
+
 		if (!empty($cacheEngine)) {
 			$cacheKey = 'seo_ab_tests';
 			$tests = Cache::read($cacheKey, $cacheEngine);
@@ -302,7 +309,9 @@ class SeoABTest extends SeoAppModel {
 				Cache::write($cacheKey, $tests, $cacheEngine);
 			}
 		}
+
 		foreach ($tests as $test) {
+
 			if ($this->requestMatch($request, $test[$this->SeoUri->alias]['uri'])) {
 				return $test;
 			}
