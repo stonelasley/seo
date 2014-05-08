@@ -351,12 +351,6 @@ class SeoABTestTest extends CakeTestCase {
 		$this->SeoABTest->expects($this->once())
 			->method('getConfig')
 			->will($this->returnValue(''));
-//		$this->SeoABTest->expects($this->at(0))
-//			->method('find')
-//			->will($this->returnValue(array()));
-//		$this->SeoABTest->expects($this->at(1))
-//			->method('find')
-//			->will($this->returnValue(array()));
 		$result = $this->SeoABTest->findTestByUri('/notfound', false);
 
 		$this->assertFalse($result);
