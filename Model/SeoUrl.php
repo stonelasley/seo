@@ -101,7 +101,6 @@ class SeoUrl extends SeoAppModel {
 				'redirect' => '/',
 				'shortest' => -1
 			);
-
 			//Run import if we have no urls to look at.
 			if ($this->find('count') == 0) {
 				if ($this->import() == 0) {
@@ -141,9 +140,9 @@ class SeoUrl extends SeoAppModel {
  * @param $path
  * @return string file path to source.
  */
-	private function __getPathToSiteMap($path) {
+	private function __getPathToSiteMap($path = null) {
 		if ($path === null) {
-			return WWW_ROOT . DS . 'site-map.xml';
+			return WWW_ROOT . 'site-map.xml';
 		} else {
 			return $path;
 		}
