@@ -37,8 +37,7 @@ class SeoUrisController extends SeoAppController {
 		if (!$this->SeoUri->exists($id)) {
 			throw new NotFoundException(__('Invalid seo uri.'));
 		}
-		$options = array('conditions' => array('SeoUri.' . $this->SeoUri->primaryKey => $id));
-		$this->set('seoUri', $this->SeoUri->find('first', $options));
+		$this->set('seoUri', $this->SeoUri->findForViewById($id));
 	}
 
 	public function admin_add() {
