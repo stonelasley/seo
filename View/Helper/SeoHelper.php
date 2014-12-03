@@ -28,6 +28,21 @@ class SeoHelper extends AppHelper {
  */
 	public function metaTags($metaData = array()) {
 		$markup = '';
+		$request = env('REQUEST_URI');
+		$metaTags = ClassRegistry::init('Seo.SeoMetaTag')->findAllTagsByUri($request);
+		foreach ($metaTags as $tag) {
+			if (isset($metaData[$tag['SeoMetaTag']['name']])) {
+				unset($metaData[$tag['SeoMetaTag']['name']]);
+			}
+			$data = array();
+			if ($tag['SeoMetaTag']['is_http_equiv']) {
+				$data['http-equiv'] = $tag['SeoMetaTag']['name'];
+			} else {
+				$data['name'] = $tag['SeoMetaTag']['name'];
+			}
+			$data['content'] = $tag['SeoMetaTag']['content'];
+			$markup .= $this->Html->meta($data);
+		}
 		if (!empty($metaData)) {
 			foreach ($metaData as $tag) {
 				$name = 'name';
@@ -88,7 +103,10 @@ class SeoHelper extends AppHelper {
  * @param string default title tag
  * @return string title for requested uri
  */
-	public function title($title = '') {
+	public function title($default = '') {
+		$request = env('REQUEST_URI');
+		$seoTitle = ClassRegistry::init('Seo.SeoTitle')->findTitleByUri($request);
+		$title = $seoTitle ? $seoTitle['SeoTitle']['title'] : $default;
 		return $this->Html->tag('title', $title);
 	}
 
