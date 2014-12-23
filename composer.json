@@ -1,21 +1,21 @@
 {
-	"name": "webtechnick/cakephp-seo-plugin",
+	"name": "stonelasley/seo",
 	"description": "CakePHP Search Engine Optimization Plugin",
 	"type": "cakephp-plugin",
 	"keywords": ["cakephp", "seo", "meta tags", "title tags", "banning", "redirects", "ab test", "canonical", "blacklist", "levenshtein", "404 handling"],
-	"homepage": "https://github.com/webtechnick/CakePHP-Seo-Plugin",
+	"homepage": "https://github.com/stonelasley/seo.git",
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Nick Baker",
-			"homepage": "http://www.webtechnick.com",
+			"name": "Stone Lasley",
+			"homepage": "https://github.com/stonelasley/seo",
 			"role": "Author"
 		}
 	],
 	"support": {
-		"issues": "https://github.com/webtechnick/CakePHP-Seo-Plugin/issues",
-		"irc": "irc://irc.freenode.org/cakephp",
-		"source": "https://github.com/webtechnick/CakePHP-Seo-Plugin"
+		"issues": "https://github.com/stonelasley/seo/issues",
+		"irc": "irc://irc.blendtec.com/dev",
+		"source": "https://github.com/stonelasley/seo"
 	},
 	"require": {
 		"php": ">=5.3.0",
